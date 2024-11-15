@@ -95,6 +95,7 @@ public class Map
     if (_mapObjects.Contains(mapObject))
     {
       _mapObjects.Remove(mapObject);
+
       mapObject.RestoreMap(this);
     }
   }
@@ -157,11 +158,11 @@ public class Map
     {
       return false;
     }
-    /*
+
     Projectile hitbox = new Projectile(
-        spawnPosition, direction, screenObjectManager, damage, maxDistance, color, glyph);
+        spawnPosition, direction, _screenObjectManager, damage, maxDistance, color, glyph);
     _mapObjects.Add(hitbox);
-    */
+
     return true;
   }
 

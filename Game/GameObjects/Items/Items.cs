@@ -15,7 +15,7 @@ public abstract class Items : GameObject
 
   }
 
-  protected override bool Touched(GameObject source, Map map)
+  public override bool Touched(GameObject source, Map map)
   {
     if (source == map.UserControlledObject)
     {

@@ -17,7 +17,7 @@ public class Dragon : Monster
   {
     if (InactiveTime >= FixActionDelay)
     {
-      var direction = Movements.AggressiveDirection(Position,
+      var direction = DirectionGeneration.AggressiveDirection(Position,
           map.UserControlledObject.Position);
       map.CreateProjectile(this.Position, direction, Color.Red, Damage, 15);
     }
@@ -30,11 +30,11 @@ public class Dragon : Monster
   {
     if (InactiveTime >= FixActionDelay)
     {
-      var direction = Movements.AggressiveDirection(this.Position,
+      var direction = DirectionGeneration.AggressiveDirection(this.Position,
           map.UserControlledObject.Position);
       if (!RandomAction.weightedBool(3))
       {
-        direction = Movements.GetRandomDirection();
+        direction = DirectionGeneration.GetRandomDirection();
       }
       this.Move(this.Position + direction, map);
       InactiveTime = 0;

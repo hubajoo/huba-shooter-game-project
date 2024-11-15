@@ -12,7 +12,7 @@ public class RangeBonus : Items
   {
   }
 
-  protected override bool Touched(GameObject source, Map map)
+  public override bool Touched(GameObject source, Map map)
   {
     if (source is Player)
     {

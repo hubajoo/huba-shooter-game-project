@@ -19,11 +19,11 @@ public class Goblin : Monster //The goblin moves fast and hunts the player - mel
   {
     if (InactiveTime >= FixActionDelay)
     {
-      var direction = Movements.AggressiveDirection(this.Position,
+      var direction = DirectionGeneration.AggressiveDirection(this.Position,
           map.UserControlledObject.Position);
       if (!RandomAction.weightedBool(4))
       {
-        direction = Movements.GetRandomDirection();
+        direction = DirectionGeneration.GetRandomDirection();
       }
       this.Move(this.Position + direction, map);
       InactiveTime = 0;

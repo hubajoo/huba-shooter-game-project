@@ -31,7 +31,7 @@ public class Player : GameObject
   /// <param name="position"></param>
   /// <param name="hostingSurface"></param>
 
-  public Direction Direction;
+  //public Direction Direction;
   public Player(Point position, ScreenObjectManager screenObjectManager)
       : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager)
   {
@@ -73,7 +73,7 @@ public class Player : GameObject
     }
   }
 
-  protected override bool Touched(GameObject source, Map map)
+  public override bool Touched(GameObject source, Map map)
   {
     source.Touching(this);
     if (source is Monster || source is Projectile)
@@ -93,5 +93,4 @@ public class Player : GameObject
   {
     Kills++;
   }
-
 }

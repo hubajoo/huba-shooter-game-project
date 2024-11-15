@@ -43,7 +43,7 @@ public class Monster : GameObject
 
     return Health <= 0;
   }
-  protected override bool Touched(GameObject source, Map map)
+  public override bool Touched(GameObject source, Map map)
   {
     if (source is Projectile)
     {
@@ -64,7 +64,7 @@ public class Monster : GameObject
   {
     if (InactiveTime >= FixActionDelay)
     {
-      var direction = Movements.GetRandomDirection();
+      var direction = DirectionGeneration.GetRandomDirection();
       this.Move(this.Position + direction, map);
       InactiveTime = 0;
       InactiveTime -= RandomAction.RandomWait(RandomActionDelayMax);

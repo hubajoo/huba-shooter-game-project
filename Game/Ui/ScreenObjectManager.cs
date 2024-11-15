@@ -13,9 +13,9 @@ public class ScreenObjectManager
   }
 
 
-  public void DrawScreenObject(GameObject gameObject)
+  public void DrawScreenObject(GameObject gameObject, Point position)
   {
-    gameObject.Appearance.CopyAppearanceTo(_screenSurface.Surface[gameObject.Position]);
+    gameObject.Appearance.CopyAppearanceTo(_screenSurface.Surface[position]);
     _screenSurface.IsDirty = true;
   }
 

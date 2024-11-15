@@ -10,14 +10,14 @@ namespace DungeonCrawl.Gameobjects;
 /// </summary>
 public abstract class GameObject : IGameObject
 {
-  public Point Position { get; private set; }
+  public Point Position { get; set; }
   public Direction Direction;
   public int Damage { get; protected set; } = 0;
   public int Range { get; set; }
   public void RestoreMap(Map map) => _mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
   public ColoredGlyph Appearance { get; set; }
   protected ColoredGlyph OriginalAppearance { get; set; }
-  private ColoredGlyph _mapAppearance = new ColoredGlyph();
+  public ColoredGlyph _mapAppearance = new ColoredGlyph();
 
   /// <summary>
   /// Constructor.
@@ -36,7 +36,7 @@ public abstract class GameObject : IGameObject
 
 
     // Draw the object
-    screenObjectManager.DrawScreenObject(this);
+    screenObjectManager.DrawScreenObject(this, position);
     //DrawGameObject(hostingSurface);
   }
 
@@ -91,7 +91,7 @@ public abstract class GameObject : IGameObject
   /// <param name="source"></param>
   /// <param name="map"></param>
   /// <returns></returns>
-  protected virtual bool Touched(GameObject source, Map map)
+  public virtual bool Touched(GameObject source, Map map)
   {
     source.Touching(this);
     return false;

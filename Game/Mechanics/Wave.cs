@@ -17,7 +17,7 @@ public class Wave
     _map = map;
     _screenObjectManager = screenObjectManager;
     Point randomPosition = OpenPortal(map, difficulty, _screenObjectManager);
-    randomPosition += Movements.AggressiveDirection(randomPosition,
+    randomPosition += DirectionGeneration.AggressiveDirection(randomPosition,
         map.UserControlledObject.Position);
     AddMonsters(randomPosition, difficulty, _screenObjectManager);
   }

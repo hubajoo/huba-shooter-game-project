@@ -11,7 +11,7 @@ public class Potion : Items
   {
     Amount = 25;
   }
-  protected override bool Touched(GameObject source, Maps.Map map)
+  public override bool Touched(GameObject source, Maps.Map map)
   {
     if (source is Player)
     {

@@ -21,7 +21,7 @@ public class Projectile : GameObject
     Direction = direction;
   }
 
-  protected override bool Touched(GameObject source, Map map)
+  public override bool Touched(GameObject source, Map map)
   {
     this.Direction = Direction.None;
     return true;
