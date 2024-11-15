@@ -16,10 +16,10 @@ namespace DungeonCrawl.Maps;
 /// </summary>
 public class Map
 {
-  public IReadOnlyList<GameObject> GameObjects => _mapObjects.AsReadOnly();
+  public IReadOnlyList<IGameObject> GameObjects => _mapObjects.AsReadOnly();
   public ScreenSurface SurfaceObject => _mapSurface;
-  public Player UserControlledObject { get; private set; }
-  private List<GameObject> _mapObjects;
+  public Player UserControlledObject { get; set; }
+  private List<IGameObject> _mapObjects;
   private ScreenSurface _mapSurface;
   private int _difficulty;
 
@@ -32,15 +32,25 @@ public class Map
   /// </summary>
   /// <param name="mapWidth"></param>
   /// <param name="mapHeight"></param>
-  public Map(ScreenSurface mapSurface, Player player, ScreenObjectManager screenObjectManager)
+  public Map(ScreenSurface mapSurface, ScreenObjectManager screenObjectManager)
   {
-    _mapObjects = new List<GameObject>();
+    _mapObjects = new List<IGameObject>();
     _mapSurface = mapSurface;
-    UserControlledObject = player;
     Width = _mapSurface.Surface.Width;
     Height = _mapSurface.Surface.Height;
     _screenObjectManager = screenObjectManager;
-    CreateMonsterWave();
+  }
+
+
+  public void AddUserControlledObject(Player player)
+  {
+    UserControlledObject = player;
+
+  }
+
+  public void AddMapObject(IGameObject gameObject)
+  {
+    _mapObjects.Add(gameObject);
   }
 
   /// <summary>
@@ -49,11 +59,34 @@ public class Map
   /// <param name="position"></param>
   /// <param name="gameObject"></param>
   /// <returns></returns>
-  public bool TryGetMapObject(Point position, out GameObject gameObject)
+  public IGameObject GetGameObject(Point position)
+  {
+    #nullable enable
+    IGameObject? foundGameObject = null;
+    foreach (var gameObject in _mapObjects)
+    {
+      if (gameObject.GetPosition() == position)
+      {
+        foundGameObject =  gameObject;
+      }
+    }
+
+    return foundGameObject;
+    /*
+    if (UserControlledObject.Position == position)
+    {
+      gameObject = UserControlledObject;
+      return true;
+    }
+    gameObject = null;
+    return false;
+    */
+  }
+  public bool TryGetMapObject(Point position, out IGameObject gameObject)
   {
     foreach (var otherGameObject in _mapObjects)
     {
-      if (otherGameObject.Position == position)
+      if (otherGameObject.GetPosition() == position)
       {
         gameObject = otherGameObject;
         return true;
@@ -67,11 +100,11 @@ public class Map
     gameObject = null;
     return false;
   }
-  public bool TryGetMapObject(Point position, out GameObject gameObject, GameObject excluded)
+  public bool TryGetMapObject(Point position, out IGameObject gameObject, IGameObject excluded)
   {
     foreach (var otherGameObject in _mapObjects)
     {
-      if (otherGameObject.Position == position && otherGameObject != excluded)
+      if (otherGameObject.GetPosition() == position && otherGameObject != excluded)
       {
         gameObject = otherGameObject;
         return true;
@@ -89,54 +122,21 @@ public class Map
   /// <summary>
   /// Removes an object from the map.
   /// </summary>
-  /// <param name="mapObject"></param>
+  /// <param name="mapObject">Object to be removed</param>
   public void RemoveMapObject(GameObject mapObject)
   {
     if (_mapObjects.Contains(mapObject))
     {
       _mapObjects.Remove(mapObject);
 
-      mapObject.RestoreMap(this);
+      //mapObject.RestoreMap(this);
     }
   }
+
 
   /// <summary>
-  /// Creates a monster on the map.
+  /// Opens a portal and unleashes enemies.
   /// </summary>
-  private void CreateMonster()
-  {
-    for (int i = 0; i < 1000; i++)
-    {
-      Point randomPosition1 = new Point(Game.Instance.Random.Next(0, _mapSurface.Surface.Width),
-          Game.Instance.Random.Next(0, _mapSurface.Surface.Height));
-
-      bool foundObject1 = _mapObjects.Any(obj => obj.Position == randomPosition1);
-      if (foundObject1) continue;
-
-      GameObject monster1 = new Goblin(randomPosition1, _screenObjectManager);
-      _mapObjects.Add(monster1);
-
-      Point randomPosition2 = new Point(Game.Instance.Random.Next(0, _mapSurface.Surface.Width),
-          Game.Instance.Random.Next(0, _mapSurface.Surface.Height));
-
-      bool foundObject2 = _mapObjects.Any(obj => obj.Position == randomPosition2);
-      if (foundObject2) continue;
-
-      GameObject monster2 = new Orc(randomPosition2, _screenObjectManager);
-      _mapObjects.Add(monster2);
-
-      Point randomPosition3 = new Point(Game.Instance.Random.Next(0, _mapSurface.Surface.Width),
-          Game.Instance.Random.Next(0, _mapSurface.Surface.Height));
-
-      bool foundObject3 = _mapObjects.Any(obj => obj.Position == randomPosition3);
-      if (foundObject3) continue;
-
-      GameObject monster3 = new Dragon(randomPosition3, _screenObjectManager);
-      _mapObjects.Add(monster3);
-      break;
-    }
-  }
-
   public void CreateMonsterWave()
   {
     Wave wave = new Wave(this, _screenObjectManager, _difficulty);
@@ -146,21 +146,26 @@ public class Map
     }
 
     _difficulty++;
-
   }
 
 
-  public bool CreateProjectile(Point attackerPosition, Direction direction, Color color, int damage = 1, int maxDistance = 1, int glyph = 4)
+  /// <summary>
+  /// Creartes a custom projectile going in the required direction.
+  /// </summary>
+  /// <param name="attackerPosition">Origin position</param>
+  /// <param name="direction"Direction of flight</param>
+  /// <param name="color" Projectile color</param>
+  public bool CreateProjectile(Point origin, Direction direction, Color color, int damage = 1, int maxDistance = 1, int glyph = 4)
   {
-    Point spawnPosition = attackerPosition + direction;
+    Point spawnPosition = origin + direction;
     if (!this.SurfaceObject.Surface.IsValidCell(spawnPosition.X, spawnPosition.Y)) return false;
-    if (this.TryGetMapObject(spawnPosition, out GameObject foundObject))
+    if (this.TryGetMapObject(spawnPosition, out IGameObject foundObject))
     {
       return false;
     }
 
     Projectile hitbox = new Projectile(
-        spawnPosition, direction, _screenObjectManager, damage, maxDistance, color, glyph);
+        spawnPosition, direction, _screenObjectManager, damage, maxDistance, color, this, glyph);
     _mapObjects.Add(hitbox);
 
     return true;
@@ -170,12 +175,12 @@ public class Map
   {
     for (int i = 0; i < _mapObjects.Count; i++)
     {
-      _mapObjects[i].Update(this);
+      _mapObjects[i].Update();
     }
 
     if (_mapObjects.Count(obj => obj is Monster) < 1)
     {
-      CreateMonsterWave();
+
     }
     //DrawGameObject(map.SurfaceObject)
   }

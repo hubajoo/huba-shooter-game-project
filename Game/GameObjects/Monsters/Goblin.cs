@@ -6,10 +6,10 @@ using SadRogue.Primitives;
 
 namespace DungeonCrawl.GameObjects;
 
-public class Goblin : Monster //The goblin moves fast and hunts the player - melee
+public class Goblin : Monster, IDamaging, IMoving//The goblin moves fast and hunts the player - melee
 {
-  public Goblin(Point position, ScreenObjectManager screenObjectManager)
-      : base(new ColoredGlyph(Color.DarkBlue, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 5)
+  public Goblin(Point position, ScreenObjectManager screenObjectManager, Map map)
+      : base(new ColoredGlyph(Color.DarkBlue, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 5, map)
   {
     Damage = 10;
     FixActionDelay = 10;

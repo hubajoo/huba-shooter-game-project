@@ -9,14 +9,13 @@ namespace DungeonCrawl.Mechanics;
 public class Wave
 {
   public List<GameObject> Monsters = new List<GameObject>();
-  private Point _spawn = new Point(0, 0);
   private ScreenObjectManager _screenObjectManager;
   private Map _map;
-  public Wave(Map map, ScreenObjectManager screenObjectManager, int difficulty)
+  public Wave(Map map, ScreenObjectManager screenObjectManager, int difficulty=0)
   {
     _map = map;
     _screenObjectManager = screenObjectManager;
-    Point randomPosition = OpenPortal(map, difficulty, _screenObjectManager);
+    Point randomPosition = OpenPortal(difficulty);
     randomPosition += DirectionGeneration.AggressiveDirection(randomPosition,
         map.UserControlledObject.Position);
     AddMonsters(randomPosition, difficulty, _screenObjectManager);
@@ -66,25 +65,30 @@ public class Wave
     for (int i = 0; i < oCount; i++)
     {
 
-      GameObject monster1 = new Orc(position, screenObjectManager);
+      GameObject monster1 = new Orc(position, screenObjectManager, _map);
       Monsters.Add(monster1);
     }
     for (int i = 0; i < gCount; i++)
-    {
+    { 
 
-      GameObject monster1 = new Goblin(position, _screenObjectManager);
+      GameObject monster1 = new Goblin(position, _screenObjectManager, _map);
       Monsters.Add(monster1);
     }
     for (int i = 0; i < dCount; i++)
     {
 
-      GameObject monster1 = new Dragon(position, _screenObjectManager);
+      GameObject monster1 = new Dragon(position, _screenObjectManager, _map);
       Monsters.Add(monster1);
+    }
+
+    foreach (IGameObject monster in Monsters)
+    {
+      _map.AddMapObject(monster);
     }
 
   }
 
-  private Point OpenPortal(Map map, int difficulty, ScreenObjectManager screenObjectManager)
+  private Point OpenPortal(int difficulty)
   {
     Point location = new Point(0, 0);
 
@@ -93,7 +97,7 @@ public class Wave
       location = new Point(Game.Instance.Random.Next(0, _map.Width),
           Game.Instance.Random.Next(0, _map.Height));
     }
-    Monsters.Add(new Portal(location, _screenObjectManager));
+    Monsters.Add(new Portal(location, _screenObjectManager, _map));
     return location;
   }
 }

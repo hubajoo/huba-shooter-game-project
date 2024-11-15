@@ -5,30 +5,31 @@ using DungeonCrawl.Maps;
 
 namespace DungeonCrawl.GameObjects;
 
-public class Projectile : GameObject
+public class Projectile : GameObject, IDamaging
 {
 
   private int _flownDistance = 0;
   private int _maxDistance;
 
-  public Projectile(Point position, Direction direction, ScreenObjectManager screenObjectManager, int damage, int maxDistance, Color color, int glyph = 4)
-      : base(new ColoredGlyph(color, Color.Transparent, glyph), position, screenObjectManager)
+  public Projectile(Point position, Direction direction, ScreenObjectManager screenObjectManager, int damage, int maxDistance, Color color, Map map, int glyph = 4)
+      : base(new ColoredGlyph(color, Color.Transparent, glyph), position, screenObjectManager, map)
   {
     _maxDistance = maxDistance;
     Damage = damage;
     Direction = direction;
   }
 
-  public override bool Touched(IGameObject source, Map map)
+  public override bool Touched(IGameObject source)
   {
     Direction = Direction.None;
-    return true;
+    return false;
   }
 
-  public override void Update(Map map)
+  public override void Update()
   {
-    Fly(map);
+    Fly(_map);
   }
+
   public void Fly(Map map)
   {
     if (_flownDistance <= _maxDistance)
@@ -39,14 +40,18 @@ public class Projectile : GameObject
     }
     else
     {
-      map.RemoveMapObject(this);
+      RemoveSelf();
     }
 
   }
 
-
-  public override void Touching(IGameObject source)
+  public void Touching()
   {
     Appearance = new ColoredGlyph(OriginalAppearance.Foreground, Appearance.Background, 15);
+  }
+
+  public int GetDamage()
+  {
+    return Damage;
   }
 }

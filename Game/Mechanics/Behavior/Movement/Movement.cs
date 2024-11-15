@@ -25,36 +25,42 @@ public class Movement : IMovementLogic
     if (!map.SurfaceObject.Surface.IsValidCell(newPosition.X, newPosition.Y)) return false;
 
     // Check if other object is there
-    if (map.TryGetMapObject(newPosition, out GameObject foundObject))
+    if (map.TryGetMapObject(newPosition, out IGameObject foundObject))
     {
       // We touched the other object, but they won't allow us to move into the space
-      if (!foundObject.Touched(gameObject, map))
+      if (!foundObject.Touched(gameObject))
       {
         return false;
       }
     }
-
+    
     // Restore the old cell
-    GameObject cellContent;
+    
+    IGameObject cellContent;
     if (map.TryGetMapObject(gameObject.Position, out cellContent, gameObject))
     {
-      map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(cellContent.Appearance);
+      map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(cellContent.GetAppearance());
       /*
-       map.SurfaceObject.Surface[Position].CopyAppearanceFrom(
-           new ColoredGlyph(Color.Transparent, Color.Transparent, 0));
-      // */
+       map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
+           new ColoredGlyph(Color.Transparent, Color.Red, 0));
+      */
     }
     else
     {
-      map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
-          new ColoredGlyph(Color.White, Color.Transparent, 0));
+      map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(gameObject._mapAppearance);
+      /*
+    map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
+        new ColoredGlyph(Color.White, Color.Green, 0));
+        */
     }
-
+    
     // Store the map cell of the new position
-    map.SurfaceObject.Surface[newPosition].CopyAppearanceTo(gameObject._mapAppearance);
-
+    map.SurfaceObject.Surface[newPosition].CopyAppearanceTo(gameObject.Appearance);
+    //Point oldPosition = gameObject.Position;
     gameObject.Position = newPosition;
-    _screenObjectManager.DrawScreenObject(gameObject, newPosition);
+   // _screenObjectManager.RefreshCell(_map, oldPosition);
+    //_screenObjectManager.RefreshCell(_map, newPosition);
+    //_screenObjectManager.DrawScreenObject(gameObject, newPosition);
     return true;
   }
 

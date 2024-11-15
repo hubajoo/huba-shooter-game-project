@@ -25,6 +25,7 @@ public class Player : GameObject
   public int BaseShield { get; private set; }
 
   public int Kills { get; private set; } = 0;
+
   /// <summary>
   /// Constructor.
   /// </summary>
@@ -32,8 +33,8 @@ public class Player : GameObject
   /// <param name="hostingSurface"></param>
 
   //public Direction Direction;
-  public Player(Point position, ScreenObjectManager screenObjectManager)
-      : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager)
+  public Player(Point position, ScreenObjectManager screenObjectManager, Map map)
+      : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager, map)
   {
     Inventory = new List<Items>();
     BaseDamage = PLAYER_BASE_DAMAGE;
@@ -73,19 +74,19 @@ public class Player : GameObject
     }
   }
 
-  public bool Touched(Monster source, Map map)
+  public bool Touched(IDamaging source, Map map)
   {
-    source.Touching(this);
+    source.Touching();
     if (source is Monster || source is Projectile)
     {
-      BaseHealth -= source.Damage;
-      source.Touching(this);
+      BaseHealth -= source.GetDamage();
+      //source.Touching(this);
       if (BaseHealth <= 0)
       {
-
+        Appearance.Background = Color.Red;
         //Game.Instance.Dispose();
       }
-      return TakeDamage(map, source, source.Damage);
+      return TakeDamage(map, source as IGameObject, source.GetDamage());
     }
     return false;
   }
@@ -106,7 +107,7 @@ public class Player : GameObject
     return false;
   }
 
-  public override bool Touched(IGameObject source, Map map)
+  public override bool Touched(IGameObject source)
   {
     return false;
   }

@@ -7,21 +7,16 @@ namespace DungeonCrawl.GameObjects;
 
 public class RangeBonus : Items
 {
-  public RangeBonus(Point position, ScreenObjectManager screenObjectManager)
-      : base(new ColoredGlyph(Color.Cyan, Color.Transparent, 'R'), position, screenObjectManager)
+  public RangeBonus(Point position, ScreenObjectManager screenObjectManager, Map map)
+      : base(new ColoredGlyph(Color.Cyan, Color.Transparent, 'R'), position, screenObjectManager, map)
   {
   }
 
-  public override bool Touched(IGameObject source, Map map)
+  public override bool Touched(Player source)
   {
-    if (source is Player)
-    {
-      var p = source as Player;
-      p.Range += 3;
-      map.RemoveMapObject(this);
-      return true;
-    }
-    //source.Touching(this);
+
+    source.Range += 3;
+    //map.RemoveMapObject(this);
     return true;
   }
 }

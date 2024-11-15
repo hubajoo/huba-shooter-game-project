@@ -8,21 +8,23 @@ namespace DungeonCrawl.GameObjects;
 
 public abstract class Items : GameObject
 {
-  private IScreenSurface screenSurface;
-  protected ScreenObjectManager screenObjectManager;
-  protected Items(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager) : base(appearance, position, screenObjectManager)
+  protected Items(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager, Map map) : base(appearance, position, screenObjectManager, map)
   {
 
   }
 
-  public override bool Touched(IGameObject source, Map map)
+  public virtual bool Touched(Player source)
   {
-    if (source == map.UserControlledObject)
-    {
-      map.UserControlledObject.AddNewItemToInventory(this);
-      map.RemoveMapObject(this);
-      return true;
-    }
+    source.AddNewItemToInventory(this);
+    _map.RemoveMapObject(this);
+    return true;
+  }
+  public bool Touched(Projectile source)
+  {
+    return true;
+  }
+  public override bool Touched(IGameObject source)
+  {
     return false;
   }
 }

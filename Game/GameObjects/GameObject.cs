@@ -15,26 +15,29 @@ public abstract class GameObject : IGameObject
   public Direction Direction;
   public int Damage { get; protected set; } = 0;
   public int Range { get; set; }
-  public void RestoreMap(Map map) => _mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
+  
   public ColoredGlyph Appearance { get; set; }
   protected ColoredGlyph OriginalAppearance { get; set; }
   public ColoredGlyph _mapAppearance = new ColoredGlyph();
 
   private ScreenObjectManager _screenObjectManager;
 
+  protected Map _map;
 
+  
   /// <summary>
   /// Constructor.
   /// </summary>
   /// <param name="appearance"></param>
   /// <param name="position"></param>
   /// <param name="hostingSurface"></param>
-  protected GameObject(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager)
+  protected GameObject(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager, Map map)
   {
     Appearance = appearance;
     OriginalAppearance = appearance;
     Position = position;
     _screenObjectManager = screenObjectManager;
+    _map = map;
 
 
     // Store the map cell
@@ -44,6 +47,12 @@ public abstract class GameObject : IGameObject
     // Draw the object
     screenObjectManager.DrawScreenObject(this, position);
   }
+  
+  public void RestoreMap(Map map)
+  {
+    
+    //_mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
+  } 
 
   /// <summary>
   /// Moves the object to the given position on the map.
@@ -63,7 +72,7 @@ public abstract class GameObject : IGameObject
   /// <param name="source"></param>
   /// <param name="map"></param>
   /// <returns></returns>
-  public virtual bool Touched(IGameObject source, Map map)
+  public virtual bool Touched(IGameObject source)
   {
     source.Touching(this);
     return false;
@@ -72,10 +81,25 @@ public abstract class GameObject : IGameObject
   {
   }
 
-  public virtual void Update(Map map)
+  public virtual void Update()
   {
 
   }
+  public virtual void RemoveSelf()
+  {
+    _map.RemoveMapObject(this);
+  }
+
+  public Point GetPosition()
+  {
+    return Position;
+  }
+
+  public ColoredGlyph GetAppearance()
+  {
+    return Appearance;
+  }
+
   public virtual bool TakeDamage(Map map, IGameObject source, int damage)
   {
     return false;
@@ -86,9 +110,11 @@ public abstract class GameObject : IGameObject
   /// Draws the object on the screen.
   /// </summary>
   /// <param name="screenSurface"></param>
+  /*
   protected void DrawGameObject(IScreenSurface screenSurface)
   {
     Appearance.CopyAppearanceTo(screenSurface.Surface[Position]);
     screenSurface.IsDirty = true;
-  }
+  }  */
+
 }

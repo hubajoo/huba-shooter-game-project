@@ -6,10 +6,10 @@ using SadRogue.Primitives;
 
 namespace DungeonCrawl.GameObjects;
 
-public class Dragon : Monster
+public class Dragon : Monster, IDamaging, IMoving
 {
-  public Dragon(Point position, ScreenObjectManager screenObjectManager)
-      : base(new ColoredGlyph(Color.Red, Color.Transparent, 1), position, screenObjectManager, health: 20, damage: 20)
+  public Dragon(Point position, ScreenObjectManager screenObjectManager, Map map)
+      : base(new ColoredGlyph(Color.Red, Color.Transparent, 1), position, screenObjectManager, health: 20, damage: 20, map)
   {
     Health = 10;
   }
@@ -45,8 +45,5 @@ public class Dragon : Monster
       InactiveTime++;
     }
   }
-
-
-
 
 }
