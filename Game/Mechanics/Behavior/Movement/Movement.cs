@@ -39,15 +39,16 @@ public class Movement : IMovementLogic
     IGameObject cellContent;
     if (map.TryGetMapObject(gameObject.Position, out cellContent, gameObject))
     {
-      map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(cellContent.GetAppearance());
-      /*
+      //map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(cellContent.GetAppearance());
+      
        map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
            new ColoredGlyph(Color.Transparent, Color.Red, 0));
-      */
+      
     }
     else
-    {
-      map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(gameObject._mapAppearance);
+    { /*map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
+        new ColoredGlyph(Color.White, Color.Transparent, 4));*/
+      //map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(gameObject._mapAppearance);
       /*
     map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
         new ColoredGlyph(Color.White, Color.Green, 0));
@@ -55,12 +56,12 @@ public class Movement : IMovementLogic
     }
     
     // Store the map cell of the new position
-    map.SurfaceObject.Surface[newPosition].CopyAppearanceTo(gameObject.Appearance);
-    //Point oldPosition = gameObject.Position;
+   //map.SurfaceObject.Surface[newPosition].CopyAppearanceTo(gameObject.Appearance);
+    Point oldPosition = gameObject.Position;
     gameObject.Position = newPosition;
-   // _screenObjectManager.RefreshCell(_map, oldPosition);
+    _screenObjectManager.RefreshCell(_map, oldPosition);
     //_screenObjectManager.RefreshCell(_map, newPosition);
-    //_screenObjectManager.DrawScreenObject(gameObject, newPosition);
+    //_screenObjectManager.DrawScreenObject(gameObject);
     return true;
   }
 

@@ -17,6 +17,7 @@ public class Projectile : GameObject, IDamaging
     _maxDistance = maxDistance;
     Damage = damage;
     Direction = direction;
+    //map.AddMapObject(this);
   }
 
   public override bool Touched(IGameObject source)

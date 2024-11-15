@@ -31,8 +31,8 @@ public class Wave
     {
       case 0:
         oCount = 1;
-        gCount = 10;
-        dCount = 10;
+        gCount = 2;
+        dCount = 2;
         break;
       case 1:
         oCount = 3;

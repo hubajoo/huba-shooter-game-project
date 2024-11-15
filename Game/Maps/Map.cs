@@ -45,7 +45,7 @@ public class Map
   public void AddUserControlledObject(Player player)
   {
     UserControlledObject = player;
-
+    _mapObjects.Add(player);
   }
 
   public void AddMapObject(IGameObject gameObject)

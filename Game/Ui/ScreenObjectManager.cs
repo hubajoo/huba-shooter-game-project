@@ -24,9 +24,10 @@ public class ScreenObjectManager
     apperance.CopyAppearanceTo(_screenSurface.Surface[position]);
     _screenSurface.IsDirty = true;
   }
-  public void DrawScreenObject(IGameObject gameObject)
+  public void DrawScreenObject(GameObject gameObject)
   {
-    gameObject.GetAppearance().CopyAppearanceTo(_screenSurface.Surface[gameObject.GetPosition()]);
+    //gameObject.GetAppearance().CopyAppearanceTo(_screenSurface.Surface[gameObject.GetPosition()]);
+    gameObject.Appearance.CopyAppearanceTo(_screenSurface.Surface[gameObject.Position]);
     _screenSurface.IsDirty = true;
   }
 
@@ -45,5 +46,4 @@ public class ScreenObjectManager
     DrawScreenObject(
       new ColoredGlyph(Color.Transparent, Color.Transparent, 0), position);
   }
-
 }
