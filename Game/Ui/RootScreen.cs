@@ -21,15 +21,19 @@ public class RootScreen : ScreenObject
 {
   private Map _map;
   private PlayerStatsConsole _playerStatsConsole;
+
+  private ScreenObject _leaderBoard;
+
   /// <summary>
   /// Constructor.
   /// </summary>
-  public RootScreen(Map map, PlayerStatsConsole playerStatsConsole)
+  public RootScreen(Map map, PlayerStatsConsole playerStatsConsole, LeaderBoard leaderBoard)
   {
     _map = map;
     _playerStatsConsole = playerStatsConsole;
-    Children.Add(_map.SurfaceObject);
-    Children.Add(_playerStatsConsole);
+    _leaderBoard = leaderBoard;
+    AddScreenObject(_map.SurfaceObject);
+    AddScreenObject(_playerStatsConsole);
   }
 
   /// <summary>
@@ -40,6 +44,20 @@ public class RootScreen : ScreenObject
   public override void Update(TimeSpan delta)
   {
     _map.ProgressTime();
+  }
+
+  public void RemoveScreenObject(ScreenObject screenObject)
+  {
+    Children.Remove(screenObject);
+  }
+  public void AddScreenObject(ScreenObject screenObject)
+  {
+    Children.Add(screenObject);
+  }
+  public void ClearScreen()
+  {
+    Children.Remove(_map.SurfaceObject);
+    Children.Remove(_playerStatsConsole);
   }
 
   public override bool ProcessKeyboard(Keyboard keyboard)

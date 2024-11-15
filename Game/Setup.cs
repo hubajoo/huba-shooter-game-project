@@ -43,9 +43,19 @@ public class Setup
     {
       Position = new Point(0, 0)
     };
+    var leaderBoard = new LeaderBoard(statsConsoleWidth, mapHeight, player, Settings["name"])
+    {
+      Position = new Point(0, 0)
+    };
 
-    Game.Instance.Screen = new RootScreen(map, PlayerStatsConsole);
+    var rootScreen = new RootScreen(map, PlayerStatsConsole, leaderBoard);
+
+
+
+    Game.Instance.Screen = rootScreen;
     Game.Instance.Screen.IsFocused = true;
+
+    GameOver gameOver = new GameOver(rootScreen, leaderBoard);
 
 
     // This is needed because we replaced the initial screen object with our own.

@@ -36,12 +36,13 @@ public class Program
     // Hook the start event so we can add consoles to the system.
     Game.Instance.OnStart = setup.Init;
 
-    // Creates Setup class
-    GameOver gameOver = new GameOver();
+    /*
+        // Creates Setup class
+        GameOver gameOver = new GameOver();
 
-    // Hook the end event so we can add display the end screen.
-    Game.Instance.OnEnd = gameOver.End;
-
+        // Hook the end event so we can add display the end screen.
+        Game.Instance.OnEnd = gameOver.End;
+    */
     // Start the game.
     Game.Instance.Run();
     Game.Instance.Dispose();

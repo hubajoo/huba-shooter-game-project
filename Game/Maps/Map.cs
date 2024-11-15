@@ -21,8 +21,7 @@ public class Map : IMap
   public Player UserControlledObject { get; private set; }
   private List<GameObject> _mapObjects;
   private ScreenSurface _mapSurface;
-  private PlayerStatsConsole _playerStatsConsole;
-  private int _difficulty;
+   private int _difficulty;
   /// <summary>
   /// Constructor.
   /// </summary>
