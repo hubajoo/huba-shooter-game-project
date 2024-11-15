@@ -3,7 +3,7 @@ using SadRogue.Primitives;
 using SadConsole;
 
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 
 public class Portal : GameObject
 {
@@ -11,7 +11,7 @@ public class Portal : GameObject
       : base(new ColoredGlyph(Color.Gray, Color.Red, 0), position, screenObjectManager)
   {
   }
-  public override bool Touched(GameObject source, Map map)
+  public override bool Touched(IGameObject source, Map map)
   {
     source.Touching(this);
     return false;

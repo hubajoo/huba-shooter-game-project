@@ -1,6 +1,6 @@
 ﻿using System.Buffers.Text;
 using System.Collections.Generic;
-using DungeonCrawl.Gameobjects;
+using DungeonCrawl.GameObjects;
 using DungeonCrawl.Ui;
 using DungeonCrawl.UI;
 using Microsoft.VisualBasic;

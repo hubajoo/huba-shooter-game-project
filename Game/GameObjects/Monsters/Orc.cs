@@ -2,7 +2,7 @@ using SadConsole;
 using SadRogue.Primitives;
 
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 
 public class Orc : Monster //The orc is a slower, tankier melee opponent
 {

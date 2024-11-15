@@ -1,11 +1,10 @@
-﻿using System;
-using DungeonCrawl.Maps;
+﻿using DungeonCrawl.Maps;
 using DungeonCrawl.Mechanics;
 using SadConsole;
 using SadRogue.Primitives;
 
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 
 /// <summary>
 /// Class <c>Monster</c> models a hostile object in the game.
@@ -31,7 +30,7 @@ public class Monster : GameObject
     Health = health;
     DamageNumber = damage;
   }
-  public override bool TakeDamage(Map map, GameObject source, int damage = 1)
+  public override bool TakeDamage(Map map, IGameObject source, int damage = 1)
   {
     Health -= damage;
     if (Health <= 0)
@@ -43,13 +42,14 @@ public class Monster : GameObject
 
     return Health <= 0;
   }
-  public override bool Touched(GameObject source, Map map)
+  public override bool Touched(IGameObject source, Map map)
   {
     if (source is Projectile)
     {
-      source.Direction = Direction.None;
-      source.Touching(this);
-      return this.TakeDamage(map, source, source.Damage);
+      var p = source as Projectile;
+      p.Direction = Direction.None;
+      p.Touching(this);
+      return this.TakeDamage(map, source, p.Damage);
     }
     return false;
   }

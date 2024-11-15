@@ -1,5 +1,4 @@
 ﻿using System;
-using DungeonCrawl.Gameobjects;
 using SadConsole;
 using SadRogue.Primitives;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using DungeonCrawl.Mechanics;
 using DungeonCrawl.UI;
 using SadConsole.UI;
+using DungeonCrawl.GameObjects;
 
 namespace DungeonCrawl.Maps;
 

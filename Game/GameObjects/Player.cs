@@ -6,7 +6,7 @@ using System.Linq;
 using DungeonCrawl.Maps;
 
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 
 /// <summary>
 /// Class <c>Player</c> models a user controlled object in the game.
@@ -73,7 +73,7 @@ public class Player : GameObject
     }
   }
 
-  public override bool Touched(GameObject source, Map map)
+  public bool Touched(Monster source, Map map)
   {
     source.Touching(this);
     if (source is Monster || source is Projectile)
@@ -85,11 +85,33 @@ public class Player : GameObject
 
         //Game.Instance.Dispose();
       }
-      return this.TakeDamage(map, source, source.Damage);
+      return TakeDamage(map, source, source.Damage);
     }
     return false;
   }
-  public void Killed(GameObject victim)
+  public bool Touched(Projectile source, Map map)
+  {
+    source.Touching(this);
+    if (source is Monster || source is Projectile)
+    {
+      BaseHealth -= source.Damage;
+      source.Touching(this);
+      if (BaseHealth <= 0)
+      {
+
+        //Game.Instance.Dispose();
+      }
+      return TakeDamage(map, source, source.Damage);
+    }
+    return false;
+  }
+
+  public override bool Touched(IGameObject source, Map map)
+  {
+    return false;
+  }
+
+  public void Killed(IGameObject victim)
   {
     Kills++;
   }

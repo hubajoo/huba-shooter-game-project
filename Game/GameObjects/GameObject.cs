@@ -1,9 +1,10 @@
 ﻿using DungeonCrawl.Maps;
+using DungeonCrawl.Mechanics;
 using SadConsole;
 using SadRogue.Primitives;
 
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 
 /// <summary>
 /// Class <c>GameObject</c> models any objects in the game.
@@ -19,6 +20,9 @@ public abstract class GameObject : IGameObject
   protected ColoredGlyph OriginalAppearance { get; set; }
   public ColoredGlyph _mapAppearance = new ColoredGlyph();
 
+  private ScreenObjectManager _screenObjectManager;
+
+
   /// <summary>
   /// Constructor.
   /// </summary>
@@ -30,14 +34,15 @@ public abstract class GameObject : IGameObject
     Appearance = appearance;
     OriginalAppearance = appearance;
     Position = position;
+    _screenObjectManager = screenObjectManager;
+
+
     // Store the map cell
-    //hostingSurface.Surface[position].CopyAppearanceTo(_mapAppearance);
     _mapAppearance = screenObjectManager.GetScreenObject(position);
 
 
     // Draw the object
     screenObjectManager.DrawScreenObject(this, position);
-    //DrawGameObject(hostingSurface);
   }
 
   /// <summary>
@@ -48,41 +53,8 @@ public abstract class GameObject : IGameObject
   /// <returns></returns>
   public bool Move(Point newPosition, Map map)
   {
-    // Check new position is valid
-    if (!map.SurfaceObject.Surface.IsValidCell(newPosition.X, newPosition.Y)) return false;
-
-    // Check if other object is there
-    if (map.TryGetMapObject(newPosition, out GameObject foundObject))
-    {
-      // We touched the other object, but they won't allow us to move into the space
-      if (!foundObject.Touched(this, map))
-      {
-        return false;
-      }
-    }
-
-    // Restore the old cell
-    GameObject cellContent;
-    if (map.TryGetMapObject(Position, out cellContent, this))
-    {
-      map.SurfaceObject.Surface[Position].CopyAppearanceFrom(cellContent.Appearance);
-      /*
-       map.SurfaceObject.Surface[Position].CopyAppearanceFrom(
-           new ColoredGlyph(Color.Transparent, Color.Transparent, 0));
-      // */
-    }
-    else
-    {
-      map.SurfaceObject.Surface[Position].CopyAppearanceFrom(
-          new ColoredGlyph(Color.White, Color.Transparent, 0));
-    }
-
-    // Store the map cell of the new position
-    map.SurfaceObject.Surface[newPosition].CopyAppearanceTo(_mapAppearance);
-
-    Position = newPosition;
-    DrawGameObject(map.SurfaceObject);
-    return true;
+    var m = new Movement(map, _screenObjectManager);
+    return m.Move(this, map, newPosition);
   }
 
   /// <summary>
@@ -91,23 +63,24 @@ public abstract class GameObject : IGameObject
   /// <param name="source"></param>
   /// <param name="map"></param>
   /// <returns></returns>
-  public virtual bool Touched(GameObject source, Map map)
+  public virtual bool Touched(IGameObject source, Map map)
   {
     source.Touching(this);
     return false;
+  }
+  public virtual void Touching(IGameObject source)
+  {
   }
 
   public virtual void Update(Map map)
   {
 
   }
-  public virtual bool TakeDamage(Map map, GameObject source, int damage)
+  public virtual bool TakeDamage(Map map, IGameObject source, int damage)
   {
     return false;
   }
-  public virtual void Touching(GameObject source)
-  {
-  }
+
 
   /// <summary>
   /// Draws the object on the screen.

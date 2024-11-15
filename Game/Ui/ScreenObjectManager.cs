@@ -1,4 +1,4 @@
-using DungeonCrawl.Gameobjects;
+using DungeonCrawl.GameObjects;
 using SadConsole;
 using SadRogue.Primitives;
 

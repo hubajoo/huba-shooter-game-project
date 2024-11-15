@@ -4,7 +4,7 @@ using SadConsole;
 using SadRogue.Primitives;
 
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 
 public abstract class Items : GameObject
 {
@@ -15,7 +15,7 @@ public abstract class Items : GameObject
 
   }
 
-  public override bool Touched(GameObject source, Map map)
+  public override bool Touched(IGameObject source, Map map)
   {
     if (source == map.UserControlledObject)
     {

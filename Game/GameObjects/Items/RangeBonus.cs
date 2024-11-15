@@ -2,7 +2,7 @@ using DungeonCrawl.Maps;
 using SadConsole;
 using SadRogue.Primitives;
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 
 
 public class RangeBonus : Items
@@ -12,11 +12,12 @@ public class RangeBonus : Items
   {
   }
 
-  public override bool Touched(GameObject source, Map map)
+  public override bool Touched(IGameObject source, Map map)
   {
     if (source is Player)
     {
-      source.Range += 3;
+      var p = source as Player;
+      p.Range += 3;
       map.RemoveMapObject(this);
       return true;
     }

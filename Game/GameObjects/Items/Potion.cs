@@ -2,7 +2,7 @@
 using SadConsole;
 using SadRogue.Primitives;
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 public class Potion : Items
 {
   public int Amount { get; private set; }
@@ -11,7 +11,7 @@ public class Potion : Items
   {
     Amount = 25;
   }
-  public override bool Touched(GameObject source, Maps.Map map)
+  public override bool Touched(IGameObject source, Maps.Map map)
   {
     if (source is Player)
     {

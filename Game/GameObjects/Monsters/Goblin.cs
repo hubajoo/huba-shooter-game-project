@@ -4,7 +4,7 @@ using SadConsole;
 using SadRogue.Primitives;
 
 
-namespace DungeonCrawl.Gameobjects;
+namespace DungeonCrawl.GameObjects;
 
 public class Goblin : Monster //The goblin moves fast and hunts the player - melee
 {

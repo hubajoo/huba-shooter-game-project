@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using DungeonCrawl.Maps;
-using DungeonCrawl.Gameobjects;
+using DungeonCrawl.GameObjects;
 using DungeonCrawl.Ui;
 using DungeonCrawl.UI;
 using Microsoft.VisualBasic;
@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using SadConsole;
 using SadConsole.UI;
 using SadRogue.Primitives;
-using Console = System.Console;
 
 public class Setup
 {

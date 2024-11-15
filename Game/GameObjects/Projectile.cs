@@ -1,11 +1,9 @@
 using SadConsole.Components;
-
-
-namespace DungeonCrawl.Gameobjects;
 using SadConsole;
 using SadRogue.Primitives;
-using DungeonCrawl.Gameobjects;
 using DungeonCrawl.Maps;
+
+namespace DungeonCrawl.GameObjects;
 
 public class Projectile : GameObject
 {
@@ -21,9 +19,9 @@ public class Projectile : GameObject
     Direction = direction;
   }
 
-  public override bool Touched(GameObject source, Map map)
+  public override bool Touched(IGameObject source, Map map)
   {
-    this.Direction = Direction.None;
+    Direction = Direction.None;
     return true;
   }
 
@@ -35,9 +33,9 @@ public class Projectile : GameObject
   {
     if (_flownDistance <= _maxDistance)
     {
-      if (!this.Move(this.Position + this.Direction, map)) this.Direction = Direction.None;
+      if (!Move(Position + Direction, map)) Direction = Direction.None;
       _flownDistance++;
-      if (this.Direction == Direction.Up || this.Direction == Direction.Down) _flownDistance++;
+      if (Direction == Direction.Up || Direction == Direction.Down) _flownDistance++;
     }
     else
     {
@@ -47,8 +45,8 @@ public class Projectile : GameObject
   }
 
 
-  public override void Touching(GameObject source)
+  public override void Touching(IGameObject source)
   {
-    this.Appearance = new ColoredGlyph(OriginalAppearance.Foreground, Appearance.Background, 15);
+    Appearance = new ColoredGlyph(OriginalAppearance.Foreground, Appearance.Background, 15);
   }
 }
