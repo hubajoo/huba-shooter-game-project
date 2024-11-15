@@ -14,7 +14,7 @@ public abstract class GameObject : IGameObject
   public int Damage { get; protected set; } = 0;
   public int Range { get; set; }
   public void RestoreMap(Map map) => _mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
-  protected ColoredGlyph Appearance { get; set; }
+  public ColoredGlyph Appearance { get; set; }
   protected ColoredGlyph OriginalAppearance { get; set; }
   private ColoredGlyph _mapAppearance = new ColoredGlyph();
 
@@ -113,10 +113,5 @@ public abstract class GameObject : IGameObject
   {
     Appearance.CopyAppearanceTo(screenSurface.Surface[Position]);
     screenSurface.IsDirty = true;
-  }
-
-  public bool Move()
-  {
-    throw new System.NotImplementedException();
   }
 }

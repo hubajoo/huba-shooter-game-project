@@ -33,9 +33,11 @@ public class Setup
 
 
 
+    // Creates screensurface
     var screenSurface = new ScreenSurface(mapWidth, mapHeight);
     screenSurface.UseMouse = false;
 
+    
     // Creates player
     Player player = new Player(screenSurface.Surface.Area.Center, screenSurface);
 
@@ -43,7 +45,6 @@ public class Setup
     Map map = new Map(screenSurface, player);
 
     map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
-
 
     // Creates UI elements
     var PlayerStatsConsole = new PlayerStatsConsole(statsConsoleWidth, mapHeight, player, Settings["name"])
@@ -58,11 +59,18 @@ public class Setup
     var rootScreen = new RootScreen(map, PlayerStatsConsole, leaderBoard);
 
 
+    map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
+
+
+
+    // Sets up game over logic in advance.
+   //var gameOver = new GameOver(rootScreen, leaderBoard);
+
 
     Game.Instance.Screen = rootScreen;
     Game.Instance.Screen.IsFocused = true;
 
-    GameOver gameOver = new GameOver(rootScreen, leaderBoard);
+
 
 
     // This is needed because we replaced the initial screen object with our own.

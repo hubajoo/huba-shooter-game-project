@@ -53,10 +53,6 @@ public class Player : GameObject
   public void AddNewItemToInventory(Items items)
   {
     Inventory.Add(items);
-    if (items is Sword sword)
-    {
-      BaseDamage += sword.Damage;
-    }
 
     if (items is Potion potion)
     {
@@ -85,7 +81,8 @@ public class Player : GameObject
       source.Touching(this);
       if (BaseHealth <= 0)
       {
-        Game.Instance.Dispose();
+
+        //Game.Instance.Dispose();
       }
       return this.TakeDamage(map, source, source.Damage);
     }

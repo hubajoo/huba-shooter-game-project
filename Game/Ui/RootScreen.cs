@@ -136,4 +136,10 @@ public class RootScreen : ScreenObject
     Children.Remove(_playerStatsConsole);
   }
 
+  public void End()
+  {
+    ClearScreen();
+    AddScreenObject(_leaderBoard);
+  }
+
 }

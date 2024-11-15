@@ -1,7 +1,6 @@
+using DungeonCrawl.Mechanics;
+using SadConsole;
 public interface IGameObject
 {
-  public bool Move();
-
-  //protected void DrawGameObject();
 
 }
