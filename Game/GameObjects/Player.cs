@@ -5,7 +5,8 @@ using DungeonCrawl.Mechanics;
 using System.Linq;
 using DungeonCrawl.Maps;
 
-namespace DungeonCrawl.Tiles;
+
+namespace DungeonCrawl.Gameobjects;
 
 /// <summary>
 /// Class <c>Player</c> models a user controlled object in the game.
@@ -31,8 +32,8 @@ public class Player : GameObject
   /// <param name="hostingSurface"></param>
 
   public Direction Direction;
-  public Player(Point position, IScreenSurface hostingSurface)
-      : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, hostingSurface)
+  public Player(Point position, ScreenObjectManager screenObjectManager)
+      : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager)
   {
     Inventory = new List<Items>();
     BaseDamage = PLAYER_BASE_DAMAGE;

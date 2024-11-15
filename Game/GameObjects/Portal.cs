@@ -2,17 +2,18 @@ using DungeonCrawl.Maps;
 using SadRogue.Primitives;
 using SadConsole;
 
-namespace DungeonCrawl.Tiles;
+
+namespace DungeonCrawl.Gameobjects;
 
 public class Portal : GameObject
 {
-    public Portal(Point position, IScreenSurface hostingSurface)
-        : base(new ColoredGlyph(Color.Gray, Color.Red, 0), position, hostingSurface)
-    {
-    }
-    protected override bool Touched(GameObject source, Map map)
-    {
-        source.Touching(this);
-        return false;
-    }
+  public Portal(Point position, ScreenObjectManager screenObjectManager)
+      : base(new ColoredGlyph(Color.Gray, Color.Red, 0), position, screenObjectManager)
+  {
+  }
+  protected override bool Touched(GameObject source, Map map)
+  {
+    source.Touching(this);
+    return false;
+  }
 }

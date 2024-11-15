@@ -1,5 +1,5 @@
 using System;
-using DungeonCrawl.Tiles;
+using DungeonCrawl.Gameobjects;
 using SadConsole;
 using SadRogue.Primitives;
 using Console = SadConsole.Console;
@@ -37,7 +37,7 @@ namespace DungeonCrawl.UI
 
       this.Print(2, 8, " Inventory: ", Color.Black, Color.White);
       this.Print(2, 9, $" Number of swords: 0", Color.DarkOrange);
-  
+
     }
     private void DrawBorder()
     {

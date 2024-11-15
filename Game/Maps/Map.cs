@@ -1,5 +1,5 @@
 ﻿using System;
-using DungeonCrawl.Tiles;
+using DungeonCrawl.Gameobjects;
 using SadConsole;
 using SadRogue.Primitives;
 using System.Collections.Generic;
@@ -22,17 +22,24 @@ public class Map
   private List<GameObject> _mapObjects;
   private ScreenSurface _mapSurface;
   private int _difficulty;
+
+  public int Width;
+  public int Height;
+
+  private ScreenObjectManager _screenObjectManager;
   /// <summary>
   /// Constructor.
   /// </summary>
   /// <param name="mapWidth"></param>
   /// <param name="mapHeight"></param>
-  public Map(ScreenSurface mapSurface, Player player)
+  public Map(ScreenSurface mapSurface, Player player, ScreenObjectManager screenObjectManager)
   {
     _mapObjects = new List<GameObject>();
     _mapSurface = mapSurface;
     UserControlledObject = player;
-
+    Width = _mapSurface.Surface.Width;
+    Height = _mapSurface.Surface.Height;
+    _screenObjectManager = screenObjectManager;
     CreateMonsterWave();
   }
 
@@ -105,7 +112,7 @@ public class Map
       bool foundObject1 = _mapObjects.Any(obj => obj.Position == randomPosition1);
       if (foundObject1) continue;
 
-      GameObject monster1 = new Goblin(randomPosition1, _mapSurface);
+      GameObject monster1 = new Goblin(randomPosition1, _screenObjectManager);
       _mapObjects.Add(monster1);
 
       Point randomPosition2 = new Point(Game.Instance.Random.Next(0, _mapSurface.Surface.Width),
@@ -114,7 +121,7 @@ public class Map
       bool foundObject2 = _mapObjects.Any(obj => obj.Position == randomPosition2);
       if (foundObject2) continue;
 
-      GameObject monster2 = new Orc(randomPosition2, _mapSurface);
+      GameObject monster2 = new Orc(randomPosition2, _screenObjectManager);
       _mapObjects.Add(monster2);
 
       Point randomPosition3 = new Point(Game.Instance.Random.Next(0, _mapSurface.Surface.Width),
@@ -123,7 +130,7 @@ public class Map
       bool foundObject3 = _mapObjects.Any(obj => obj.Position == randomPosition3);
       if (foundObject3) continue;
 
-      GameObject monster3 = new Dragon(randomPosition3, _mapSurface);
+      GameObject monster3 = new Dragon(randomPosition3, _screenObjectManager);
       _mapObjects.Add(monster3);
       break;
     }
@@ -131,7 +138,7 @@ public class Map
 
   public void CreateMonsterWave()
   {
-    Wave wave = new Wave(this, _mapSurface, _difficulty);
+    Wave wave = new Wave(this, _screenObjectManager, _difficulty);
     foreach (var monster in wave.Monsters)
     {
       _mapObjects.Add(monster);
@@ -150,9 +157,11 @@ public class Map
     {
       return false;
     }
+    /*
     Projectile hitbox = new Projectile(
-        spawnPosition, direction, _mapSurface, damage, maxDistance, color, glyph);
+        spawnPosition, direction, screenObjectManager, damage, maxDistance, color, glyph);
     _mapObjects.Add(hitbox);
+    */
     return true;
   }
 
@@ -175,6 +184,7 @@ public class Map
     Random rnd = new Random();
     int item = rnd.Next(0, 2);
     //position += Movements.GetRandomDirection();
+    /*
     GameObject loot = new Wall(position, _mapSurface);
     switch (item)
     {
@@ -186,6 +196,6 @@ public class Map
         break;
     }
     _mapObjects.Add(loot);
-
+*/
   }
 }

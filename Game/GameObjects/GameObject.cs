@@ -2,7 +2,8 @@
 using SadConsole;
 using SadRogue.Primitives;
 
-namespace DungeonCrawl.Tiles;
+
+namespace DungeonCrawl.Gameobjects;
 
 /// <summary>
 /// Class <c>GameObject</c> models any objects in the game.
@@ -24,16 +25,19 @@ public abstract class GameObject : IGameObject
   /// <param name="appearance"></param>
   /// <param name="position"></param>
   /// <param name="hostingSurface"></param>
-  protected GameObject(ColoredGlyph appearance, Point position, IScreenSurface hostingSurface)
+  protected GameObject(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager)
   {
     Appearance = appearance;
     OriginalAppearance = appearance;
     Position = position;
     // Store the map cell
-    hostingSurface.Surface[position].CopyAppearanceTo(_mapAppearance);
+    //hostingSurface.Surface[position].CopyAppearanceTo(_mapAppearance);
+    _mapAppearance = screenObjectManager.GetScreenObject(position);
+
 
     // Draw the object
-    DrawGameObject(hostingSurface);
+    screenObjectManager.DrawScreenObject(this);
+    //DrawGameObject(hostingSurface);
   }
 
   /// <summary>

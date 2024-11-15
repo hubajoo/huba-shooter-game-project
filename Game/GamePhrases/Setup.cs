@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using DungeonCrawl.Maps;
-using DungeonCrawl.Tiles;
+using DungeonCrawl.Gameobjects;
 using DungeonCrawl.Ui;
 using DungeonCrawl.UI;
 using Microsoft.VisualBasic;
@@ -37,13 +37,15 @@ public class Setup
     var screenSurface = new ScreenSurface(mapWidth, mapHeight);
     screenSurface.UseMouse = false;
 
-    
+    // Drawing logic setup
+    var screenObjectManager = new ScreenObjectManager(screenSurface);
+
+
     // Creates player
-    Player player = new Player(screenSurface.Surface.Area.Center, screenSurface);
+    Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager);
 
     // Creates the map
-    Map map = new Map(screenSurface, player);
-
+    Map map = new Map(screenSurface, player, screenObjectManager);
     map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
 
     // Creates UI elements
@@ -55,16 +57,14 @@ public class Setup
     {
       Position = new Point(0, 0)
     };
-
     var rootScreen = new RootScreen(map, PlayerStatsConsole, leaderBoard);
+    //map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
 
-
-    map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
 
 
 
     // Sets up game over logic in advance.
-   //var gameOver = new GameOver(rootScreen, leaderBoard);
+    //var gameOver = new GameOver(rootScreen, leaderBoard);
 
 
     Game.Instance.Screen = rootScreen;

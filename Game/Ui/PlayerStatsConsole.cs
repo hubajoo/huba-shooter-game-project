@@ -1,5 +1,5 @@
 using System;
-using DungeonCrawl.Tiles;
+using DungeonCrawl.Gameobjects;
 using SadConsole;
 using SadRogue.Primitives;
 using Console = SadConsole.Console;

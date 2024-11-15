@@ -4,7 +4,8 @@ using DungeonCrawl.Mechanics;
 using SadConsole;
 using SadRogue.Primitives;
 
-namespace DungeonCrawl.Tiles;
+
+namespace DungeonCrawl.Gameobjects;
 
 /// <summary>
 /// Class <c>Monster</c> models a hostile object in the game.
@@ -23,8 +24,8 @@ public class Monster : GameObject
   /// <param name="appearance"></param>
   /// <param name="position"></param>
   /// <param name="hostingSurface"></param>
-  protected Monster(ColoredGlyph appearance, Point position, IScreenSurface hostingSurface, int health, int damage)
-      : base(appearance, position, hostingSurface)
+  protected Monster(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager, int health, int damage)
+      : base(appearance, position, screenObjectManager)
   {
     FixActionDelay = 0;
     Health = health;
