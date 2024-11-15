@@ -26,19 +26,18 @@ namespace DungeonCrawl.UI
     {
       this.Clear();
 
-      this.Print(2, 1, _name, Color.Black, Color.White);
-      //this.Print(2, 1, " Mission: Survive ", Color.Black, Color.White);
+      this.Print(2, 1, $" User: {_name}", Color.White);
       this.DrawBox(new Rectangle(0, 0, Width, Height), ShapeParameters.CreateBorder(new ColoredGlyph(Color.DarkOrange, Color.Black)));
-      this.Print(2, 3, " These are your stats:", Color.Black, Color.White);
+      this.DrawBox(new Rectangle(3, 10, 20, 20), ShapeParameters.CreateBorder(new ColoredGlyph(Color.DarkOrange, Color.Black)));
+      this.Print(2, 3, " Player stats:", Color.Black, Color.White);
 
       this.Print(2, 4, $" Health: {_player.BaseHealth}", Color.White);
       this.Print(2, 5, $" Damage: {_player.BaseDamage}", Color.White);
-      this.Print(2, 6, $" Shield: {_player.BaseShield}", Color.White);
+      this.Print(2, 6, $" Range: {_player.Range}", Color.White);
+      this.Print(2, 7, $" Score: {_player.Kills}", Color.White);
 
-      this.Print(2, 8, " Inventory: ", Color.Black, Color.White);
-      this.Print(2, 9, $" Number of swords: {_player.GetSwordCount()}", Color.DarkOrange);
-      this.Print(2, 10, $" Number of potions: {_player.GetPotionCount()}", Color.DarkOrange);
-      this.Print(2, 11, $" Number of shields: {_player.GetShieldCount()}", Color.DarkOrange);
+      this.Print(2, 9, $" Top Players", Color.Black, Color.White);
+      this.Print(2, 10, $" Number of Kills: {_player.Kills}", Color.DarkOrange);
     }
     private void DrawBorder()
     {

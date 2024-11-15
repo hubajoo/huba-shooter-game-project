@@ -14,33 +14,24 @@ namespace DungeonCrawl.Maps;
 /// <summary>
 /// Class <c>Map</c> models a map for the game.
 /// </summary>
-public class Map : IMap
+public class Map
 {
   public IReadOnlyList<GameObject> GameObjects => _mapObjects.AsReadOnly();
   public ScreenSurface SurfaceObject => _mapSurface;
   public Player UserControlledObject { get; private set; }
   private List<GameObject> _mapObjects;
   private ScreenSurface _mapSurface;
-   private int _difficulty;
+  private int _difficulty;
   /// <summary>
   /// Constructor.
   /// </summary>
   /// <param name="mapWidth"></param>
   /// <param name="mapHeight"></param>
-  public Map(int mapWidth, int mapHeight /*PlayerStatsConsole playerStatConsole*/)
+  public Map(ScreenSurface mapSurface, Player player)
   {
     _mapObjects = new List<GameObject>();
-    _mapSurface = new ScreenSurface(mapWidth, mapHeight);
-    _mapSurface.UseMouse = false;
-
-    UserControlledObject = new Player(_mapSurface.Surface.Area.Center, _mapSurface);
-
-
-    //_playerStatsConsole = new PlayerStatsConsole(15, 10, UserControlledObject, "1");
-    //SadConsole.Game.Instance.Screen.Children.Add(_playerStatsConsole);
-
-
-    //_playerStatsConsole.Position = new Point(mapWidth, 0);
+    _mapSurface = mapSurface;
+    UserControlledObject = player;
 
     CreateMonsterWave();
   }
@@ -192,9 +183,6 @@ public class Map : IMap
         break;
       case 1:
         loot = new RangeBonus(position, _mapSurface);
-        break;
-      case 2:
-        loot = new Shield(position, _mapSurface);
         break;
     }
     _mapObjects.Add(loot);

@@ -1,9 +1,6 @@
 using System;
 using DungeonCrawl.Maps;
-using DungeonCrawl.Tiles;
 using DungeonCrawl.UI;
-using DungeonCrawl.Mechanics;
-using DungeonCrawl.Tiles;
 using SadConsole;
 using SadConsole.Input;
 using SadRogue.Primitives;
@@ -36,6 +33,8 @@ public class RootScreen : ScreenObject
     AddScreenObject(_playerStatsConsole);
   }
 
+
+
   /// <summary>
   /// Processes keyboard inputs.
   /// </summary>
@@ -46,19 +45,6 @@ public class RootScreen : ScreenObject
     _map.ProgressTime();
   }
 
-  public void RemoveScreenObject(ScreenObject screenObject)
-  {
-    Children.Remove(screenObject);
-  }
-  public void AddScreenObject(ScreenObject screenObject)
-  {
-    Children.Add(screenObject);
-  }
-  public void ClearScreen()
-  {
-    Children.Remove(_map.SurfaceObject);
-    Children.Remove(_playerStatsConsole);
-  }
 
   public override bool ProcessKeyboard(Keyboard keyboard)
   {
@@ -132,4 +118,22 @@ public class RootScreen : ScreenObject
 
     return handled;
   }
+
+  /// <summary>
+  /// ScreenObject lifetime managementt.
+  /// </summary>
+  public void RemoveScreenObject(ScreenObject screenObject)
+  {
+    Children.Remove(screenObject);
+  }
+  public void AddScreenObject(ScreenObject screenObject)
+  {
+    Children.Add(screenObject);
+  }
+  public void ClearScreen()
+  {
+    Children.Remove(_map.SurfaceObject);
+    Children.Remove(_playerStatsConsole);
+  }
+
 }

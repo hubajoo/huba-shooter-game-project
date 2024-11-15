@@ -31,12 +31,19 @@ public class Setup
     int mapWidth = Game.Instance.ScreenCellsX - statsConsoleWidth;
     int mapHeight = Game.Instance.ScreenCellsY;
 
-    // Creates the map
-    Map map = new Map(mapWidth, mapHeight);
-    map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
+
+
+    var screenSurface = new ScreenSurface(mapWidth, mapHeight);
+    screenSurface.UseMouse = false;
 
     // Creates player
-    Player player = map.UserControlledObject;
+    Player player = new Player(screenSurface.Surface.Area.Center, screenSurface);
+
+    // Creates the map
+    Map map = new Map(screenSurface, player);
+
+    map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
+
 
     // Creates UI elements
     var PlayerStatsConsole = new PlayerStatsConsole(statsConsoleWidth, mapHeight, player, Settings["name"])

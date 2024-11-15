@@ -36,9 +36,8 @@ namespace DungeonCrawl.UI
       this.Print(2, 6, $" Shield: {_player.BaseShield}", Color.White);
 
       this.Print(2, 8, " Inventory: ", Color.Black, Color.White);
-      this.Print(2, 9, $" Number of swords: {_player.GetSwordCount()}", Color.DarkOrange);
-      this.Print(2, 10, $" Number of potions: {_player.GetPotionCount()}", Color.DarkOrange);
-      this.Print(2, 11, $" Number of shields: {_player.GetShieldCount()}", Color.DarkOrange);
+      this.Print(2, 9, $" Number of swords: 0", Color.DarkOrange);
+  
     }
     private void DrawBorder()
     {
