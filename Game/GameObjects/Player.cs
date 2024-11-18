@@ -74,9 +74,9 @@ public class Player : GameObject
     }
   }
 
-  public bool Touched(IDamaging source, Map map)
+  public bool Touched(IDamaging source)
   {
-    source.Touching();
+    source.Touching(this);
 
     BaseHealth -= source.GetDamage();
     //source.Touching(this);

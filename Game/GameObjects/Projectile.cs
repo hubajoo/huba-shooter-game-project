@@ -46,9 +46,11 @@ public class Projectile : GameObject, IDamaging
 
   }
 
-  public void Touching()
+  public override void Touching(IGameObject source)
   {
     Appearance = new ColoredGlyph(OriginalAppearance.Foreground, Appearance.Background, 15);
+    _screenObjectManager.RefreshCell(_map, Position);
+    //source.Touched(this);
   }
 
   public int GetDamage()

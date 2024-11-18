@@ -7,8 +7,16 @@ public interface IDamaging
 {
   /// <summary> Gets the damage. </summary>
   public int GetDamage();
+
   /// <summary>
-  /// Calls contact logic for the game object.
+  /// Checks if the game object has been touched.
   /// </summary>
-  public void Touching();
+  /// <param name="source"></param>
+  /// <returns></returns>
+  public bool Touched(IGameObject source);
+  /// <summary>
+  /// Calls contact logic for the touchhed game object.
+  /// </summary>
+  /// <param name="source"></param>
+  public void Touching(IGameObject source);
 }

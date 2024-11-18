@@ -10,7 +10,11 @@ namespace DungeonCrawl.GameObjects;
 /// </summary>
 public interface IGameObject
 {
-  /// <summary> Calls contact logic for this game object. </summary>
+  /// <summary>
+  /// Checks if the game object has been touched.
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
   public bool Touched(IGameObject source);
   /// <summary>
   /// Calls contact logic for the touchhed game object.

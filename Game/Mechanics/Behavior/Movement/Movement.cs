@@ -23,13 +23,13 @@ public class Movement : IMovementLogic
     _screenObjectManager = screenObjectManager;
   }
 
-/// <summary>
-/// Moves a game object to a new position on the map.
-/// </summary>
-/// <param name="gameObject"></param>
-/// <param name="map"></param>
-/// <param name="newPosition"></param>
-/// <returns> Bool </returns>
+  /// <summary>
+  /// Moves a game object to a new position on the map.
+  /// </summary>
+  /// <param name="gameObject"></param>
+  /// <param name="map"></param>
+  /// <param name="newPosition"></param>
+  /// <returns> Bool </returns>
   public bool Move(GameObject gameObject, Map map, Point newPosition)
   {
     // Check new position is valid
@@ -45,34 +45,16 @@ public class Movement : IMovementLogic
       }
     }
 
-    // Restore the old cell
-
-    IGameObject cellContent;
-    if (map.TryGetMapObject(gameObject.Position, out cellContent, gameObject))
-    {
-      //map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(cellContent.GetAppearance());
-
-      map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
-          new ColoredGlyph(Color.Transparent, Color.Red, 0));
-
-    }
-    else
-    { /*map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
-        new ColoredGlyph(Color.White, Color.Transparent, 4));*/
-      //map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(gameObject._mapAppearance);
-      /*
-    map.SurfaceObject.Surface[gameObject.Position].CopyAppearanceFrom(
-        new ColoredGlyph(Color.White, Color.Green, 0));
-        */
-    }
-
-    // Store the map cell of the new position
-    //map.SurfaceObject.Surface[newPosition].CopyAppearanceTo(gameObject.Appearance);
+    // Save the old position
     Point oldPosition = gameObject.Position;
+
+    // Update the game object's position
     gameObject.Position = newPosition;
-    _screenObjectManager.RefreshCell(_map, oldPosition);
-    //_screenObjectManager.RefreshCell(_map, newPosition);
-    //_screenObjectManager.DrawScreenObject(gameObject);
+
+    // Update cells 
+    _screenObjectManager.RefreshCell(map, newPosition);
+    _screenObjectManager.RefreshCell(map, oldPosition);
+
     return true;
   }
 

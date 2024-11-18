@@ -82,7 +82,7 @@ public class Map
     return false;
     */
   }
-  public bool TryGetMapObject(Point position, out IGameObject gameObject)
+  public bool TryGetMapObject(Point position, out IGameObject? gameObject)
   {
     foreach (var otherGameObject in _mapObjects)
     {
@@ -100,7 +100,7 @@ public class Map
     gameObject = null;
     return false;
   }
-  public bool TryGetMapObject(Point position, out IGameObject gameObject, IGameObject excluded)
+  public bool TryGetMapObject(Point position, out IGameObject? gameObject, IGameObject excluded)
   {
     foreach (var otherGameObject in _mapObjects)
     {

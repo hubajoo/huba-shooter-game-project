@@ -61,6 +61,7 @@ public class Monster : GameObject, IDamaging, IMoving, IVulnerable
   /// <returns></returns>
   public override bool Touched(IGameObject source)
   {
+    source.Touching(this);
     return false;
   }
   /// <summary>
@@ -69,17 +70,13 @@ public class Monster : GameObject, IDamaging, IMoving, IVulnerable
   /// </summary>
   public bool Touched(IDamaging source)
   {
-
-    var p = source as Projectile;
-    p.Direction = Direction.None;
-    p.Touching(this);
-    //TakeDamage(source as IGameObject, p.Damage);
+    //var p = source as Projectile;
+    //p.Direction = Direction.None;
+    source.Touching(this);
+    TakeDamage(_map, source.GetDamage());
     return false;
   }
-  public void Touching()
-  {
-    throw new System.NotImplementedException();
-  }
+
   /// <summary>
   /// Method <c>Update</c> updates the monster's behaviour.
   /// </summary>

@@ -20,7 +20,7 @@ public abstract class GameObject : IGameObject
   protected ColoredGlyph OriginalAppearance { get; set; }
   public ColoredGlyph _mapAppearance = new ColoredGlyph();
 
-  private ScreenObjectManager _screenObjectManager;
+  protected ScreenObjectManager _screenObjectManager;
 
   protected Map _map;
 
@@ -97,6 +97,7 @@ public abstract class GameObject : IGameObject
   public virtual void RemoveSelf()
   {
     _map.RemoveMapObject(this);
+    _screenObjectManager.RefreshCell(_map, Position);
   }
   /// <summary>
   /// Gets the position of the object.

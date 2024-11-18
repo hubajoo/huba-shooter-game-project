@@ -31,8 +31,8 @@ public class MonsterWave
     {
       case 0:
         oCount = 1;
-        gCount = 2;
-        dCount = 2;
+        gCount = 0;
+        dCount = 0;
         break;
       case 1:
         oCount = 3;
