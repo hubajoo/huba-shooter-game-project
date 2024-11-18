@@ -48,11 +48,11 @@ public abstract class GameObject : IGameObject
     screenObjectManager.DrawScreenObject(this, position);
   }
 
-  public void RestoreMap(Map map)
+  /*public void RestoreMap(Map map)
   {
 
     //_mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
-  }
+  }*/
 
   /// <summary>
   /// Moves the object to the given position on the map.
@@ -127,17 +127,4 @@ public abstract class GameObject : IGameObject
   {
     return false;
   }
-
-
-  /// <summary>
-  /// Draws the object on the screen.
-  /// </summary>
-  /// <param name="screenSurface"></param>
-  /*
-  protected void DrawGameObject(IScreenSurface screenSurface)
-  {
-    Appearance.CopyAppearanceTo(screenSurface.Surface[Position]);
-    screenSurface.IsDirty = true;
-  }  */
-
 }

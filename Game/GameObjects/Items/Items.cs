@@ -15,7 +15,7 @@ public abstract class Items : GameObject
 
   public virtual bool Touched(Player source)
   {
-    source.AddNewItemToInventory(this);
+    //source.AddNewItemToInventory(this);
     _map.RemoveMapObject(this);
     return true;
   }
@@ -25,6 +25,13 @@ public abstract class Items : GameObject
   }
   public override bool Touched(IGameObject source)
   {
-    return false;
+    if (source is Player player)
+    {
+      var p = source as Player;
+      // p.AddNewItemToInventory(this);
+      _map.RemoveMapObject(this);
+      return Touched(player);
+    }
+    return true;
   }
 }

@@ -51,28 +51,32 @@ public class Setup
     Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map);
     map.AddUserControlledObject(player);
 
+    Func<Point, ScreenObjectManager, Map, IGameObject> Orc = (Point a, ScreenObjectManager b, Map c) => new Orc(a, b, c);
+    Func<Point, ScreenObjectManager, Map, IGameObject> Goblin = (Point a, ScreenObjectManager b, Map c) => new Goblin(a, b, c);
+    Func<Point, ScreenObjectManager, Map, IGameObject> Dragon = (Point a, ScreenObjectManager b, Map c) => new Dragon(a, b, c);
+    MonsterTypes monsterTypes = new MonsterTypes(Orc, Goblin, Dragon);
 
-    //
-    MonsterWave wave = new MonsterWave(map, screenObjectManager, difficulty);
+    var spawnScrip = new SpawnScript();
+    var monster = (Point position) => new Goblin(position, screenObjectManager, map);
+    MonsterWave wave = new MonsterWave(map, screenObjectManager, monsterTypes, spawnScrip);
+    map.SetSpawnLogic(wave);
+
+
 
     // Creates UI elements
     var PlayerStatsConsole = new PlayerStatsConsole(statsConsoleWidth, mapHeight, player, Settings["name"])
     {
       Position = new Point(0, 0)
     };
-    var leaderBoard = new LeaderBoard(statsConsoleWidth, mapHeight, player, Settings["name"])
+    var EndScreen = new LeaderBoard(statsConsoleWidth, mapHeight, player, Settings["name"])
     {
       Position = new Point(0, 0)
     };
-    var rootScreen = new RootScreen(map, PlayerStatsConsole, leaderBoard);
-    //map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
-
-    //Starts monster Waves
-    //map.CreateMonsterWave();
-
-
-    // Sets up game over logic in advance.
-    //var gameOver = new GameOver(rootScreen, leaderBoard);
+    var rootScreen = new RootScreen(map);
+    screenObjectManager.SetMainScreen(rootScreen);
+    screenObjectManager.SetConsole(PlayerStatsConsole);
+    screenObjectManager.SetEndScreen(EndScreen);
+    map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
 
 
     Game.Instance.Screen = rootScreen;
@@ -82,7 +86,7 @@ public class Setup
 
 
     // This is needed because we replaced the initial screen object with our own.
-    Game.Instance.DestroyDefaultStartingConsole();
+    //Game.Instance.DestroyDefaultStartingConsole();
   }
 
 }

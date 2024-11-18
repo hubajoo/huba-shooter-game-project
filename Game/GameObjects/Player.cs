@@ -11,20 +11,14 @@ namespace DungeonCrawl.GameObjects;
 /// <summary>
 /// Class <c>Player</c> models a user controlled object in the game.
 /// </summary>
-public class Player : GameObject
+public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
 {
-  public static int PLAYER_MAX_HEALTH = 100;
-  public static int PLAYER_BASE_SHIELD = 0;
-  public static int PLAYER_BASE_DAMAGE = 1;
   public List<Items> Inventory { get; private set; }
 
-  public int BaseDamage { get; private set; }
-
-  public int BaseHealth { get; set; }
-
-  public int BaseShield { get; private set; }
+  public int Health { get; set; }
 
   public int Kills { get; private set; } = 0;
+
 
   /// <summary>
   /// Constructor.
@@ -33,25 +27,29 @@ public class Player : GameObject
   /// <param name="hostingSurface"></param>
 
   //public Direction Direction;
-  public Player(Point position, ScreenObjectManager screenObjectManager, Map map)
+  public Player(Point position, ScreenObjectManager screenObjectManager, Map map, int health = 100, int damage = 1, int range = 5)
       : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager, map)
   {
     Inventory = new List<Items>();
-    BaseDamage = PLAYER_BASE_DAMAGE;
-    BaseHealth = PLAYER_MAX_HEALTH;
-    BaseShield = PLAYER_BASE_SHIELD;
-    Range = 5;
-
+    Health = health;
+    Damage = damage;
+    Range = range;
   }
 
   public void ChangeDirection(Direction direction)
   {
     Direction = direction;
   }
-  public void Shoot(Map map)
+  public void Shoot()
   {
-    map.CreateProjectile(this.Position, this.Direction, Color.Orange, PLAYER_BASE_DAMAGE, Range, 4);
+    CreateProjectile(Position, Direction, Color.Orange, Damage, Range, 4);
   }
+
+  /// <summary>
+  /// Method <c>Move</c> moves the player to a new position.
+  /// </summary>
+  /// <param name="items"></param>
+  /*
   public void AddNewItemToInventory(Items items)
   {
     Inventory.Add(items);
@@ -73,27 +71,70 @@ public class Player : GameObject
       }
     }
   }
-
-  public bool Touched(IDamaging source)
-  {
-    source.Touching(this);
-
-    BaseHealth -= source.GetDamage();
-    //source.Touching(this);
-    if (BaseHealth <= 0)
-    {
-      Appearance.Background = Color.Red;
-      //Game.Instance.Dispose();
-    }
-    return false;
-  }
+*/
+  /// <summary>
+  /// Method <c>Touched</c> prevents other Objects from moving to the occupied position.
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
   public override bool Touched(IGameObject source)
   {
+    if (source is IDamaging damaging && !(source is Player))
+    {
+      damaging.Touching(this);
+      TakeDamage(damaging.GetDamage());
+    }
+    source.Touching(this);
     return false;
   }
 
+  public void TakeDamage(int damage)
+  {
+    Health -= damage;
+    if (Health <= 0)
+    {
+      EndGame();
+    }
+  }
+
+  /// <summary>
+  /// Method <c>Killed</c> counts the players's kills.
+  /// </summary>
+  /// <param name="victim"></param>
   public void Killed(IGameObject victim)
   {
     Kills++;
+  }
+
+
+  /// <summary>
+  /// Creartes a custom projectile going in the required direction.
+  /// </summary>
+  /// <param name="attackerPosition">Origin position</param>
+  /// <param name="direction"Direction of flight</param>
+  /// <param name="color" Projectile color</param>
+  public bool CreateProjectile(Point origin, Direction direction, Color color, int damage = 1, int maxDistance = 1, int glyph = 4)
+  {
+    Point spawnPosition = origin + direction;
+    if (!_map.SurfaceObject.Surface.IsValidCell(spawnPosition.X, spawnPosition.Y)) return false;
+    IGameObject foundObject;
+    if (_map.TryGetMapObject(spawnPosition, out foundObject))
+    {
+      foundObject.Touched(this);
+      return false;
+    }
+
+    Projectile projectile = new Projectile(spawnPosition, direction, _screenObjectManager, damage, maxDistance, color, _map, glyph);
+    _map.AddMapObject(projectile);
+
+    return true;
+  }
+
+  public void EndGame()
+  {
+    Appearance.Foreground = Color.White;
+    _screenObjectManager.RefreshCell(_map, Position);
+    _screenObjectManager.End();
+
   }
 }

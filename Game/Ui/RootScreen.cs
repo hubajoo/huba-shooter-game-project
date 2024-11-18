@@ -24,13 +24,10 @@ public class RootScreen : ScreenObject
   /// <summary>
   /// Constructor.
   /// </summary>
-  public RootScreen(Map map, PlayerStatsConsole playerStatsConsole, LeaderBoard leaderBoard)
+  public RootScreen(Map map)
   {
     _map = map;
-    _playerStatsConsole = playerStatsConsole;
-    _leaderBoard = leaderBoard;
-    AddScreenObject(_map.SurfaceObject);
-    AddScreenObject(_playerStatsConsole);
+    Children.Add(_map.SurfaceObject);
   }
 
 
@@ -40,11 +37,6 @@ public class RootScreen : ScreenObject
   /// </summary>
   /// <param name="keyboard"></param>
   /// <returns></returns>
-  public override void Update(TimeSpan delta)
-  {
-    _map.ProgressTime();
-  }
-
 
   public override bool ProcessKeyboard(Keyboard keyboard)
   {
@@ -77,69 +69,14 @@ public class RootScreen : ScreenObject
     }
     else if (keyboard.IsKeyPressed(Keys.Space))
     {
-      _map.UserControlledObject.Shoot(_map);
+      _map.UserControlledObject.Shoot();
       handled = true;
     }
-    //Alternative controls
-    /* 
-    if (keyboard.IsKeyPressed(Keys.W)
-        ||keyboard.IsKeyPressed(Keys.S)
-        ||keyboard.IsKeyPressed(Keys.A)
-        ||keyboard.IsKeyPressed(Keys.D)
-        )
-    {
-        int x = 0;
-        int y = 0;
-
-        if (keyboard.IsKeyPressed(Keys.W))
-        {
-            y = -1;
-        }
-        if (keyboard.IsKeyPressed(Keys.S))
-        {
-            y = 1;
-        }
-
-        if (keyboard.IsKeyPressed(Keys.A))
-        {
-            x = -1;
-        }
-
-        if (keyboard.IsKeyPressed(Keys.D))
-        {
-            x = 1;
-        }
-
-        // _map.UserControlledObject.ChangeDirection(Direction.GetDirection(0,0, 10, 0));
-        _map.UserControlledObject.ChangeDirection(Direction.GetDirection(x, y));
-    }
-    */
-    _playerStatsConsole.PrintStats();
-
     return handled;
   }
 
-  /// <summary>
-  /// ScreenObject lifetime managementt.
-  /// </summary>
-  public void RemoveScreenObject(ScreenObject screenObject)
+  public override void Update(TimeSpan delta)
   {
-    Children.Remove(screenObject);
+    _map.ProgressTime();
   }
-  public void AddScreenObject(ScreenObject screenObject)
-  {
-    Children.Add(screenObject);
-  }
-  public void ClearScreen()
-  {
-    Children.Remove(_map.SurfaceObject);
-    Children.Remove(_playerStatsConsole);
-  }
-
-  public void End()
-  {
-    ClearScreen();
-    AddScreenObject(_leaderBoard);
-  }
-
 }

@@ -1,21 +1,32 @@
 using DungeonCrawl.GameObjects;
 using DungeonCrawl.Maps;
+using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;
 /// <summary>
 /// Class <c>ScreenObjectManager</c> manages screen objects.
 /// </summary>
-public class ScreenObjectManager
+public class ScreenObjectManager : ScreenObject
 {
+  private IScreenObject _Screen;
+
+  private IScreenObject _EndScreen;
+
+  private bool _EndScreenSet = false;
+
+  private IStatConsole _SideConsole;
+
+  private bool _SideConsoleSet = false;
 
   private IScreenSurface _screenSurface;
   /// <summary>
   /// Constructor.
   /// </summary>
   /// <param name="screenSurface"></param>
-  public ScreenObjectManager(ScreenSurface screenSurface)
+  public ScreenObjectManager(IScreenSurface screenSurface)
   {
     _screenSurface = screenSurface;
+    _Screen = new ScreenObject();
   }
 
   /// <summary>
@@ -66,7 +77,7 @@ public class ScreenObjectManager
   public void RefreshCell(Map map, Point position)
   {
     IGameObject gameObject;
-    
+
     // Check if there is a game object at that position
     if (map.TryGetMapObject(position, out gameObject))
     {
@@ -74,7 +85,7 @@ public class ScreenObjectManager
       DrawScreenObject(gameObject, position);
     }
     //DrawScreenObject(gameObject, position);
-    
+
     // If there is no game object at that position
     else
     {
@@ -82,6 +93,56 @@ public class ScreenObjectManager
       DrawScreenObject(
         new ColoredGlyph(Color.Transparent, Color.Transparent, 0), position);
     }
-    
+
+  }
+
+
+  /// <summary>
+  /// ScreenObject lifetime managementt.
+  /// </summary>
+  public void RemoveScreenObject(IScreenObject screenObject)
+  {
+    _Screen.Children.Remove(screenObject);
+  }
+  public void AddScreenObject(IScreenObject screenObject)
+  {
+    _Screen.Children.Add(screenObject);
+  }
+  public void ClearScreen()
+  {
+    _Screen.Children.Clear();
+  }
+  public void SetMainScreen(ScreenObject mainScreen)
+  {
+    _Screen = mainScreen;
+  }
+  public void SetConsole(PlayerStatsConsole console)
+  {
+    _SideConsole = console as IStatConsole;
+    _Screen.Children.Add(console);
+    _SideConsoleSet = true;
+  }
+
+
+  public void End()
+  {
+    if (_EndScreenSet)
+    {
+      ClearScreen();
+      AddScreenObject(_EndScreen);
+    }
+  }
+  public void SetEndScreen(ScreenObject endScreen)
+  {
+    _EndScreen = endScreen;
+    _EndScreenSet = true;
+  }
+  public override void Update(System.TimeSpan delta)
+  {
+    if (_SideConsoleSet)
+    {
+      _SideConsole.PrintStats();
+    }
+
   }
 }

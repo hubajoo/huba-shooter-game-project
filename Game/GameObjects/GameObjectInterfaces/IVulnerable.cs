@@ -8,5 +8,5 @@ public interface IVulnerable
   /// <summary> 
   /// Takes damage. 
   /// </summary>
-  public void TakeDamage(Map map, int damage);
+  public void TakeDamage(int damage);
 }

@@ -17,8 +17,8 @@ public class GameOver
 
   public void End()
   {
-    rootScreen.ClearScreen();
-    rootScreen.AddScreenObject(leaderBoard);
+    //_sc.ClearScreen();
+    //rootScreen.AddScreenObject(leaderBoard);
   }
 
 }

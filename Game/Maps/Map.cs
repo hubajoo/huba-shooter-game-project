@@ -21,6 +21,9 @@ public class Map
   public Player UserControlledObject { get; set; }
   private List<IGameObject> _mapObjects;
   private ScreenSurface _mapSurface;
+
+  private ISpawnOrchestrator _spawnLogic;
+  private bool _spawnLogicSet = false;
   private int _difficulty;
 
   public int Width;
@@ -52,6 +55,11 @@ public class Map
   {
     _mapObjects.Add(gameObject);
   }
+  public void SetSpawnLogic(ISpawnOrchestrator spawnLogic)
+  {
+    _spawnLogicSet = true;
+    _spawnLogic = spawnLogic;
+  }
 
   /// <summary>
   /// Try to find a map object at that position.
@@ -61,26 +69,17 @@ public class Map
   /// <returns></returns>
   public IGameObject GetGameObject(Point position)
   {
-    #nullable enable
+#nullable enable
     IGameObject? foundGameObject = null;
     foreach (var gameObject in _mapObjects)
     {
       if (gameObject.GetPosition() == position)
       {
-        foundGameObject =  gameObject;
+        foundGameObject = gameObject;
       }
     }
 
     return foundGameObject;
-    /*
-    if (UserControlledObject.Position == position)
-    {
-      gameObject = UserControlledObject;
-      return true;
-    }
-    gameObject = null;
-    return false;
-    */
   }
   public bool TryGetMapObject(Point position, out IGameObject? gameObject)
   {
@@ -134,43 +133,6 @@ public class Map
   }
 
 
-  /// <summary>
-  /// Opens a portal and unleashes enemies.
-  /// </summary>
-  public void CreateMonsterWave()
-  {
-    MonsterWave wave = new MonsterWave(this, _screenObjectManager, _difficulty);
-    foreach (var monster in wave.Monsters)
-    {
-      _mapObjects.Add(monster);
-    }
-
-    _difficulty++;
-  }
-
-
-  /// <summary>
-  /// Creartes a custom projectile going in the required direction.
-  /// </summary>
-  /// <param name="attackerPosition">Origin position</param>
-  /// <param name="direction"Direction of flight</param>
-  /// <param name="color" Projectile color</param>
-  public bool CreateProjectile(Point origin, Direction direction, Color color, int damage = 1, int maxDistance = 1, int glyph = 4)
-  {
-    Point spawnPosition = origin + direction;
-    if (!this.SurfaceObject.Surface.IsValidCell(spawnPosition.X, spawnPosition.Y)) return false;
-    if (this.TryGetMapObject(spawnPosition, out IGameObject foundObject))
-    {
-      return false;
-    }
-
-    Projectile hitbox = new Projectile(
-        spawnPosition, direction, _screenObjectManager, damage, maxDistance, color, this, glyph);
-    _mapObjects.Add(hitbox);
-
-    return true;
-  }
-
   public void ProgressTime()
   {
     for (int i = 0; i < _mapObjects.Count; i++)
@@ -178,30 +140,30 @@ public class Map
       _mapObjects[i].Update();
     }
 
-    if (_mapObjects.Count(obj => obj is Monster) < 1)
+    if (_mapObjects.Count(obj => obj is Monster) < 1 && _spawnLogicSet)
     {
-
+      _spawnLogic.NoEnemiesLeft();
     }
-    //DrawGameObject(map.SurfaceObject)
   }
 
   public void DropLoot(Point position)
   {
     Random rnd = new Random();
     int item = rnd.Next(0, 2);
-    //position += Movements.GetRandomDirection();
-    /*
-    GameObject loot = new Wall(position, _mapSurface);
+    //position += Movement.GetRandomDirection();
+
+    IGameObject loot = null;
     switch (item)
     {
       case 0:
-        loot = new Potion(position, _mapSurface);
+        loot = new Potion(position, _screenObjectManager, this);
         break;
       case 1:
-        loot = new RangeBonus(position, _mapSurface);
+        loot = new RangeBonus(position, _screenObjectManager, this);
         break;
     }
     _mapObjects.Add(loot);
-*/
+
   }
+
 }

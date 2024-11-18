@@ -36,14 +36,14 @@ public class Monster : GameObject, IDamaging, IMoving, IVulnerable
   /// <param name="map"></param>
   /// <param name="damage"></param>
   /// <returns></returns>
-  public void TakeDamage(Map map, int damage = 1)
+  public void TakeDamage( int damage = 1)
   {
     Health -= damage;
     if (Health <= 0)
     {
       RemoveSelf(); //Removes the monster from the map
-      map.UserControlledObject.Killed(this); //Accredits the kill to the player
-      map.DropLoot(this.Position); //Drops loot
+      _map.UserControlledObject.Killed(this); //Accredits the kill to the player
+      _map.DropLoot(Position); //Drops loot
     }
   }
   /// <summary>
@@ -54,28 +54,24 @@ public class Monster : GameObject, IDamaging, IMoving, IVulnerable
   {
     return DamageNumber;
   }
+
+
   /// <summary>
-  /// Method <c>Touched<c> returns false, as monsters do not allow other objects to move into their space.
+  /// Method <c>Touched</c> checks if the monster has been touched, triggers TakeDamage if when relevant.
   /// </summary>
   /// <param name="source"></param>
   /// <returns></returns>
   public override bool Touched(IGameObject source)
   {
+    if (source is IDamaging damaging && !(source is Monster))
+    {
+      damaging.Touching(this);
+      TakeDamage(damaging.GetDamage());
+    }
     source.Touching(this);
     return false;
   }
-  /// <summary>
-  /// Method <c>Touched<c> returns false, as monsters do not allow other objects to move into their space.
-  /// The source is Damaging, so the monster takes damage.
-  /// </summary>
-  public bool Touched(IDamaging source)
-  {
-    //var p = source as Projectile;
-    //p.Direction = Direction.None;
-    source.Touching(this);
-    TakeDamage(_map, source.GetDamage());
-    return false;
-  }
+
 
   /// <summary>
   /// Method <c>Update</c> updates the monster's behaviour.

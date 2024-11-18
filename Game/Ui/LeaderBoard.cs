@@ -31,9 +31,8 @@ namespace DungeonCrawl.UI
       this.DrawBox(new Rectangle(0, 0, Width, Height), ShapeParameters.CreateBorder(new ColoredGlyph(Color.DarkOrange, Color.Black)));
       this.Print(2, 3, " These are your stats:", Color.Black, Color.White);
 
-      this.Print(2, 4, $" Health: {_player.BaseHealth}", Color.White);
-      this.Print(2, 5, $" Damage: {_player.BaseDamage}", Color.White);
-      this.Print(2, 6, $" Shield: {_player.BaseShield}", Color.White);
+      this.Print(2, 4, $" Health: {_player.Health}", Color.White);
+      this.Print(2, 5, $" Damage: {_player.Damage}", Color.White);
 
       this.Print(2, 8, " Inventory: ", Color.Black, Color.White);
       this.Print(2, 9, $" Number of swords: 0", Color.DarkOrange);

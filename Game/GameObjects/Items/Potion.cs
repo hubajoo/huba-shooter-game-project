@@ -23,7 +23,7 @@ public class Potion : Items
   /// <summary>
   public override bool Touched(Player source)
   {
-    source.BaseHealth += 25;
+    source.Health += 25;
     RemoveSelf();
     return true;
   }
