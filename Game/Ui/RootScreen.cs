@@ -78,5 +78,9 @@ public class RootScreen : ScreenObject
   public override void Update(TimeSpan delta)
   {
     _map.ProgressTime();
+    foreach (var child in Children)
+    {
+      child.Update(delta);
+    }
   }
 }

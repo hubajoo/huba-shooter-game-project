@@ -39,7 +39,7 @@ namespace DungeonCrawl.UI
       this.Print(2, 9, $" Top Players", Color.Black, Color.White);
       this.Print(2, 10, $" Number of Kills: {_player.Kills}", Color.DarkOrange);
     }
-    private void DrawBorder()
+    public void DrawBorder()
     {
       this.DrawBox(new Rectangle(0, 0, Width, Height),
           ShapeParameters.CreateBorder(new ColoredGlyph(Color.White, Color.Black, 176)));
@@ -47,9 +47,8 @@ namespace DungeonCrawl.UI
 
     public override void Update(TimeSpan timeElapsed)
     {
-     PrintStats();
-      //base.Update(timeElapsed);
-      ///DrawBorder();
+      PrintStats();
+      DrawBorder();
     }
   }
 }

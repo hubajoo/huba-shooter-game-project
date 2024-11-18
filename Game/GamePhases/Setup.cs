@@ -84,7 +84,6 @@ public class Setup
 
 
 
-
     // This is needed because we replaced the initial screen object with our own.
     //Game.Instance.DestroyDefaultStartingConsole();
   }

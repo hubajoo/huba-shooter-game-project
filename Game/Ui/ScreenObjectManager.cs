@@ -15,7 +15,7 @@ public class ScreenObjectManager : ScreenObject
   private bool _EndScreenSet = false;
 
   private IStatConsole _SideConsole;
-
+  private PlayerStatsConsole _PlayerStatsConsole;
   private bool _SideConsoleSet = false;
 
   private IScreenSurface _screenSurface;
@@ -118,7 +118,8 @@ public class ScreenObjectManager : ScreenObject
   }
   public void SetConsole(PlayerStatsConsole console)
   {
-    _SideConsole = console as IStatConsole;
+    //_SideConsole = console as IStatConsole;
+    _PlayerStatsConsole = console;
     _Screen.Children.Add(console);
     _SideConsoleSet = true;
   }
@@ -136,13 +137,5 @@ public class ScreenObjectManager : ScreenObject
   {
     _EndScreen = endScreen;
     _EndScreenSet = true;
-  }
-  public override void Update(System.TimeSpan delta)
-  {
-    if (_SideConsoleSet)
-    {
-      _SideConsole.PrintStats();
-    }
-
   }
 }
