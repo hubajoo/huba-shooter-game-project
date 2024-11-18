@@ -2,6 +2,9 @@ using DungeonCrawl.Maps;
 using SadRogue.Primitives;
 
 namespace DungeonCrawl.GameObjects;
+/// <summary>
+/// Interface <c>IMoving</c> defines the movement logic for a game object.
+/// </summary>
 public interface IMoving
 {
   /// <summary>

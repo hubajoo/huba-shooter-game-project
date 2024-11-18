@@ -4,9 +4,12 @@ using SadRogue.Primitives;
 
 namespace DungeonCrawl.Mechanics;
 
+/// <summary> 
+/// GEnerates directions for movement or projectiles.
+/// </summary>
 public class DirectionGeneration
 {
-
+  /// <summary> Generates a random direction. </summary>
   public static Direction GetRandomDirection()
   {
     Random rnd = new Random();
@@ -15,7 +18,12 @@ public class DirectionGeneration
     Direction direction = directions[randomDirectionNumber];
     return direction;
   }
-
+  /// <summary>
+  /// Generates a direction that moves towards the target.
+  /// </summary>
+  /// <param name="hunterPosition"></param>
+  /// <param name="targetPosition"></param>
+  /// <returns></returns>
   public static Direction AggressiveDirection(Point hunterPosition, Point targetPosition)
   { //Checks the targets position and returns movements that approach the target
     Random rnd = new Random();

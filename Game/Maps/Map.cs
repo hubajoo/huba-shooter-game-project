@@ -139,7 +139,7 @@ public class Map
   /// </summary>
   public void CreateMonsterWave()
   {
-    Wave wave = new Wave(this, _screenObjectManager, _difficulty);
+    MonsterWave wave = new MonsterWave(this, _screenObjectManager, _difficulty);
     foreach (var monster in wave.Monsters)
     {
       _mapObjects.Add(monster);

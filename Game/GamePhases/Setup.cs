@@ -53,7 +53,7 @@ public class Setup
 
 
     //
-    Wave wave = new Wave(map, screenObjectManager, difficulty);
+    MonsterWave wave = new MonsterWave(map, screenObjectManager, difficulty);
 
     // Creates UI elements
     var PlayerStatsConsole = new PlayerStatsConsole(statsConsoleWidth, mapHeight, player, Settings["name"])

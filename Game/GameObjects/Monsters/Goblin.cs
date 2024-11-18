@@ -6,8 +6,17 @@ using SadRogue.Primitives;
 
 namespace DungeonCrawl.GameObjects;
 
-public class Goblin : Monster, IDamaging, IMoving//The goblin moves fast and hunts the player - melee
+/// <summary>
+/// The class <c>Goblin</c> models a fast, agressive, melee monster in the game.
+/// </summary>
+public class Goblin : Monster, IDamaging, IMoving
 {
+  /// <summary>
+  /// Initializes a new instance of <c>Goblin</c> with a position, screen object manager, and map.
+  /// </summary>
+  /// <param name="position"></param>
+  /// <param name="screenObjectManager"></param>
+  /// <param name="map"></param>
   public Goblin(Point position, ScreenObjectManager screenObjectManager, Map map)
       : base(new ColoredGlyph(Color.DarkBlue, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 5, map)
   {
@@ -15,7 +24,11 @@ public class Goblin : Monster, IDamaging, IMoving//The goblin moves fast and hun
     FixActionDelay = 10;
     RandomActionDelayMax = 5;
   }
-  protected override void AIMove(Map map) //Movement is overwritten to approach player
+  /// <summary>
+  /// Overwrites the AIMove method to make the goblin chase the player.
+  /// </summary>
+  /// <param name="map"></param>
+  protected override void AIMove(Map map)
   {
     if (InactiveTime >= FixActionDelay)
     {

@@ -62,14 +62,14 @@ public class Player : GameObject
       {
         Inventory.Add(potion);
       }
-      else if (BaseHealth + potion.Amount > PLAYER_MAX_HEALTH)
+      else if (BaseHealth + potion.Healing > PLAYER_MAX_HEALTH)
 
       {
         BaseHealth = PLAYER_MAX_HEALTH;
       }
       else
       {
-        BaseHealth += potion.Amount;
+        BaseHealth += potion.Healing;
       }
     }
   }
@@ -77,36 +77,16 @@ public class Player : GameObject
   public bool Touched(IDamaging source, Map map)
   {
     source.Touching();
-    if (source is Monster || source is Projectile)
+
+    BaseHealth -= source.GetDamage();
+    //source.Touching(this);
+    if (BaseHealth <= 0)
     {
-      BaseHealth -= source.GetDamage();
-      //source.Touching(this);
-      if (BaseHealth <= 0)
-      {
-        Appearance.Background = Color.Red;
-        //Game.Instance.Dispose();
-      }
-      return TakeDamage(map, source as IGameObject, source.GetDamage());
+      Appearance.Background = Color.Red;
+      //Game.Instance.Dispose();
     }
     return false;
   }
-  public bool Touched(Projectile source, Map map)
-  {
-    source.Touching(this);
-    if (source is Monster || source is Projectile)
-    {
-      BaseHealth -= source.Damage;
-      source.Touching(this);
-      if (BaseHealth <= 0)
-      {
-
-        //Game.Instance.Dispose();
-      }
-      return TakeDamage(map, source, source.Damage);
-    }
-    return false;
-  }
-
   public override bool Touched(IGameObject source)
   {
     return false;

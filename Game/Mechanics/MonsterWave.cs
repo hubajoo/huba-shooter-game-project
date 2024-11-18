@@ -6,12 +6,12 @@ using SadRogue.Primitives;
 
 namespace DungeonCrawl.Mechanics;
 
-public class Wave
+public class MonsterWave
 {
   public List<GameObject> Monsters = new List<GameObject>();
   private ScreenObjectManager _screenObjectManager;
   private Map _map;
-  public Wave(Map map, ScreenObjectManager screenObjectManager, int difficulty=0)
+  public MonsterWave(Map map, ScreenObjectManager screenObjectManager, int difficulty = 0)
   {
     _map = map;
     _screenObjectManager = screenObjectManager;
@@ -69,7 +69,7 @@ public class Wave
       Monsters.Add(monster1);
     }
     for (int i = 0; i < gCount; i++)
-    { 
+    {
 
       GameObject monster1 = new Goblin(position, _screenObjectManager, _map);
       Monsters.Add(monster1);

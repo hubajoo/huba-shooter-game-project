@@ -1,4 +1,12 @@
+using DungeonCrawl.Maps;
+
+/// <summary>
+/// Interface <c>IVulnerable</c> models the vulnerability of a game object.
+/// </summary>
 public interface IVulnerable
 {
-  public void TakeDamage();
+  /// <summary> 
+  /// Takes damage. 
+  /// </summary>
+  public void TakeDamage(Map map, int damage);
 }

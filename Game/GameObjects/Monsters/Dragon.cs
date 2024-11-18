@@ -6,8 +6,17 @@ using SadRogue.Primitives;
 
 namespace DungeonCrawl.GameObjects;
 
+/// <summary>
+/// The class <c>Dragon</c> models a ranged monster in the game.
+/// </summary>
 public class Dragon : Monster, IDamaging, IMoving
 {
+  /// <summary>
+  /// Initializes a new instance of <c>Dragon</c> with a position, screen object manager, and map.
+  /// </summary>
+  /// <param name="position"></param>
+  /// <param name="screenObjectManager"></param>
+  /// <param name="map"></param>
   public Dragon(Point position, ScreenObjectManager screenObjectManager, Map map)
       : base(new ColoredGlyph(Color.Red, Color.Transparent, 1), position, screenObjectManager, health: 20, damage: 20, map)
   {

@@ -15,7 +15,7 @@ public abstract class GameObject : IGameObject
   public Direction Direction;
   public int Damage { get; protected set; } = 0;
   public int Range { get; set; }
-  
+
   public ColoredGlyph Appearance { get; set; }
   protected ColoredGlyph OriginalAppearance { get; set; }
   public ColoredGlyph _mapAppearance = new ColoredGlyph();
@@ -24,7 +24,7 @@ public abstract class GameObject : IGameObject
 
   protected Map _map;
 
-  
+
   /// <summary>
   /// Constructor.
   /// </summary>
@@ -47,12 +47,12 @@ public abstract class GameObject : IGameObject
     // Draw the object
     screenObjectManager.DrawScreenObject(this, position);
   }
-  
+
   public void RestoreMap(Map map)
   {
-    
+
     //_mapAppearance.CopyAppearanceTo(map.SurfaceObject.Surface[Position]);
-  } 
+  }
 
   /// <summary>
   /// Moves the object to the given position on the map.
@@ -77,28 +77,50 @@ public abstract class GameObject : IGameObject
     source.Touching(this);
     return false;
   }
+  /// <summary>
+  /// Defines what should happen if the current object touches another object.
+  /// </summary>
+  /// <param name="source"></param>
   public virtual void Touching(IGameObject source)
   {
   }
-
+  /// <summary>
+  /// Updates the object.
+  /// </summary>
   public virtual void Update()
   {
 
   }
+  /// <summary>
+  /// Removes the object from the map.
+  /// </summary>
   public virtual void RemoveSelf()
   {
     _map.RemoveMapObject(this);
   }
-
+  /// <summary>
+  /// Gets the position of the object.
+  /// </summary>
+  /// <returns>Point</returns>
   public Point GetPosition()
   {
     return Position;
   }
-
+  /// <summary>
+  /// Gets the appearance of the object.
+  /// </summary>
+  /// <returns></returns>
   public ColoredGlyph GetAppearance()
   {
     return Appearance;
   }
+  /// <summary>
+  /// Method <c>TakeDamage</c> reduces the health of the monster by a given amount.
+  /// </summary>
+  /// <param name="map"></param>
+  /// <param name="source"></param>
+  /// <param name="damage"></param>
+  /// <returns></returns>
 
   public virtual bool TakeDamage(Map map, IGameObject source, int damage)
   {
