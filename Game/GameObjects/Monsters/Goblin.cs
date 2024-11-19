@@ -18,7 +18,7 @@ public class Goblin : Monster, IDamaging, IMoving
   /// <param name="screenObjectManager"></param>
   /// <param name="map"></param>
   public Goblin(Point position, IScreenObjectManager screenObjectManager, IMap map, IDirectionChoiche directionChoice = null)
-      : base(new ColoredGlyph(Color.DarkBlue, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 5, map, directionChoice)
+      : base(new ColoredGlyph(Color.Blue, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 5, map, directionChoice)
   {
     Damage = 10;
     FixActionDelay = 10;
@@ -33,7 +33,6 @@ public class Goblin : Monster, IDamaging, IMoving
     if (InactiveTime >= FixActionDelay)
     {
       var direction = _directionChoice.GetDirection(Position, map.UserControlledObject.Position);
-
       if (!RandomAction.weightedBool(4))
       {
         direction = _directionChoice.GetDirection();

@@ -7,4 +7,5 @@ public interface IGameSettings
   public int PlayerHealth { get; set; }
   public int PlayerDamage { get; set; }
   public int PlayerRange { get; set; }
+  public string ServerUrl { get; set; }
 }

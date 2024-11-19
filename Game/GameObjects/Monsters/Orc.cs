@@ -15,8 +15,8 @@ public class Orc : Monster
   /// <param name="position"></param>
   /// <param name="screenObjectManager"></param>
   /// <param name="map"></param>
-  public Orc(Point position, IScreenObjectManager screenObjectManager, IMap map)
-      : base(new ColoredGlyph(Color.DarkGreen, Color.Transparent, 1), position, screenObjectManager, health: 10, damage: 10, map)
+  public Orc(Point position, IScreenObjectManager screenObjectManager, IMap map, IDirectionChoiche directionChoice = null)
+      : base(new ColoredGlyph(Color.DarkGreen, Color.Transparent, 1), position, screenObjectManager, health: 10, damage: 10, map, directionChoice)
   {
     FixActionDelay = 10;
   }

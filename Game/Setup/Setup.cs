@@ -31,14 +31,14 @@ public class GameSetup
   public void Init()
   {
 
+    ILeaderBoardHandler leaderBoardHandler = new LeaderBoardHandler(_settings.ServerUrl, _settings.UserName);
+
     // Creates screensurface
     var screenSurface = new ScreenSurface(_settings.ViewPortWidth, _settings.ViewPortHeight);
     screenSurface.UseMouse = false;
 
     // Drawing logic setup
     var screenObjectManager = new ScreenObjectManager(screenSurface);
-
-
 
     // Creates the map
     Map map = new Map(screenSurface, screenObjectManager);
@@ -48,13 +48,15 @@ public class GameSetup
     Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map, _settings.PlayerHealth, _settings.PlayerDamage, _settings.PlayerRange);
     map.AddUserControlledObject(player);
 
-    Func<Point, IScreenObjectManager, IMap, IGameObject> Orc = (Point a, IScreenObjectManager b, IMap c) => new Orc(a, b, c);
-    Func<Point, IScreenObjectManager, IMap, IGameObject> Goblin = (Point a, IScreenObjectManager b, IMap c) => new Goblin(a, b, c);
-    Func<Point, IScreenObjectManager, IMap, IGameObject> Dragon = (Point a, IScreenObjectManager b, IMap c) => new Dragon(a, b, c);
-    MonsterTypes monsterTypes = new MonsterTypes(Orc, Goblin, Dragon);
 
+
+    // Creates monster types
+    MonsterTypes monsterTypes = new MonsterTypes(MonsterCreation.CreateMonsterTypes());
+
+    // Creates spawn logic
     var spawnScrip = new SpawnScript();
-    var monster = (Point position) => new Goblin(position, screenObjectManager, map);
+
+    // Creates wave and sets spawn logic
     MonsterWave wave = new MonsterWave(map, screenObjectManager, monsterTypes, spawnScrip);
     map.SetSpawnLogic(wave);
 
@@ -75,7 +77,7 @@ public class GameSetup
     screenObjectManager.SetEndScreen(EndScreen);
     map.SurfaceObject.Position = new Point(_settings.StatsConsoleWidth, 0);
 
-
+    // Sets the main screen
     Game.Instance.Screen = rootScreen;
     Game.Instance.Screen.IsFocused = true;
 

@@ -20,7 +20,7 @@ public class Program
   public static void Main()
   {
     SettingsReader settingsReader = new SettingsReader();
-    string path = "settings.txt";
+    string path = "Data/settings.txt";
     IGameSettings settings = settingsReader.ReadSettings(path);
 
     // Setup the engine and create the main window.

@@ -1,7 +1,7 @@
 UserName:Huba
-StatsConsoleWidth:25
-ViewPortWidth:100
-ViewPortHeight:40
+StatsConsoleWidth:40
+ViewPortWidth:200
+ViewPortHeight:50
 PlayerHealth:100
 PlayerDamage:1
 PlayerRange:5

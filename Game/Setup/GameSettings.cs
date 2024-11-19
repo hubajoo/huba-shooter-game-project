@@ -12,8 +12,8 @@ public class GameSettings : IGameSettings
   public int StatsConsoleWidth { get; set; }
   public int PlayerHealth { get; set; }
   public int PlayerDamage { get; set; }
-
   public int PlayerRange { get; set; }
+  public string ServerUrl { get; set; }
 
   public GameSettings(string[] lines)
   {
@@ -33,7 +33,7 @@ public class GameSettings : IGameSettings
       PlayerHealth = Int32.Parse(settingsDict["PlayerHealth"]);
       PlayerDamage = Int32.Parse(settingsDict["PlayerDamage"]);
       PlayerRange = Int32.Parse(settingsDict["PlayerRange"]);
-
+      ServerUrl = settingsDict["ServerUrl"];
     }
     catch (Exception e)
     {

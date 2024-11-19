@@ -31,7 +31,7 @@ namespace DungeonCrawl.UI
 
       this.Print(_center, 2, " You died ", Color.Red, Color.White);
       //this.Print(2, 1, " Mission: Survive ", Color.Black, Color.White);
-      // this.DrawBox(new Rectangle(0, 0, Width, Height), ShapeParameters.CreateBorder(new ColoredGlyph(Color.DarkOrange, Color.Black)));
+       this.DrawBox(new Rectangle(0, 0, Width, Height), ShapeParameters.CreateBorder(new ColoredGlyph(Color.DarkOrange, Color.Black)));
       this.Print(2, 3, " Score:", Color.Black, Color.White);
 
       this.Print(2, 4, $" Kills: {_player.Kills}", Color.White);
