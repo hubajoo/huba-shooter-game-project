@@ -1,6 +1,8 @@
-﻿using SadConsole;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Setup;
 
-namespace DungeonCrawl;
+namespace ShooterGame;
 
 /// <summary>
 /// Class <c>Program</c> provides an entry point for the game.
@@ -17,25 +19,21 @@ public class Program
   /// </summary>
   public static void Main()
   {
+    SettingsReader settingsReader = new SettingsReader();
+    string path = @"C:\Program Files\Repository\New\huba-shooter-game-project\Game\settings.txt";
+    IGameSettings settings = settingsReader.ReadSettings(path);
 
     // Setup the engine and create the main window.
-    Game.Create(ViewPortWidth, ViewPortHeight);
+    SadConsole.Game.Create(settings.ViewPortWidth, settings.ViewPortHeight);
 
     // Creates Setup class
-    Setup setup = new Setup();
+    GameSetup setup = new GameSetup(settings);
 
     // Hook the start event so we can add consoles to the system.
-    Game.Instance.OnStart = setup.Init;
+    SadConsole.Game.Instance.OnStart = setup.Init;
 
-    /*
-        // Creates Setup class
-        GameOver gameOver = new GameOver();
-
-        // Hook the end event so we can add display the end screen.
-        Game.Instance.OnEnd = gameOver.End;
-    */
     // Start the game.
-    Game.Instance.Run();
-    Game.Instance.Dispose();
+    SadConsole.Game.Instance.Run();
+    SadConsole.Game.Instance.Dispose();
   }
 }

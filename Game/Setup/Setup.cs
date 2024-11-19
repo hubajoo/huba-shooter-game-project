@@ -14,28 +14,25 @@ using SadConsole;
 using SadConsole.UI;
 using SadRogue.Primitives;
 using DungeonCrawl.Mechanics;
+namespace Setup;
 
-public class Setup
+public class GameSetup
 {
   /// <summary>
   /// Initializes the game.
   /// </summary>
-  private Dictionary<string, string> Settings = new Dictionary<string, string>(){
-      { "name", "Huba" },
-      {"statsConsoleWidth", "25"},
-      {"difficulty", "0"}
-  };
+  private IGameSettings _settings;
+
+  public GameSetup(IGameSettings settings)
+  {
+    _settings = settings;
+  }
+
   public void Init()
   {
-    // Converts Settings Dictionary to variables
-    int statsConsoleWidth = Int32.Parse(Settings["statsConsoleWidth"]);
-    int mapWidth = Game.Instance.ScreenCellsX - statsConsoleWidth;
-    int mapHeight = Game.Instance.ScreenCellsY;
-    int difficulty = Int32.Parse(Settings["difficulty"]);
-
 
     // Creates screensurface
-    var screenSurface = new ScreenSurface(mapWidth, mapHeight);
+    var screenSurface = new ScreenSurface(_settings.ViewPortWidth, _settings.ViewPortHeight);
     screenSurface.UseMouse = false;
 
     // Drawing logic setup
@@ -45,7 +42,7 @@ public class Setup
 
     // Creates the map
     Map map = new Map(screenSurface, screenObjectManager);
-    map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
+    map.SurfaceObject.Position = new Point(_settings.statsConsoleWidth, 0);
 
     // Creates player
     Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map);
@@ -64,11 +61,11 @@ public class Setup
 
 
     // Creates UI elements
-    var PlayerStatsConsole = new PlayerStatsConsole(statsConsoleWidth, mapHeight, player, Settings["name"])
+    var PlayerStatsConsole = new PlayerStatsConsole(_settings.statsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName)
     {
       Position = new Point(0, 0)
     };
-    var EndScreen = new LeaderBoard(statsConsoleWidth, mapHeight, player, Settings["name"])
+    var EndScreen = new LeaderBoard(_settings.statsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName)
     {
       Position = new Point(0, 0)
     };
@@ -76,7 +73,7 @@ public class Setup
     screenObjectManager.SetMainScreen(rootScreen);
     screenObjectManager.SetConsole(PlayerStatsConsole);
     screenObjectManager.SetEndScreen(EndScreen);
-    map.SurfaceObject.Position = new Point(statsConsoleWidth, 0);
+    map.SurfaceObject.Position = new Point(_settings.statsConsoleWidth, 0);
 
 
     Game.Instance.Screen = rootScreen;

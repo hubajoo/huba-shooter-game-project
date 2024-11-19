@@ -17,9 +17,6 @@ namespace DungeonCrawl.Ui;
 public class RootScreen : ScreenObject
 {
   private Map _map;
-  private PlayerStatsConsole _playerStatsConsole;
-
-  private ScreenObject _leaderBoard;
 
   /// <summary>
   /// Constructor.

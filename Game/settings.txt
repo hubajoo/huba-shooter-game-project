@@ -1,0 +1,4 @@
+UserName:Huba
+StatsConsoleWidth:25
+ViewPortWidth:100
+ViewPortHeight:40

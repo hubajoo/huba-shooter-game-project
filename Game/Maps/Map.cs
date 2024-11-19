@@ -24,7 +24,6 @@ public class Map
 
   private ISpawnOrchestrator _spawnLogic;
   private bool _spawnLogicSet = false;
-  private int _difficulty;
 
   public int Width;
   public int Height;
@@ -150,9 +149,8 @@ public class Map
   {
     Random rnd = new Random();
     int item = rnd.Next(0, 2);
-    //position += Movement.GetRandomDirection();
 
-    IGameObject loot = null;
+    IGameObject? loot = null;
     switch (item)
     {
       case 0:

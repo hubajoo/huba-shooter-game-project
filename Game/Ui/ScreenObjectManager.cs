@@ -14,9 +14,8 @@ public class ScreenObjectManager : ScreenObject
 
   private bool _EndScreenSet = false;
 
-  private IStatConsole _SideConsole;
   private PlayerStatsConsole _PlayerStatsConsole;
-  private bool _SideConsoleSet = false;
+
 
   private IScreenSurface _screenSurface;
   /// <summary>
@@ -118,10 +117,8 @@ public class ScreenObjectManager : ScreenObject
   }
   public void SetConsole(PlayerStatsConsole console)
   {
-    //_SideConsole = console as IStatConsole;
     _PlayerStatsConsole = console;
     _Screen.Children.Add(console);
-    _SideConsoleSet = true;
   }
 
 
