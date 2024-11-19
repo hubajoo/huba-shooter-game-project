@@ -12,8 +12,10 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   public string path = "Data/leaderBoard.txt";
   public LeaderBoardHandler(string url, string username)
   {
+    LeaderBoard = new Dictionary<string, int>();
     FetchLeaderboard(url, username);
     ReadLeaderBoard();
+    SortLeaderBoard();
   }
 
   public async void FetchLeaderboard(string url, string name)
@@ -35,6 +37,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   {
     using StreamWriter sw = File.AppendText(path);
     sw.WriteLine($"{name}:{score}");
+    SortLeaderBoard();
   }
 
   public void ReadLeaderBoard()
@@ -68,6 +71,19 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   {
     var sortedDict = LeaderBoard.AsQueryable();
     sortedDict = (from entry in sortedDict orderby entry.Value descending select entry).Take(10);
+    LeaderBoard = sortedDict.ToDictionary(x => x.Key, x => x.Value);
+  }
+
+  public string[] GetArray()
+  {
+    string[] array = new string[LeaderBoard.Count];
+    int i = 0;
+    foreach (KeyValuePair<string, int> kvp in LeaderBoard)
+    {
+      array[i] = $"{kvp.Key}: {kvp.Value}";
+      i++;
+    }
+    return array;
   }
 
 }

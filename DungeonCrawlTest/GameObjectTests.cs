@@ -25,7 +25,7 @@ public class GameObjectsTests
     //mockScreenSurface.SetupGet(s => s.Surface.Height).Returns(3);
     //mockScreenSurface.SetupGet(s => s.Surface.Area.Center).Returns(new Point(1, 1));
 
-    mockScreenObjectManager = new Mock<ScreenObjectManager>(mockScreenSurface.Object);
+    mockScreenObjectManager = new Mock<IScreenObjectManager>(mockScreenSurface.Object);
 
     map = new Map(mockScreenSurface.Object, mockScreenObjectManager.Object);
     map.SurfaceObject.Position = new Point(0, 0);

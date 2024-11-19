@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DungeonCrawl.GameObjects;
 using SadConsole;
 using SadRogue.Primitives;
@@ -14,7 +15,9 @@ namespace DungeonCrawl.UI
     private int _borderOffset;
     private int fullWidth;
     private int fullHeight;
-    public PlayerStatsConsole(int width, int height, Player player, string name, int borderOffset = 1) : base(width, height)
+    private int LeaderBoardOffset;
+    private int leftMargin;
+    public PlayerStatsConsole(int width, int height, Player player, string name, string[] leaderboard, int borderOffset = 1) : base(width, height)
     {
       _player = player;
       IsVisible = true;
@@ -22,58 +25,68 @@ namespace DungeonCrawl.UI
       _borderOffset = borderOffset;
       fullWidth = width;
       fullHeight = height;
-
+      leftMargin = _borderOffset + 1;
       _name = name;
-      //PrintStats();
-      //DrawBorder();
-      string[] a = new string[] { "Huba: 1000", "Bela: 500", "Gyuri: 200" };
-      //PrintLeaderBoard(a);
+
+      PrintStats();
+      DrawBorder();
+      PrintLeaderBoard(leaderboard);
     }
 
     public void PrintStats()
     {
-      this.Clear();
-      int leftMargin = _borderOffset + 1;
+      //this.Clear();
 
-      this.Print(leftMargin, 1, " Mission: Survive ", Color.Black, Color.White);
-      this.Print(leftMargin, 2, $" User: {_name} ", Color.White);
+      int line = _borderOffset + 1;
+
+      this.Print(leftMargin, line, " Mission: Survive ", Color.Black, Color.White);
+      line++;
+      this.Print(leftMargin, line + 1, $" User: {_name} ", Color.White);
+      line += 3;
 
       string mission = "Kill the monsters coming from the portals and survive as long as you can.";
-      //string mission = "1 2 3 4 5 6 7 8 9 9 0 1 3 4 5 6 7 8 9";
       string[] missionArr = mission.Split(" ");
 
-      int line = 3 + _borderOffset;
       string lineText = "";
       for (int i = 0; i < missionArr.Length; i++)
       {
-        
-        if (lineText.Length + missionArr[i].Length > 0)
+        if (lineText.Length + missionArr[i].Length > 20 || i == missionArr.Length - 1)
         {
+          lineText += " " + missionArr[i];
           this.Print(leftMargin, line, lineText, Color.DarkOrange);
           lineText = "";
-          //i--;
           line++;
         }
         else
         {
           lineText += " " + missionArr[i];
         }
-        
       }
-      /*
-            this.Print(2, 5, " Player stats:", Color.Black, Color.White);
-
-            this.Print(leftMargin, 7, $" Health: {_player.Health}", Color.White);
-            this.Print(leftMargin, 8, $" Damage: {_player.Damage}", Color.White);
-            this.Print(leftMargin, 9, $" Range: {_player.Range}", Color.White);
-            this.Print(leftMargin, 10, $" Score: {_player.Kills}", Color.White);
-            */
+      line++;
+      this.Print(leftMargin, line, " Player stats:", Color.Black, Color.White);
+      line++;
+      this.Print(leftMargin, line, $" Health: {_player.Health}", Color.White);
+      line++;
+      this.Print(leftMargin, line, $" Damage: {_player.Damage}", Color.White);
+      line++;
+      this.Print(leftMargin, line, $" Range: {_player.Range}", Color.White);
+      line++;
+      this.Print(leftMargin, line, $" Score: {_player.Kills}", Color.White);
+      line++;
+      LeaderBoardOffset = line;
     }
     public void PrintLeaderBoard(string[] leaderBoard)
     {
+      int line = LeaderBoardOffset + 1;
+      this.Print(leftMargin, line, $"Top players:", Color.Black, Color.White);
+      line++;
       for (int i = 0; i < leaderBoard.Length; i++)
       {
-        this.Print(2, 11 + i, $"{i + 1}. {leaderBoard[i]}", Color.White);
+        if (line < Height - _borderOffset * 2)
+        {
+          this.Print(leftMargin, line, $"{i + 1}. {leaderBoard[i]}", Color.White);
+          line++;
+        }
       }
     }
     public void DrawBorder()
@@ -86,7 +99,7 @@ namespace DungeonCrawl.UI
     {
       PrintStats();
       //PrintLeaderBoard();
-      DrawBorder();
+      //DrawBorder();
     }
   }
 }

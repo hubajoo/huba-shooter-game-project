@@ -60,10 +60,8 @@ public class GameSetup
     MonsterWave wave = new MonsterWave(map, screenObjectManager, monsterTypes, spawnScrip);
     map.SetSpawnLogic(wave);
 
-
-
     // Creates UI elements
-    var PlayerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName)
+    var PlayerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName, leaderBoardHandler.GetArray())
     {
       Position = new Point(0, 0)
     };
