@@ -17,8 +17,8 @@ public class Goblin : Monster, IDamaging, IMoving
   /// <param name="position"></param>
   /// <param name="screenObjectManager"></param>
   /// <param name="map"></param>
-  public Goblin(Point position, ScreenObjectManager screenObjectManager, Map map)
-      : base(new ColoredGlyph(Color.DarkBlue, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 5, map)
+  public Goblin(Point position, IScreenObjectManager screenObjectManager, IMap map, IDirectionChoiche directionChoice = null)
+      : base(new ColoredGlyph(Color.DarkBlue, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 5, map, directionChoice)
   {
     Damage = 10;
     FixActionDelay = 10;
@@ -28,15 +28,15 @@ public class Goblin : Monster, IDamaging, IMoving
   /// Overwrites the AIMove method to make the goblin chase the player.
   /// </summary>
   /// <param name="map"></param>
-  protected override void AIMove(Map map)
+  protected override void AIMove(IMap map)
   {
     if (InactiveTime >= FixActionDelay)
     {
-      var direction = DirectionGeneration.AggressiveDirection(this.Position,
-          map.UserControlledObject.Position);
+      var direction = _directionChoice.GetDirection(Position, map.UserControlledObject.Position);
+
       if (!RandomAction.weightedBool(4))
       {
-        direction = DirectionGeneration.GetRandomDirection();
+        direction = _directionChoice.GetDirection();
       }
       this.Move(this.Position + direction, map);
       InactiveTime = 0;

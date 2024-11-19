@@ -16,12 +16,12 @@ namespace DungeonCrawl.Ui;
 
 public class RootScreen : ScreenObject
 {
-  private Map _map;
+  private IMap _map;
 
   /// <summary>
   /// Constructor.
   /// </summary>
-  public RootScreen(Map map)
+  public RootScreen(IMap map)
   {
     _map = map;
     Children.Add(_map.SurfaceObject);

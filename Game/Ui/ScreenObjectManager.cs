@@ -6,7 +6,7 @@ using SadRogue.Primitives;
 /// <summary>
 /// Class <c>ScreenObjectManager</c> manages screen objects.
 /// </summary>
-public class ScreenObjectManager : ScreenObject
+public class ScreenObjectManager : ScreenObject, IScreenObjectManager
 {
   private IScreenObject _Screen;
 
@@ -52,7 +52,7 @@ public class ScreenObjectManager : ScreenObject
   /// Draws a game object on the screen.
   /// </summary>
   /// <param name="gameObject"></param>
-  public void DrawScreenObject(GameObject gameObject)
+  public void DrawScreenObject(IGameObject gameObject)
   {
     gameObject.GetAppearance().CopyAppearanceTo(_screenSurface.Surface[gameObject.GetPosition()]);
     //gameObject.Appearance.CopyAppearanceTo(_screenSurface.Surface[gameObject.Position]); 
@@ -73,7 +73,7 @@ public class ScreenObjectManager : ScreenObject
   /// </summary>
   /// <param name="map"></param>
   /// <param name="position"></param>
-  public void RefreshCell(Map map, Point position)
+  public void RefreshCell(IMap map, Point position)
   {
     IGameObject gameObject;
 
@@ -111,7 +111,7 @@ public class ScreenObjectManager : ScreenObject
   {
     _Screen.Children.Clear();
   }
-  public void SetMainScreen(ScreenObject mainScreen)
+  public void SetMainScreen(IScreenObject mainScreen)
   {
     _Screen = mainScreen;
   }
@@ -130,7 +130,7 @@ public class ScreenObjectManager : ScreenObject
       AddScreenObject(_EndScreen);
     }
   }
-  public void SetEndScreen(ScreenObject endScreen)
+  public void SetEndScreen(IScreenObject endScreen)
   {
     _EndScreen = endScreen;
     _EndScreenSet = true;

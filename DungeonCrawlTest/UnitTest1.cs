@@ -13,50 +13,50 @@ public class Tests
   private static ScreenObjectManager screenObjectManager;//= new ScreenObjectManager(screenSurface);
   private Map map;
   private Player player;
-
-  [SetUp]
-  public void Setup()
-  {
-    mapWidth = 3;
-    mapHeight = 3;
-
-    // Creates screensurface
-    ScreenSurface screenSurface = new ScreenSurface(3, 3);
-    screenSurface.UseMouse = false;
-
-    // Drawing logic setup
-    ScreenObjectManager screenObjectManager = new ScreenObjectManager(screenSurface);
-
-    // Creates the map
-    map = new Map(screenSurface, screenObjectManager);
-    map.SurfaceObject.Position = new Point(0, 0);
-
-    // Creates player
-    player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map);
-    map.AddUserControlledObject(player);
-  }
-
-
-  [Test]
-  public void SucceesfullMoveTest()
-  {
-    player.Move(new Point(0, 0), map);
-    Assert.Equals(player.Position, new Point(0, 0));
-  }
   /*
-    [Test]
-    public void screenSurfaceCreationTest()
+    [SetUp]
+    public void Setup()
     {
-      var screenSurface = new ScreenSurface(mapWidth, mapHeight);
-      Assert.Equals(screenSurface.Surface.Width, mapWidth);
+      mapWidth = 3;
+      mapHeight = 3;
+
+      // Creates screensurface
+      ScreenSurface screenSurface = new ScreenSurface(3, 3);
+      screenSurface.UseMouse = false;
+
+      // Drawing logic setup
+      ScreenObjectManager screenObjectManager = new ScreenObjectManager(screenSurface);
+
+      // Creates the map
+      map = new Map(screenSurface, screenObjectManager);
+      map.SurfaceObject.Position = new Point(0, 0);
+
+      // Creates player
+      player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map);
+      map.AddUserControlledObject(player);
     }
 
+
     [Test]
-    public void playerCreationTest()
+    public void SucceesfullMoveTest()
     {
-     var player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map);
-     Assert.Equals(player.Position, screenSurface.Surface.Area.Center);
+      player.Move(new Point(0, 0), map);
+      Assert.Equals(player.Position, new Point(0, 0));
     }
-  */
+    /*
+      [Test]
+      public void screenSurfaceCreationTest()
+      {
+        var screenSurface = new ScreenSurface(mapWidth, mapHeight);
+        Assert.Equals(screenSurface.Surface.Width, mapWidth);
+      }
+
+      [Test]
+      public void playerCreationTest()
+      {
+       var player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map);
+       Assert.Equals(player.Position, screenSurface.Surface.Area.Center);
+      }
+    */
 
 }

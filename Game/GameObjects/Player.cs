@@ -27,7 +27,7 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
   /// <param name="hostingSurface"></param>
 
   //public Direction Direction;
-  public Player(Point position, ScreenObjectManager screenObjectManager, Map map, int health = 100, int damage = 1, int range = 5)
+  public Player(Point position, IScreenObjectManager screenObjectManager, IMap map, int health = 100, int damage = 1, int range = 5)
       : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager, map)
   {
     Inventory = new List<Items>();

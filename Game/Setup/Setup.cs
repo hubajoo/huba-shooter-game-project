@@ -42,15 +42,15 @@ public class GameSetup
 
     // Creates the map
     Map map = new Map(screenSurface, screenObjectManager);
-    map.SurfaceObject.Position = new Point(_settings.statsConsoleWidth, 0);
+    map.SurfaceObject.Position = new Point(_settings.StatsConsoleWidth, 0);
 
     // Creates player
-    Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map);
+    Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map, _settings.PlayerHealth, _settings.PlayerDamage, _settings.PlayerRange);
     map.AddUserControlledObject(player);
 
-    Func<Point, ScreenObjectManager, Map, IGameObject> Orc = (Point a, ScreenObjectManager b, Map c) => new Orc(a, b, c);
-    Func<Point, ScreenObjectManager, Map, IGameObject> Goblin = (Point a, ScreenObjectManager b, Map c) => new Goblin(a, b, c);
-    Func<Point, ScreenObjectManager, Map, IGameObject> Dragon = (Point a, ScreenObjectManager b, Map c) => new Dragon(a, b, c);
+    Func<Point, IScreenObjectManager, IMap, IGameObject> Orc = (Point a, IScreenObjectManager b, IMap c) => new Orc(a, b, c);
+    Func<Point, IScreenObjectManager, IMap, IGameObject> Goblin = (Point a, IScreenObjectManager b, IMap c) => new Goblin(a, b, c);
+    Func<Point, IScreenObjectManager, IMap, IGameObject> Dragon = (Point a, IScreenObjectManager b, IMap c) => new Dragon(a, b, c);
     MonsterTypes monsterTypes = new MonsterTypes(Orc, Goblin, Dragon);
 
     var spawnScrip = new SpawnScript();
@@ -61,11 +61,11 @@ public class GameSetup
 
 
     // Creates UI elements
-    var PlayerStatsConsole = new PlayerStatsConsole(_settings.statsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName)
+    var PlayerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName)
     {
       Position = new Point(0, 0)
     };
-    var EndScreen = new LeaderBoard(_settings.statsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName)
+    var EndScreen = new LeaderBoard(_settings.ViewPortWidth, _settings.ViewPortHeight, player, _settings.UserName)
     {
       Position = new Point(0, 0)
     };
@@ -73,7 +73,7 @@ public class GameSetup
     screenObjectManager.SetMainScreen(rootScreen);
     screenObjectManager.SetConsole(PlayerStatsConsole);
     screenObjectManager.SetEndScreen(EndScreen);
-    map.SurfaceObject.Position = new Point(_settings.statsConsoleWidth, 0);
+    map.SurfaceObject.Position = new Point(_settings.StatsConsoleWidth, 0);
 
 
     Game.Instance.Screen = rootScreen;
@@ -82,7 +82,7 @@ public class GameSetup
 
 
     // This is needed because we replaced the initial screen object with our own.
-    //Game.Instance.DestroyDefaultStartingConsole();
+    Game.Instance.DestroyDefaultStartingConsole();
   }
 
 }

@@ -20,12 +20,12 @@ public class MonsterWave : ISpawnOrchestrator
   /// <summary>
   /// Screen object manager.
   /// </summary>
-  private ScreenObjectManager _screenObjectManager;
+  private IScreenObjectManager _screenObjectManager;
 
   /// <summary>
   ///  Map object.
   /// </summary>
-  private Map _map;
+  private IMap _map;
 
   /// <summary>
   /// Monster types.
@@ -50,7 +50,7 @@ public class MonsterWave : ISpawnOrchestrator
   /// <param name="monsterTypes"></param>
   /// <param name="spawnScript"></param>
   /// <param name="difficulty"></param>
-  public MonsterWave(Map map, ScreenObjectManager screenObjectManager, MonsterTypes monsterTypes, SpawnScript spawnScript, int difficulty = 0)
+  public MonsterWave(IMap map, IScreenObjectManager screenObjectManager, MonsterTypes monsterTypes, SpawnScript spawnScript, int difficulty = 0)
   {
     _map = map;
     _screenObjectManager = screenObjectManager;
@@ -102,8 +102,8 @@ public class MonsterWave : ISpawnOrchestrator
   /// <param name="position"></param>
   private void spawn(int code, Point position)
   {
-    var spawn = _monsterTypes.GetTypes()[code];
-    Monsters.Add(spawn(position, _screenObjectManager, _map));
+    var s = _monsterTypes.GetTypes()[code];
+    Monsters.Add(s(position, _screenObjectManager, _map));
     addToMap();
     Monsters = new List<IGameObject>();
   }

@@ -11,7 +11,7 @@ public class Projectile : GameObject, IDamaging
   private int _flownDistance = 0;
   private int _maxDistance;
 
-  public Projectile(Point position, Direction direction, ScreenObjectManager screenObjectManager, int damage, int maxDistance, Color color, Map map, int glyph = 4)
+  public Projectile(Point position, Direction direction, IScreenObjectManager screenObjectManager, int damage, int maxDistance, Color color, IMap map, int glyph = 4)
       : base(new ColoredGlyph(color, Color.Transparent, glyph), position, screenObjectManager, map)
   {
     _maxDistance = maxDistance;
@@ -31,7 +31,7 @@ public class Projectile : GameObject, IDamaging
     Fly(_map);
   }
 
-  public void Fly(Map map)
+  public void Fly(IMap map)
   {
     if (_flownDistance <= _maxDistance)
     {

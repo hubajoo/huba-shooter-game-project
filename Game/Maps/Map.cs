@@ -14,27 +14,27 @@ namespace DungeonCrawl.Maps;
 /// <summary>
 /// Class <c>Map</c> models a map for the game.
 /// </summary>
-public class Map
+public class Map : IMap
 {
-  public IReadOnlyList<IGameObject> GameObjects => _mapObjects.AsReadOnly();
-  public ScreenSurface SurfaceObject => _mapSurface;
-  public Player UserControlledObject { get; set; }
+  //public IReadOnlyList<IGameObject> GameObjects => _mapObjects.AsReadOnly();
+  public IScreenSurface SurfaceObject => _mapSurface;
+  public Player UserControlledObject { get; private set; }
   private List<IGameObject> _mapObjects;
-  private ScreenSurface _mapSurface;
+  private IScreenSurface _mapSurface;
 
   private ISpawnOrchestrator _spawnLogic;
   private bool _spawnLogicSet = false;
 
-  public int Width;
-  public int Height;
+  public int Width { get; private set; }
+  public int Height { get; private set; }
 
-  private ScreenObjectManager _screenObjectManager;
+  private IScreenObjectManager _screenObjectManager;
   /// <summary>
   /// Constructor.
   /// </summary>
   /// <param name="mapWidth"></param>
   /// <param name="mapHeight"></param>
-  public Map(ScreenSurface mapSurface, ScreenObjectManager screenObjectManager)
+  public Map(IScreenSurface mapSurface, IScreenObjectManager screenObjectManager)
   {
     _mapObjects = new List<IGameObject>();
     _mapSurface = mapSurface;
@@ -121,7 +121,7 @@ public class Map
   /// Removes an object from the map.
   /// </summary>
   /// <param name="mapObject">Object to be removed</param>
-  public void RemoveMapObject(GameObject mapObject)
+  public void RemoveMapObject(IGameObject mapObject)
   {
     if (_mapObjects.Contains(mapObject))
     {

@@ -20,7 +20,7 @@ public class Program
   public static void Main()
   {
     SettingsReader settingsReader = new SettingsReader();
-    string path = @"C:\Program Files\Repository\New\huba-shooter-game-project\Game\settings.txt";
+    string path = "settings.txt";
     IGameSettings settings = settingsReader.ReadSettings(path);
 
     // Setup the engine and create the main window.

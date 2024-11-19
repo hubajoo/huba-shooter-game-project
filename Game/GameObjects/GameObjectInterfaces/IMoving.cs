@@ -13,5 +13,5 @@ public interface IMoving
   /// <param name="newPosition"></param>
   /// <param name="map"></param>
   /// <returns></returns>
-  public bool Move(Point newPosition, Map map);
+  public bool Move(Point newPosition, IMap map);
 }

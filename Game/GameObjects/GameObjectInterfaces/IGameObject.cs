@@ -11,6 +11,10 @@ namespace DungeonCrawl.GameObjects;
 public interface IGameObject
 {
   /// <summary>
+  /// The position of the game object.
+  /// </summary>
+  public Point Position { get; set; }
+  /// <summary>
   /// Checks if the game object has been touched.
   /// </summary>
   /// <param name="source"></param>

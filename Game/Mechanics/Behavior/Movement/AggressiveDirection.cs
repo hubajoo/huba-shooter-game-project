@@ -7,10 +7,10 @@ namespace DungeonCrawl.Mechanics;
 /// <summary> 
 /// GEnerates directions for movement or projectiles.
 /// </summary>
-public class DirectionGenerations
+public class AggressiveDirection : IDirectionChoiche
 {
   /// <summary> Generates a random direction. </summary>
-  public Direction GetRandomDirection()
+  public Direction GetDirection()
   {
     Random rnd = new Random();
     int randomDirectionNumber = rnd.Next(4);
@@ -24,7 +24,7 @@ public class DirectionGenerations
   /// <param name="hunterPosition"></param>
   /// <param name="targetPosition"></param>
   /// <returns></returns>
-  public Direction AggressiveDirection(Point hunterPosition, Point targetPosition)
+  public Direction GetDirection(Point hunterPosition, Point targetPosition)
   { //Checks the targets position and returns movements that approach the target
     Random rnd = new Random();
 
@@ -50,7 +50,7 @@ public class DirectionGenerations
     int randomDirectionNumber = rnd.Next(possibleDirections.Count);
     if (possibleDirections.Count == 0) //Error handling
     {
-      return GetRandomDirection();
+      return GetDirection();
     }
 
 

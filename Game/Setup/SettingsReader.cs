@@ -24,7 +24,7 @@ public class SettingsReader : ISettingsReader
     {
       return new DefaultSettings().Settings; // Returns default settings
     }
-    catch (Exception e)
+    catch (Exception e) // If any other exception
     {
       Console.WriteLine(e.Message);
       return new DefaultSettings().Settings;

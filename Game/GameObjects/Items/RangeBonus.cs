@@ -15,7 +15,7 @@ public class RangeBonus : Items
   /// <param name="position"></param>
   /// <param name="screenObjectManager"></param>
   /// <param name="map"></param>
-  public RangeBonus(Point position, ScreenObjectManager screenObjectManager, Map map)
+  public RangeBonus(Point position, IScreenObjectManager screenObjectManager, Map map)
       : base(new ColoredGlyph(Color.Cyan, Color.Transparent, 'R'), position, screenObjectManager, map)
   {
   }

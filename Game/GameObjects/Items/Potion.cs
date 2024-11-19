@@ -15,7 +15,7 @@ public class Potion : Items
   public int Healing { get; private set; }
   /// <summary>
   /// Initializes a new instance of <c>Potion</c> with a position, screen object manager, map, and healing value.
-  public Potion(Point position, ScreenObjectManager screenObjectManager, Map map, int healing = 25)
+  public Potion(Point position, IScreenObjectManager screenObjectManager, Map map, int healing = 25)
       : base(new ColoredGlyph(Color.Red, Color.Transparent, 3), position, screenObjectManager, map)
   {
     Healing = healing;

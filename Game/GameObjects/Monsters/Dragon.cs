@@ -17,17 +17,16 @@ public class Dragon : Monster, IDamaging, IMoving
   /// <param name="position"></param>
   /// <param name="screenObjectManager"></param>
   /// <param name="map"></param>
-  public Dragon(Point position, ScreenObjectManager screenObjectManager, Map map)
-      : base(new ColoredGlyph(Color.Red, Color.Transparent, 1), position, screenObjectManager, health: 20, damage: 20, map)
+  public Dragon(Point position, IScreenObjectManager screenObjectManager, IMap map, IDirectionChoiche directionChoice = null)
+      : base(new ColoredGlyph(Color.Red, Color.Transparent, 1), position, screenObjectManager, health: 20, damage: 20, map, directionChoice)
   {
     Health = 10;
   }
-  protected override void AIAttack(Map map)
+  protected override void AIAttack(IMap map)
   {
     if (InactiveTime >= FixActionDelay)
     {
-      var direction = DirectionGeneration.AggressiveDirection(Position,
-          map.UserControlledObject.Position);
+      var direction = _directionChoice.GetDirection(Position, map.UserControlledObject.Position);
       CreateProjectile(Position, direction, Color.Red, Damage, 15);
     }
     else
@@ -35,15 +34,15 @@ public class Dragon : Monster, IDamaging, IMoving
       InactiveTime++;
     }
   }
-  protected override void AIMove(Map map) //Movement is overwritten to approach player
+  protected override void AIMove(IMap map) //Movement is overwritten to approach player
   {
     if (InactiveTime >= FixActionDelay)
     {
-      var direction = DirectionGeneration.AggressiveDirection(this.Position,
+      var direction = _directionChoice.GetDirection(Position,
           map.UserControlledObject.Position);
       if (!RandomAction.weightedBool(3))
       {
-        direction = DirectionGeneration.GetRandomDirection();
+        direction = _directionChoice.GetDirection();
       }
       this.Move(this.Position + direction, map);
       InactiveTime = 0;

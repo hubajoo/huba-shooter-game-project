@@ -15,5 +15,5 @@ public interface IMovementLogic
   /// <param name="map"></param>
   /// <param name="newPosition"></param>
   /// <returns></returns>
-  public bool Move(GameObject gameObject, Map map, Point newPosition);
+  public bool Move(IGameObject gameObject, IMap map, Point newPosition);
 }

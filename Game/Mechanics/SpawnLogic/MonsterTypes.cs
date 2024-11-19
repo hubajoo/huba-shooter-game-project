@@ -6,15 +6,15 @@ using SadRogue.Primitives;
 
 public class MonsterTypes
 {
-  public List<Func<Point, ScreenObjectManager, Map, IGameObject>> Types { get; private set; } = new List<Func<Point, ScreenObjectManager, Map, IGameObject>>();
-  public MonsterTypes(params Func<Point, ScreenObjectManager, Map, IGameObject>[] monsterTypes)
+  public List<Func<Point, IScreenObjectManager, IMap, IGameObject>> Types { get; private set; } = new List<Func<Point, IScreenObjectManager, IMap, IGameObject>>();
+  public MonsterTypes(params Func<Point, IScreenObjectManager, IMap, IGameObject>[] monsterTypes)
   {
     foreach (var func in monsterTypes)
     {
       Types.Add(func);
     }
   }
-  public List<Func<Point, ScreenObjectManager, Map, IGameObject>> GetTypes()
+  public List<Func<Point, IScreenObjectManager, IMap, IGameObject>> GetTypes()
   {
     return Types;
   }

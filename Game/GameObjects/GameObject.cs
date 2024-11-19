@@ -20,9 +20,11 @@ public abstract class GameObject : IGameObject
   protected ColoredGlyph OriginalAppearance { get; set; }
   public ColoredGlyph _mapAppearance = new ColoredGlyph();
 
-  protected ScreenObjectManager _screenObjectManager;
+  protected IScreenObjectManager _screenObjectManager;
 
-  protected Map _map;
+  private IMovementLogic movement;
+
+  protected IMap _map;
 
 
   /// <summary>
@@ -31,14 +33,14 @@ public abstract class GameObject : IGameObject
   /// <param name="appearance"></param>
   /// <param name="position"></param>
   /// <param name="hostingSurface"></param>
-  protected GameObject(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager, Map map)
+  protected GameObject(ColoredGlyph appearance, Point position, IScreenObjectManager screenObjectManager, IMap map, IMovementLogic? movementLogic = null)
   {
     Appearance = appearance;
     OriginalAppearance = appearance;
     Position = position;
     _screenObjectManager = screenObjectManager;
     _map = map;
-
+    movement = movementLogic ?? new Movements(map, screenObjectManager);
 
     // Store the map cell
     _mapAppearance = screenObjectManager.GetScreenObject(position);
@@ -60,10 +62,10 @@ public abstract class GameObject : IGameObject
   /// <param name="newPosition"></param>
   /// <param name="map"></param>
   /// <returns></returns>
-  public bool Move(Point newPosition, Map map)
+  public bool Move(Point newPosition, IMap map)
   {
-    var m = new Movement(map, _screenObjectManager);
-    return m.Move(this, map, newPosition);
+    var m = new Movements(map, _screenObjectManager);
+    return movement.Move(this, map, newPosition);
   }
 
   /// <summary>

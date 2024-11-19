@@ -17,18 +17,21 @@ public class Monster : GameObject, IDamaging, IMoving, IVulnerable
   public int FixActionDelay { get; set; } //Delay between actions
   public int RandomActionDelayMax { get; set; } = 100; //Random delay between actions
   public int InactiveTime { get; set; } = 0; //Time since last action
+
+  protected IDirectionChoiche _directionChoice; //Direction choice for the monster
   /// <summary>
   /// Constructor.
   /// </summary>
   /// <param name="appearance"></param>
   /// <param name="position"></param>
   /// <param name="hostingSurface"></param>
-  protected Monster(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager, int health, int damage, Map map)
+  protected Monster(ColoredGlyph appearance, Point position, IScreenObjectManager screenObjectManager, int health, int damage, IMap map, IDirectionChoiche directionChoice = null)
       : base(appearance, position, screenObjectManager, map)
   {
     FixActionDelay = 0;
     Health = health;
     DamageNumber = damage;
+    _directionChoice = directionChoice ?? new RandomDirection();
   }
   /// <summary>
   /// Method <c>TakeDamage</c> reduces the health of the monster by a given amount.
@@ -36,7 +39,7 @@ public class Monster : GameObject, IDamaging, IMoving, IVulnerable
   /// <param name="map"></param>
   /// <param name="damage"></param>
   /// <returns></returns>
-  public void TakeDamage( int damage = 1)
+  public void TakeDamage(int damage = 1)
   {
     Health -= damage;
     if (Health <= 0)
@@ -85,11 +88,11 @@ public class Monster : GameObject, IDamaging, IMoving, IVulnerable
   ///  Method <c>AIMove</c> moves the monster in a random direction with a delay.
   /// </summary>
   /// <param name="map"></param>
-  protected virtual void AIMove(Map map) //Default movement is random with a delay
+  protected virtual void AIMove(IMap map) //Default movement is random with a delay
   {
     if (InactiveTime >= FixActionDelay)
     {
-      var direction = DirectionGeneration.GetRandomDirection();
+      var direction = _directionChoice.GetDirection(Position, map.UserControlledObject.Position);
       this.Move(this.Position + direction, map);
       InactiveTime = 0;
       InactiveTime -= RandomAction.RandomWait(RandomActionDelayMax);
@@ -103,7 +106,7 @@ public class Monster : GameObject, IDamaging, IMoving, IVulnerable
   /// Method <c>AIAttack</c> triggers the attack behaviour of the monster.
   /// </summary>
   /// <param name="map"></param>
-  protected virtual void AIAttack(Map map) //No default attack
+  protected virtual void AIAttack(IMap map) //No default attack
   {
 
   }

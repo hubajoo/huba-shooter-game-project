@@ -9,7 +9,11 @@ public class GameSettings : IGameSettings
   public string UserName { get; set; }
   public int ViewPortWidth { get; set; }
   public int ViewPortHeight { get; set; }
-  public int statsConsoleWidth { get; set; }
+  public int StatsConsoleWidth { get; set; }
+  public int PlayerHealth { get; set; }
+  public int PlayerDamage { get; set; }
+
+  public int PlayerRange { get; set; }
 
   public GameSettings(string[] lines)
   {
@@ -25,7 +29,10 @@ public class GameSettings : IGameSettings
       UserName = settingsDict["UserName"];
       ViewPortWidth = Int32.Parse(settingsDict["ViewPortWidth"]);
       ViewPortHeight = Int32.Parse(settingsDict["ViewPortHeight"]);
-      statsConsoleWidth = Int32.Parse(settingsDict["StatsConsoleWidth"]);
+      StatsConsoleWidth = Int32.Parse(settingsDict["StatsConsoleWidth"]);
+      PlayerHealth = Int32.Parse(settingsDict["PlayerHealth"]);
+      PlayerDamage = Int32.Parse(settingsDict["PlayerDamage"]);
+      PlayerRange = Int32.Parse(settingsDict["PlayerRange"]);
 
     }
     catch (Exception e)

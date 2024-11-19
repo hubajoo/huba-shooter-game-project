@@ -1,23 +1,22 @@
 namespace DungeonCrawl.Mechanics;
 
 using DungeonCrawl.GameObjects;
-using DungeonCrawl.Maps;
 using SadConsole;
 using SadRogue.Primitives;
 /// <summary>
 /// Class <c>Movement</c> models the movement logic for a game object.
 /// </summary>
-public class Movement : IMovementLogic
+public class Movements : IMovementLogic
 {
 
-  private Map _map;
+  private IMap _map;
 
-  private ScreenObjectManager _screenObjectManager;
+  private IScreenObjectManager _screenObjectManager;
 
   /// <summary> Constructor. </summary>
   /// <param name="map"></param>
   /// <param name="screenObjectManager"></param>
-  public Movement(Map map, ScreenObjectManager screenObjectManager)
+  public Movements(IMap map, IScreenObjectManager screenObjectManager)
   {
     _map = map;
     _screenObjectManager = screenObjectManager;
@@ -30,7 +29,7 @@ public class Movement : IMovementLogic
   /// <param name="map"></param>
   /// <param name="newPosition"></param>
   /// <returns> Bool </returns>
-  public bool Move(GameObject gameObject, Map map, Point newPosition)
+  public bool Move(IGameObject gameObject, IMap map, Point newPosition)
   {
     // Check new position is valid
     if (!map.SurfaceObject.Surface.IsValidCell(newPosition.X, newPosition.Y)) return false;

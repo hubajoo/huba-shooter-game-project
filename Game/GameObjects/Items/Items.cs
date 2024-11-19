@@ -8,7 +8,7 @@ namespace DungeonCrawl.GameObjects;
 
 public abstract class Items : GameObject
 {
-  protected Items(ColoredGlyph appearance, Point position, ScreenObjectManager screenObjectManager, Map map) : base(appearance, position, screenObjectManager, map)
+  protected Items(ColoredGlyph appearance, Point position, IScreenObjectManager screenObjectManager, Map map) : base(appearance, position, screenObjectManager, map)
   {
 
   }
