@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 /// <summary>
 /// Class <c>LeaderBoardHandler</c> handles the leaderboard.
@@ -100,21 +101,31 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   /// <param name="score"></param>
   private async void AddToLeaderboardServer(string name, int score)
   {
-    string request = $"{_url}/api/leaderboard";
-    Console.WriteLine($"Adding to leaderboard: {request}");
-
-    using (HttpClient client = new HttpClient())
+    try
     {
-      var content = new StringContent($"{{\"name\":\"{name}\",\"score\":{score}}}", System.Text.Encoding.UTF8, "application/json");
-      HttpResponseMessage response = await client.PostAsync(request, content);
-      if (response.IsSuccessStatusCode)
+      string requestUrl = $"{_url}/api/leaderboard";
+      Console.WriteLine($"Sending PUT request to: {requestUrl}");
+
+      var leaderboardEntry = new LeaderBoardEntry(name, score);
+      string jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(leaderboardEntry);
+      var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+      Console.WriteLine(jsonContent);
+      using (HttpClient client = new HttpClient())
       {
-        Console.WriteLine("Added to leaderboard");
+        HttpResponseMessage response = await client.PutAsync(requestUrl, content);
+        if (response.IsSuccessStatusCode)
+        {
+          Console.WriteLine("Successfully added to leaderboard.");
+        }
+        else
+        {
+          Console.WriteLine($"Error: {response.StatusCode}");
+        }
       }
-      else
-      {
-        Console.WriteLine($"Error: {response.StatusCode}");
-      }
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred: {ex.Message}");
     }
   }
 
