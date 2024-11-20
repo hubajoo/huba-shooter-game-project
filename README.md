@@ -95,24 +95,40 @@ This project requires .NET to be installed. You can download it from [here](http
   ```
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back tao top</a>)</p>
 
 ### Installation
 
-1. Clone the repo
+1. Clone the repository
    ```sh
    git clone https://github.com/hubajoo/huba-shooter-game-project.git
+   cd huba-shooter-game-project
    ```
 
-2. Execute the file C:\Program Files\Repository\New\huba-shooter-game-project\Game\bin\Debug\net6.0\DungeonCrawl.exe or use the terminal to run the game
-   ```sh
-   dotnet run
-   ```
-3. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin hubajoo/huba-shooter-game-project
-   git remote -v # confirm the changes
-   ```
+2. Install .NET 6.0 SDK (if not already installed)
+  Download and install from [here](https://dotnet.microsoft.com/download/dotnet/6.0).
+
+3. Build and run the project
+  Using the terminal:
+  ```sh
+  cd Game
+  dotnet run
+  ```
+  Or execute the file directly:
+  ```sh
+  C:\Program Files\Repository\New\huba-shooter-game-project\Game\bin\Debug\net6.0\DungeonCrawl.exe
+  ```
+
+4. Change git remote URL to avoid accidental pushes to the base project
+  ```sh
+  git remote set-url origin hubajoo/huba-shooter-game-project
+  git remote -v # confirm the changes
+  ```
+
+### Usage
+
+After running the game, follow the on-screen instructions to play.
+Use the arrow keys to navigate and spacebar to interact.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

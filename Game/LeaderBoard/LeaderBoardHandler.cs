@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using System.Text;
+
 /// <summary>
 /// Class <c>LeaderBoardHandler</c> handles the leaderboard.
 /// </summary>
@@ -137,7 +138,6 @@ public class LeaderBoardHandler : ILeaderBoardHandler
     try
     {
       LeaderBoard.Clear();
-      //await FetchLeaderboard();
       string[] lines = File.ReadAllLines(path); // Reads all lines from file
       foreach (string line in lines) // Loops through lines
       {
@@ -185,7 +185,6 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   /// Method <c>GetArray</c> returns the leaderboard as an array.
   /// </summary>
   /// <returns></returns>
-
   public string[] GetArray()
   {
     return LeaderBoard.ToArray();
