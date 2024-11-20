@@ -6,6 +6,7 @@ using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;
 using DungeonCrawl.Mechanics;
+using System.Xml.XPath;
 namespace Setup;
 
 public class GameSetup
@@ -23,7 +24,9 @@ public class GameSetup
   public void Init()
   {
     // Creates the leader board handler
-    ILeaderBoardHandler leaderBoardHandler = new LeaderBoardHandler(_settings.ServerUrl, _settings.UserName);
+    ILeaderBoardHandler leaderBoardHandler = new LeaderBoardHandler(_settings);
+    leaderBoardHandler.FetchLeaderboard().Wait();
+    leaderBoardHandler.ReadLeaderBoard();
 
     // Creates screensurface
     var screenSurface = new ScreenSurface(_settings.ViewPortWidth - _settings.StatsConsoleWidth, _settings.ViewPortHeight);
@@ -37,8 +40,8 @@ public class GameSetup
     map.SurfaceObject.Position = new Point(_settings.StatsConsoleWidth, 0);
 
     // Creates player
-    Player player = new Player(_settings.UserName, screenSurface.Surface.Area.Center, screenObjectManager, map, _settings.PlayerHealth, _settings.PlayerDamage,
-     _settings.PlayerRange, leaderBoardHandler.AddToLeaderboard);
+    Player player = new Player(_settings.UserName, screenSurface.Surface.Area.Center, screenObjectManager, map, 
+    _settings.PlayerHealth, _settings.PlayerDamage, _settings.PlayerRange, leaderBoardHandler.AddToLeaderboard);
     map.AddUserControlledObject(player);
 
     // Creates monster types
@@ -52,7 +55,8 @@ public class GameSetup
     map.SetSpawnLogic(wave);
 
     // Creates UI elements
-    var PlayerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName, leaderBoardHandler.GetArray())
+    var PlayerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName, 
+    leaderBoardHandler.ReadLeaderBoard().ToArray())
     {
       Position = new Point(0, 0)
     };

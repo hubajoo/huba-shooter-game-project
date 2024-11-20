@@ -1,0 +1,1 @@
+public record LeaderBoardEntry(string Name, int Score);

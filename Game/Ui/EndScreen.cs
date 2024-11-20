@@ -40,8 +40,8 @@ namespace DungeonCrawl.UI
     /// </summary>
     public void DeathMessage()
     {
-      PrintCenter(" You died ", 2, Color.Red, Color.White);
-      PrintCenter(" Press Space to quit ", 3, Color.DarkOrange);
+      PrintCenter(" You died ", 4, Color.Red, Color.White);
+      PrintCenter(" Press Space to quit ", 6, Color.DarkOrange);
     }
     /// <summary>
     /// Prints text in the horizontal center.
