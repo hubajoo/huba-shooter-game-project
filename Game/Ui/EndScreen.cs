@@ -11,8 +11,6 @@ namespace DungeonCrawl.UI
   /// </summary>
   public class EndScreen : Console
   {
-    private string _name;
-
     private int _center;
     private ILeaderBoardHandler _leaderBoardHandler;
     private int _borderOffset;
