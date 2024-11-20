@@ -1,6 +1,5 @@
 using System;
 using DungeonCrawl.GameObjects;
-using DungeonCrawl.Maps;
 using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;

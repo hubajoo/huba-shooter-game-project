@@ -22,5 +22,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  
+   <Target Name="Run" AfterTargets="Build">
+    <Exec Command="dotnet run" />
+  </Target>
 
 </Project>

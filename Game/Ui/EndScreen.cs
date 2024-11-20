@@ -1,6 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using DungeonCrawl.GameObjects;
 using SadConsole;
 using SadConsole.Input;
 using SadRogue.Primitives;

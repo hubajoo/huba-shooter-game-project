@@ -1,17 +1,9 @@
 
-using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using DungeonCrawl.Maps;
 using DungeonCrawl.GameObjects;
 using DungeonCrawl.Ui;
 using DungeonCrawl.UI;
-using Microsoft.VisualBasic;
-using Newtonsoft.Json;
 using SadConsole;
-using SadConsole.UI;
 using SadRogue.Primitives;
 using DungeonCrawl.Mechanics;
 namespace Setup;
@@ -45,7 +37,7 @@ public class GameSetup
     map.SurfaceObject.Position = new Point(_settings.StatsConsoleWidth, 0);
 
     // Creates player
-    Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map, _settings.PlayerHealth, _settings.PlayerDamage,
+    Player player = new Player(_settings.UserName, screenSurface.Surface.Area.Center, screenObjectManager, map, _settings.PlayerHealth, _settings.PlayerDamage,
      _settings.PlayerRange, leaderBoardHandler.AddToLeaderboard);
     map.AddUserControlledObject(player);
 

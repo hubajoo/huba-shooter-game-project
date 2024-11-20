@@ -4,6 +4,7 @@ using SadRogue.Primitives;
 using DungeonCrawl.Mechanics;
 using System.Linq;
 using DungeonCrawl.Maps;
+using System.Reflection.Metadata.Ecma335;
 
 
 namespace DungeonCrawl.GameObjects;
@@ -19,6 +20,9 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
 
   public int Kills { get; private set; } = 0;
 
+  public string Name { get; private set; }
+
+
   private System.Action<string, int> ScoreHandling;
 
   /// <summary>
@@ -28,13 +32,14 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
   /// <param name="hostingSurface"></param>
 
   //public Direction Direction;
-  public Player(Point position, IScreenObjectManager screenObjectManager, IMap map, int health = 100, int damage = 1, int range = 5, System.Action<string, int> addToLeaderboard = null)
+  public Player(string name, Point position, IScreenObjectManager screenObjectManager, IMap map, int health = 100, int damage = 1, int range = 5, System.Action<string, int> addToLeaderboard = null)
       : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager, map)
   {
     Inventory = new List<Items>();
     Health = health;
     Damage = damage;
     Range = range;
+    Name = name;
     ScoreHandling = addToLeaderboard ?? ((name, score) => { });
   }
   /// <summary>
@@ -124,6 +129,6 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
     //Appearance.Foreground = Color.White;
     //_screenObjectManager.RefreshCell(_map, Position);
     _screenObjectManager.End();
-    ScoreHandling("Player", Kills);
+    ScoreHandling(Name, Kills);
   }
 }

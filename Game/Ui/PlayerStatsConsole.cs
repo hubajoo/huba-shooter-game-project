@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using DungeonCrawl.GameObjects;
 using SadConsole;
 using SadRogue.Primitives;

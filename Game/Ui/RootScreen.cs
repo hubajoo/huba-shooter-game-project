@@ -1,11 +1,8 @@
 using System;
-using DungeonCrawl.Maps;
 using DungeonCrawl.UI;
 using SadConsole;
 using SadConsole.Input;
 using SadRogue.Primitives;
-using Game = SadConsole.Game;
-using System.Collections.Generic;
 
 namespace DungeonCrawl.Ui;
 
@@ -26,7 +23,6 @@ public class RootScreen : ScreenObject
     _map = map;
     Children.Add(_map.SurfaceObject);
   }
-
 
 
   /// <summary>
