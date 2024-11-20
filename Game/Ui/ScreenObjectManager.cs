@@ -1,3 +1,4 @@
+using System;
 using DungeonCrawl.GameObjects;
 using DungeonCrawl.Maps;
 using DungeonCrawl.UI;
@@ -126,13 +127,15 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   {
     if (_EndScreenSet)
     {
-      ClearScreen();
+      //ClearScreen();
       AddScreenObject(_EndScreen);
+      Game.Instance.Screen = _EndScreen;
     }
   }
   public void SetEndScreen(IScreenObject endScreen)
   {
     _EndScreen = endScreen;
+    endScreen.Update(new TimeSpan());
     _EndScreenSet = true;
   }
 }

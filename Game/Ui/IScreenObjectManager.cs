@@ -4,6 +4,9 @@ using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;
 
+/// <summary>
+/// Interface <c>IScreenObjectManager</c> models a screen object manager.
+/// </summary>
 public interface IScreenObjectManager
 {
   public void AddScreenObject(IScreenObject screenObject);

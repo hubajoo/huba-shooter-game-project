@@ -7,6 +7,9 @@ using Console = SadConsole.Console;
 
 namespace DungeonCrawl.UI
 {
+  /// <summary>
+  /// Class <c>PlayerStatsConsole</c> models a console for player stats.
+  /// </summary>
   public class PlayerStatsConsole : Console
   {
     private Player _player;
@@ -15,8 +18,18 @@ namespace DungeonCrawl.UI
     private int _borderOffset;
     private int fullWidth;
     private int fullHeight;
-    private int LeaderBoardOffset;
+    private int LeaderBoardOffset = 0;
     private int leftMargin;
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <param name="player"></param>
+    /// <param name="name"></param>
+    /// <param name="leaderboard"></param>
+    /// <param name="borderOffset"></param>
     public PlayerStatsConsole(int width, int height, Player player, string name, string[] leaderboard, int borderOffset = 1) : base(width, height)
     {
       _player = player;
@@ -33,9 +46,13 @@ namespace DungeonCrawl.UI
       PrintLeaderBoard(leaderboard);
     }
 
+    /// <summary>
+    /// Prints player stats.
+    /// </summary>
     public void PrintStats()
     {
-      //this.Clear();
+      var area = new Rectangle(_borderOffset, _borderOffset, Width - _borderOffset * 2, LeaderBoardOffset);
+      this.Clear(area);
 
       int line = _borderOffset + 1;
 
@@ -75,6 +92,11 @@ namespace DungeonCrawl.UI
       line++;
       LeaderBoardOffset = line;
     }
+
+    /// <summary>
+    /// Prints the leaderboard.
+    /// </summary>
+    /// <param name="leaderBoard"></param>
     public void PrintLeaderBoard(string[] leaderBoard)
     {
       int line = LeaderBoardOffset + 1;
@@ -89,17 +111,23 @@ namespace DungeonCrawl.UI
         }
       }
     }
+
+    /// <summary>
+    /// Draws a box.
+    /// </summary>
     public void DrawBorder()
     {
       this.DrawBox(new Rectangle(0, 0, fullWidth, fullHeight),
           ShapeParameters.CreateBorder(new ColoredGlyph(Color.White, Color.Black, 176)));
     }
 
+    /// <summary>
+    /// Updates the console.
+    /// </summary>
+    /// <param name="timeElapsed"></param>
     public override void Update(TimeSpan timeElapsed)
     {
       PrintStats();
-      //PrintLeaderBoard();
-      //DrawBorder();
     }
   }
 }

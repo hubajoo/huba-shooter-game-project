@@ -1,2 +1,3 @@
 Huba:142
-Béla:2
+Bob:21
+Victor:30

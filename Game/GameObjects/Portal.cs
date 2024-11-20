@@ -11,9 +11,4 @@ public class Portal : GameObject
       : base(new ColoredGlyph(Color.Gray, Color.Red, 0), position, screenObjectManager, map)
   {
   }
-  public override bool Touched(IGameObject source)
-  {
-    source.Touching(this);
-    return false;
-  }
 }

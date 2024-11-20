@@ -84,7 +84,7 @@ public class MonsterWave : ISpawnOrchestrator
   /// <returns></returns>
   private Point openPortal(int difficulty)
   {
-    Point location = new Point(0, 0);
+    Point location = new Point(10, 10);
 
     if (difficulty != 0)
     {

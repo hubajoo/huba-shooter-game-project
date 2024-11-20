@@ -30,11 +30,11 @@ public class GameSetup
 
   public void Init()
   {
-
+    // Creates the leader board handler
     ILeaderBoardHandler leaderBoardHandler = new LeaderBoardHandler(_settings.ServerUrl, _settings.UserName);
 
     // Creates screensurface
-    var screenSurface = new ScreenSurface(_settings.ViewPortWidth, _settings.ViewPortHeight);
+    var screenSurface = new ScreenSurface(_settings.ViewPortWidth - _settings.StatsConsoleWidth, _settings.ViewPortHeight);
     screenSurface.UseMouse = false;
 
     // Drawing logic setup
@@ -45,10 +45,9 @@ public class GameSetup
     map.SurfaceObject.Position = new Point(_settings.StatsConsoleWidth, 0);
 
     // Creates player
-    Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map, _settings.PlayerHealth, _settings.PlayerDamage, _settings.PlayerRange);
+    Player player = new Player(screenSurface.Surface.Area.Center, screenObjectManager, map, _settings.PlayerHealth, _settings.PlayerDamage,
+     _settings.PlayerRange, leaderBoardHandler.AddToLeaderboard);
     map.AddUserControlledObject(player);
-
-
 
     // Creates monster types
     MonsterTypes monsterTypes = new MonsterTypes(MonsterCreation.CreateMonsterTypes());
@@ -65,7 +64,7 @@ public class GameSetup
     {
       Position = new Point(0, 0)
     };
-    var EndScreen = new LeaderBoard(_settings.ViewPortWidth, _settings.ViewPortHeight, player, _settings.UserName)
+    var EndScreen = new EndScreen(_settings, leaderBoardHandler)
     {
       Position = new Point(0, 0)
     };

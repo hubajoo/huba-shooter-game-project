@@ -43,17 +43,28 @@ public class Map : IMap
     _screenObjectManager = screenObjectManager;
   }
 
-
+  /// <summary>
+  /// Adds a player to the map.
+  /// </summary>
+  /// <param name="player"></param>
   public void AddUserControlledObject(Player player)
   {
     UserControlledObject = player;
     _mapObjects.Add(player);
   }
-
+  /// <summary>
+  /// Adds a map object to the map.
+  /// </summary>
+  /// <param name="gameObject"></param>
   public void AddMapObject(IGameObject gameObject)
   {
     _mapObjects.Add(gameObject);
   }
+
+  /// <summary>
+  /// Sets the spawn logic for the map.
+  /// </summary>
+  /// <param name="spawnLogic"></param>
   public void SetSpawnLogic(ISpawnOrchestrator spawnLogic)
   {
     _spawnLogicSet = true;
@@ -80,6 +91,12 @@ public class Map : IMap
 
     return foundGameObject;
   }
+  /// <summary>
+  /// Try to find a map object at that position.
+  /// </summary>
+  /// <param name="position"></param>
+  /// <param name="gameObject"></param>
+  /// <returns></returns>
   public bool TryGetMapObject(Point position, out IGameObject? gameObject)
   {
     foreach (var otherGameObject in _mapObjects)

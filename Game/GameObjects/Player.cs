@@ -19,6 +19,7 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
 
   public int Kills { get; private set; } = 0;
 
+  private System.Action<string, int> ScoreHandling;
 
   /// <summary>
   /// Constructor.
@@ -27,51 +28,32 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
   /// <param name="hostingSurface"></param>
 
   //public Direction Direction;
-  public Player(Point position, IScreenObjectManager screenObjectManager, IMap map, int health = 100, int damage = 1, int range = 5)
+  public Player(Point position, IScreenObjectManager screenObjectManager, IMap map, int health = 100, int damage = 1, int range = 5, System.Action<string, int> addToLeaderboard = null)
       : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager, map)
   {
     Inventory = new List<Items>();
     Health = health;
     Damage = damage;
     Range = range;
+    ScoreHandling = addToLeaderboard ?? ((name, score) => { });
   }
-
+  /// <summary>
+  /// Method <c>ChageDirection</c> changes the direction of the player.
+  /// </summary>
+  /// <param name="direction"></param>
   public void ChangeDirection(Direction direction)
   {
     Direction = direction;
   }
+
+  /// <summary>
+  /// Method <c>Shoot</c> creates a projectile in the direction of the player.
+  /// </summary>
   public void Shoot()
   {
     CreateProjectile(Position, Direction, Color.Orange, Damage, Range, 4);
   }
 
-  /// <summary>
-  /// Method <c>Move</c> moves the player to a new position.
-  /// </summary>
-  /// <param name="items"></param>
-  /*
-  public void AddNewItemToInventory(Items items)
-  {
-    Inventory.Add(items);
-
-    if (items is Potion potion)
-    {
-      if (BaseHealth == PLAYER_MAX_HEALTH)
-      {
-        Inventory.Add(potion);
-      }
-      else if (BaseHealth + potion.Healing > PLAYER_MAX_HEALTH)
-
-      {
-        BaseHealth = PLAYER_MAX_HEALTH;
-      }
-      else
-      {
-        BaseHealth += potion.Healing;
-      }
-    }
-  }
-*/
   /// <summary>
   /// Method <c>Touched</c> prevents other Objects from moving to the occupied position.
   /// </summary>
@@ -88,11 +70,17 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
     return false;
   }
 
+
+  /// <summary>
+  /// Method <c>TakeDamage</c> reduces the player's health when hit.
+  /// </summary>
+  /// <param name="damage"></param>
   public void TakeDamage(int damage)
   {
     Health -= damage;
     if (Health <= 0)
     {
+      _map.RemoveMapObject(this);
       EndGame();
     }
   }
@@ -132,9 +120,10 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
 
   public void EndGame()
   {
-    Appearance.Foreground = Color.White;
-    _screenObjectManager.RefreshCell(_map, Position);
+    RemoveSelf();
+    //Appearance.Foreground = Color.White;
+    //_screenObjectManager.RefreshCell(_map, Position);
     _screenObjectManager.End();
-
+    ScoreHandling("Player", Kills);
   }
 }
