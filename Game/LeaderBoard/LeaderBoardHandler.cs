@@ -22,6 +22,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   {
     try
     {
+      Console.WriteLine(url);
       using var client = new HttpClient();
       using var s = await client.GetStreamAsync($"{url}/api/leaderboard?name={name}");
       using var fs = new System.IO.FileStream(path, FileMode.OpenOrCreate);
@@ -37,7 +38,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   {
     LeaderBoard.Add($"{name}:{score}");
     using StreamWriter sw = File.AppendText(path);
-    sw.WriteLine($"{name}:{score}");
+    sw.WriteLine($"\n{name}:{score}");
     Console.WriteLine($"{name}:{score}");
   }
 

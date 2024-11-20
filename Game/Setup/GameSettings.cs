@@ -22,7 +22,7 @@ public class GameSettings : IGameSettings
 
       foreach (string line in lines) // Loops through lines
       {
-        string[] parts = line.Split(':'); // Splits line by colon
+        string[] parts = line.Split('='); // Splits line by colon
         settingsDict.Add(parts[0], parts[1]); // Adds key-value pair to dictionary
       }
 
