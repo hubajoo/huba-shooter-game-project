@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-namespace Setup;
+namespace GameSetup;
 
 /// <summary>
 /// Class <c>SettingsReader</c> reads settings from a file.

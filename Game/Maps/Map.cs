@@ -115,6 +115,14 @@ public class Map : IMap
     gameObject = null;
     return false;
   }
+
+  /// <summary>
+  /// Try to find a map object at that position.
+  /// </summary>
+  /// <param name="position"></param>
+  /// <param name="gameObject"></param>
+  /// <param name="excluded"></param>
+  /// <returns></returns>
   public bool TryGetMapObject(Point position, out IGameObject? gameObject, IGameObject excluded)
   {
     foreach (var otherGameObject in _mapObjects)
@@ -143,27 +151,36 @@ public class Map : IMap
     if (_mapObjects.Contains(mapObject))
     {
       _mapObjects.Remove(mapObject);
-
-      //mapObject.RestoreMap(this);
     }
   }
 
 
+  /// <summary>
+  /// Progress time in the map.
+  /// </summary>
   public void ProgressTime()
   {
+
+    // Update all objects
     for (int i = 0; i < _mapObjects.Count; i++)
     {
       _mapObjects[i].Update();
     }
 
+    // If there are no monsters left, call the spawn logic
     if (_mapObjects.Count(obj => obj is Monster) < 1 && _spawnLogicSet)
     {
       _spawnLogic.NoEnemiesLeft();
     }
   }
 
+  /// <summary>
+  /// Drop loot at a position.
+  /// </summary>
+  /// <param name="position"></param>
   public void DropLoot(Point position)
   {
+    // Randomly choose a loot item
     Random rnd = new Random();
     int item = rnd.Next(0, 2);
 
@@ -171,14 +188,12 @@ public class Map : IMap
     switch (item)
     {
       case 0:
-        loot = new Potion(position, _screenObjectManager, this);
+        loot = new Potion(position, _screenObjectManager, this); // Create a potion
         break;
       case 1:
-        loot = new RangeBonus(position, _screenObjectManager, this);
+        loot = new RangeBonus(position, _screenObjectManager, this); // Create a range bonus
         break;
     }
     _mapObjects.Add(loot);
-
   }
-
 }

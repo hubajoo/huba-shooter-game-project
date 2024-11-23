@@ -1,3 +1,5 @@
+namespace GameSetup;
+
 public interface IGameSettings
 {
   public string UserName { get; set; }

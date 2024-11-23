@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace Setup;
+namespace GameSetup;
 
+
+/// <summary>
+/// Interface <c>IGameSettings</c> defines the properties of the game settings.
+/// </summary>
 public class GameSettings : IGameSettings
 {
   private Dictionary<string, string> settingsDict = new Dictionary<string, string>();
@@ -15,6 +19,10 @@ public class GameSettings : IGameSettings
   public int PlayerRange { get; set; }
   public string ServerUrl { get; set; }
 
+  /// <summary>
+  /// Constructor for GameSettings
+  /// </summary>
+  /// <param name="lines"></param>
   public GameSettings(string[] lines)
   {
     try

@@ -6,8 +6,7 @@ using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;
 using DungeonCrawl.Mechanics;
-using System.Xml.XPath;
-namespace Setup;
+namespace GameSetup;
 
 public class GameSetup
 {
@@ -40,7 +39,7 @@ public class GameSetup
     map.SurfaceObject.Position = new Point(_settings.StatsConsoleWidth, 0);
 
     // Creates player
-    Player player = new Player(_settings.UserName, screenSurface.Surface.Area.Center, screenObjectManager, map, 
+    Player player = new Player(_settings.UserName, screenSurface.Surface.Area.Center, screenObjectManager, map,
     _settings.PlayerHealth, _settings.PlayerDamage, _settings.PlayerRange, leaderBoardHandler.AddToLeaderboard);
     map.AddUserControlledObject(player);
 
@@ -55,7 +54,7 @@ public class GameSetup
     map.SetSpawnLogic(wave);
 
     // Creates UI elements
-    var PlayerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName, 
+    var PlayerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName,
     leaderBoardHandler.ReadLeaderBoard().ToArray())
     {
       Position = new Point(0, 0)
