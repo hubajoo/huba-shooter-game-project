@@ -2,6 +2,7 @@ using DungeonCrawl.GameObjects;
 using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;
+using System;
 
 /// <summary>
 /// Interface <c>IScreenObjectManager</c> models a screen object manager.

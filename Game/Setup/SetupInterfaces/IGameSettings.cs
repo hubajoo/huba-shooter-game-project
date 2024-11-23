@@ -1,4 +1,4 @@
-namespace GameSetup;
+namespace DungeonCrawl.GameSetup;
 
 public interface IGameSettings
 {

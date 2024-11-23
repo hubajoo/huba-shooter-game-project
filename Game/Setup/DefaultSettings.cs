@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using SadConsole;
-namespace GameSetup;
+namespace DungeonCrawl.GameSetup;
 
 /// <summary>
 /// Class <c>DefaultSettings</c> provides default settings for the game.

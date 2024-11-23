@@ -65,6 +65,11 @@ public class RootScreen : ScreenObject
       _map.UserControlledObject.Shoot();
       handled = true;
     }
+     else if (keyboard.IsKeyPressed(Keys.Escape))
+    {
+      _map.UserControlledObject.EndGame();
+      handled = true;
+    }
     return handled;
   }
 

@@ -6,7 +6,10 @@ using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;
 using DungeonCrawl.Mechanics;
-namespace GameSetup;
+using DungeonCrawl.LeaderBoard;
+
+
+namespace DungeonCrawl.GameSetup;
 
 public class GameSetup
 {

@@ -2,14 +2,15 @@ using System;
 using SadConsole;
 using SadConsole.Input;
 using SadRogue.Primitives;
-using Console = SadConsole.Console;
+using DungeonCrawl.GameSetup;
+using DungeonCrawl.LeaderBoard;
 
 namespace DungeonCrawl.UI
 {
   /// <summary>
   /// Class <c>EndScreen</c> models the end screen of the game.
   /// </summary>
-  public class EndScreen : Console
+  public class EndScreen : SadConsole.Console
   {
     private int _center;
     private ILeaderBoardHandler _leaderBoardHandler;

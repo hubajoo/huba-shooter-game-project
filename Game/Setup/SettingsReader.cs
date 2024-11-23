@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-namespace GameSetup;
+
+namespace DungeonCrawl.GameSetup;
 
 /// <summary>
 /// Class <c>SettingsReader</c> reads settings from a file.

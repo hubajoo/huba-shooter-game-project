@@ -3,6 +3,14 @@ using DungeonCrawl.GameObjects;
 using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;
+
+namespace DungeonCrawl.UI;
+
+/// <summary>
+/// Class <c>ScreenObjectManager</c> manages screen objects.
+/// </summary>
+
+
 /// <summary>
 /// Class <c>ScreenObjectManager</c> manages screen objects.
 /// </summary>
