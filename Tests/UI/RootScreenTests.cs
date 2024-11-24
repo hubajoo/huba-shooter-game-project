@@ -6,7 +6,7 @@ using SadRogue.Primitives;
 using DungeonCrawl.Ui;
 
 /*
-namespace Tests
+namespace Tests.RootScreenTests
 {
   public class RootScreenTests
   {

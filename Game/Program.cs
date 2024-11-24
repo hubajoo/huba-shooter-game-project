@@ -7,11 +7,6 @@ namespace DungeonCrawl.Program;
 /// </summary>
 public class Program
 {
-  private const int ViewPortWidth = 100;
-  private const int ViewPortHeight = 40;
-
-  //private Dictionary<string, string> Settings = new Dictionary<string, string>();
-
   /// <summary>
   /// The entry point of the program.
   /// </summary>

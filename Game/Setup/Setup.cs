@@ -26,7 +26,8 @@ public class Setup
   public void Init()
   {
     // Creates the leader board handler
-    ILeaderBoardHandler leaderBoardHandler = new LeaderBoardHandler(_settings);
+    string path = "Data/leaderboard.txt";
+    ILeaderBoardHandler leaderBoardHandler = new LeaderBoardHandler(_settings, path);
     leaderBoardHandler.FetchLeaderboard().Wait();
     leaderBoardHandler.ReadLeaderBoard();
 

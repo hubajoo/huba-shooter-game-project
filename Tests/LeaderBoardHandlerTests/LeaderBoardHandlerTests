@@ -1,0 +1,73 @@
+using NUnit.Framework;
+using Moq;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
+using DungeonCrawl.LeaderBoard;
+
+namespace Tests.LeaderBoardHandlerTests;
+
+      [TestFixture]
+  public class LeaderBoardHandlerTests
+  {
+    private Mock<HttpMessageHandler> _mockHttpMessageHandler;
+    private string _path = "Data/leaderboard.txt";
+    private string _invalidPath = "Data/leaderboard_invalid.txt";
+    private string _url = "http://example.com";
+
+
+    [SetUp]
+    public void Setup()
+    {
+      _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+    }
+    
+    [Test]
+    public void Fail()
+    {
+      Assert.Fail();
+    }
+
+
+    [Test]
+    public async Task FetchLeaderboard_Success()
+    {
+      var mockResponse = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+      {
+        Content = new StringContent("[\"Player1:100\", \"Player2:200\"]")
+      };
+
+      _mockHttpMessageHandler
+          .Setup(m => m.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
+          .ReturnsAsync(mockResponse);
+
+      var leaderBoardHandler = new LeaderBoardHandler(_url, validPath: _path)
+      await leaderBoardHandler.FetchLeaderboard();
+
+      var leaderboard = leaderBoardHandler.ReadLeaderBoard();
+      Assert.That(leaderboard, Contains.Item("Player1:100"));
+      Assert.That(leaderboard, Contains.Item("Player2:200"));
+    }
+
+    [Test]
+    public void FetchLeaderboard_Failure()
+    {
+      var mockResponse = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+
+      _mockHttpMessageHandler
+          .Setup(m => m.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
+          .ReturnsAsync(mockResponse);
+
+      var leaderBoardHandler = new LeaderBoardHandler(_url, validPath: _path)
+      Assert.ThrowsAsync<FileNotFoundException>(async () => await leaderBoardHandler.FetchLeaderboard());
+    }
+
+    [Test]
+    public void ReadLeaderBoard_FileNotFound()
+    {
+      var leaderBoardHandler = new LeaderBoardHandler(_url, validPath: _invalidPath);
+      var leaderboard = _leaderBoardHandler.ReadLeaderBoard();
+      Assert.That(leaderboard, Is.Empty);
+    }
+  }

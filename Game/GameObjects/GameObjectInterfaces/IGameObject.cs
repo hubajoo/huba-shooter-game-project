@@ -11,9 +11,15 @@ namespace DungeonCrawl.GameObjects;
 public interface IGameObject
 {
   /// <summary>
+  /// The appearance of the game object.
+  /// </summary>
+  public ColoredGlyph Appearance { get; set; }
+
+  /// <summary>
   /// The position of the game object.
   /// </summary>
   public Point Position { get; set; }
+
   /// <summary>
   /// Checks if the game object has been touched.
   /// </summary>

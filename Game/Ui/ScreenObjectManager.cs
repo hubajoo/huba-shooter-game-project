@@ -65,7 +65,6 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   public void DrawScreenObject(IGameObject gameObject)
   {
     gameObject.GetAppearance().CopyAppearanceTo(_screenSurface.Surface[gameObject.GetPosition()]);
-    //gameObject.Appearance.CopyAppearanceTo(_screenSurface.Surface[gameObject.Position]); 
     _screenSurface.IsDirty = true;
   }
 
@@ -94,7 +93,6 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
       // Draw the game object
       DrawScreenObject(gameObject, position);
     }
-    //DrawScreenObject(gameObject, position);
 
     // If there is no game object at that position
     else
@@ -113,6 +111,11 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   {
     _Screen.Children.Remove(screenObject);
   }
+
+  /// <summary>
+  /// Adds a screen object.
+  /// </summary>
+  /// <param name="screenObject"></param>
   public void AddScreenObject(IScreenObject screenObject)
   {
     _Screen.Children.Add(screenObject);
@@ -152,7 +155,6 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   {
     if (_EndScreenSet)
     {
-      //ClearScreen();
       AddScreenObject(_EndScreen);
       Game.Instance.Screen = _EndScreen;
     }

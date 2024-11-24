@@ -15,22 +15,20 @@ public class LeaderBoardHandler : ILeaderBoardHandler
 {
   private List<string> LeaderBoard;
 
-  public string path = "Data/leaderBoard.txt";
+  private string _path;
 
   private string _url;
-  public LeaderBoardHandler(IGameSettings settings)
+
+  /// <summary>
+  /// Constructor for LeaderBoardHandler
+  /// </summary>
+  /// <param name="settings"></param>
+  /// <param name="path"></param>
+  public LeaderBoardHandler(IGameSettings settings, string path = "Data/leaderboard.txt")
   {
     _url = settings.ServerUrl;
     LeaderBoard = new List<string>();
-  }
-
-  public static async Task<LeaderBoardHandler> CreateAsync(IGameSettings settings)
-  {
-    var handler = new LeaderBoardHandler(settings);
-    await handler.FetchLeaderboard();
-    handler.ReadLeaderBoard();
-    handler.SortLeaderBoard();
-    return handler;
+    _path = path;
   }
 
   /// <summary>
@@ -58,7 +56,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
           {
             string line = $"{entry.Name}:{entry.Score}";
             LeaderBoard.Add(line);
-            using StreamWriter sw = File.AppendText(path);
+            using StreamWriter sw = File.AppendText(_path);
             sw.WriteLine($"\n{line}");
           }
           ReadLeaderBoard();
@@ -85,7 +83,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
     try
     {
       LeaderBoard.Add($"{name}:{score}");
-      using StreamWriter sw = File.AppendText(path);
+      using StreamWriter sw = File.AppendText(_path);
       sw.WriteLine($"\n{name}:{score}");
       Console.WriteLine($"{name}:{score}");
       SortLeaderBoard();
@@ -141,7 +139,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
     try
     {
       LeaderBoard.Clear();
-      string[] lines = File.ReadAllLines(path); // Reads all lines from file
+      string[] lines = File.ReadAllLines(_path); // Reads all lines from file
       foreach (string line in lines) // Loops through lines
       {
         string[] parts = line.Split(':'); // Splits line by colon
@@ -156,13 +154,13 @@ public class LeaderBoardHandler : ILeaderBoardHandler
     }
     catch (FileNotFoundException) // If file not found
     {
-      File.Create(path);
+      File.Create(_path);
       return LeaderBoard;
     }
     catch (Exception e) // If any other exception
     {
-      File.Delete(path);
-      File.Create(path);
+      File.Delete(_path);
+      File.Create(_path);
       Console.WriteLine(e.Message);
       return LeaderBoard;
     }
@@ -173,7 +171,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   /// </summary>
   public void ClearLeaderBoard()
   {
-    File.WriteAllText(path, string.Empty);
+    File.WriteAllText(_path, string.Empty);
   }
 
   /// <summary>
