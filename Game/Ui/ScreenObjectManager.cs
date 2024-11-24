@@ -46,6 +46,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
     gameObject.GetAppearance().CopyAppearanceTo(_screenSurface.Surface[position]);
     _screenSurface.IsDirty = true;
   }
+
   /// <summary>
   /// Draws a ColoredGlyph at given position.
   /// </summary>
@@ -56,6 +57,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
     apperance.CopyAppearanceTo(_screenSurface.Surface[position]);
     _screenSurface.IsDirty = true;
   }
+
   /// <summary>
   /// Draws a game object on the screen.
   /// </summary>
@@ -76,6 +78,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   {
     return _screenSurface.Surface[position];
   }
+
   /// <summary>
   /// Refreshes a cell on the screen.
   /// </summary>
@@ -103,7 +106,6 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
 
   }
 
-
   /// <summary>
   /// ScreenObject lifetime managementt.
   /// </summary>
@@ -115,21 +117,37 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   {
     _Screen.Children.Add(screenObject);
   }
+
+  /// <summary>
+  /// Clears the screen.
+  /// </summary>
   public void ClearScreen()
   {
     _Screen.Children.Clear();
   }
+
+  /// <summary>
+  /// Sets the main screen.
+  /// </summary>
+  /// <param name="mainScreen"></param>
   public void SetMainScreen(IScreenObject mainScreen)
   {
     _Screen = mainScreen;
   }
+
+  /// <summary>
+  /// Sets the console.
+  /// </summary>
+  /// <param name="console"></param>
   public void SetConsole(PlayerStatsConsole console)
   {
     _PlayerStatsConsole = console;
     _Screen.Children.Add(console);
   }
 
-
+  /// <summary>
+  /// Switches to the end screen.
+  /// </summary>
   public void End()
   {
     if (_EndScreenSet)
@@ -139,6 +157,11 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
       Game.Instance.Screen = _EndScreen;
     }
   }
+
+  /// <summary>
+  /// Sets the end screen.
+  /// </summary>
+  /// <param name="endScreen"></param>
   public void SetEndScreen(IScreenObject endScreen)
   {
     _EndScreen = endScreen;

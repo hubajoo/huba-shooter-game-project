@@ -12,15 +12,15 @@ public class DefaultSettings
 
   // Array of strings that represent the default settings
   private string[] settingStringArray = new string[] {
-"UserName:Bob",
-"StatsConsoleWidth:25",
-"ViewPortWidth:100",
-"ViewPortHeight:40",
-"PlayerHealth:100",
-"PlayerDamage:1",
-"PlayerRange:5",
+    "StatsConsoleWidth=25",
+    "ViewPortWidth=100",
+    "ViewPortHeight=40",
+    "PlayerHealth=100",
+    "PlayerDamage=1",
+    "PlayerRange=5",
+    "UserName=Bob",
+    "ServerUrl=https://localhost:8090"
   };
-
 
   /// <summary>
   /// Constructor for DefaultSettings

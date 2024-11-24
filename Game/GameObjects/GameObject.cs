@@ -1,4 +1,5 @@
-﻿using DungeonCrawl.Maps;
+﻿#nullable enable
+using DungeonCrawl.Maps;
 using DungeonCrawl.Mechanics;
 using SadConsole;
 using SadRogue.Primitives;

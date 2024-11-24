@@ -19,6 +19,7 @@ public class GameSettings : IGameSettings
   public int PlayerRange { get; set; }
   public string ServerUrl { get; set; }
 
+
   /// <summary>
   /// Constructor for GameSettings
   /// </summary>
@@ -27,25 +28,27 @@ public class GameSettings : IGameSettings
   {
     try
     {
-
       foreach (string line in lines) // Loops through lines
       {
         string[] parts = line.Split('='); // Splits line by colon
+        if (parts.Length != 2) // If not key-value pair
+        {
+          throw new Exception("Invalid settings file format");
+        }
         settingsDict.Add(parts[0], parts[1]); // Adds key-value pair to dictionary
       }
-
-      UserName = settingsDict["UserName"];
       ViewPortWidth = Int32.Parse(settingsDict["ViewPortWidth"]);
       ViewPortHeight = Int32.Parse(settingsDict["ViewPortHeight"]);
       StatsConsoleWidth = Int32.Parse(settingsDict["StatsConsoleWidth"]);
       PlayerHealth = Int32.Parse(settingsDict["PlayerHealth"]);
       PlayerDamage = Int32.Parse(settingsDict["PlayerDamage"]);
       PlayerRange = Int32.Parse(settingsDict["PlayerRange"]);
+      UserName = settingsDict["UserName"];
       ServerUrl = settingsDict["ServerUrl"];
     }
     catch (Exception e)
     {
-      Console.WriteLine(e.Message);
+      throw new Exception(e.Message);
     }
   }
 }

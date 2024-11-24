@@ -1,6 +1,6 @@
 ﻿using DungeonCrawl.GameSetup;
 
-namespace ShooterGame;
+namespace DungeonCrawl.Program;
 
 /// <summary>
 /// Class <c>Program</c> provides an entry point for the game.
@@ -25,7 +25,7 @@ public class Program
     SadConsole.Game.Create(settings.ViewPortWidth, settings.ViewPortHeight);
 
     // Creates Setup class
-    GameSetup setup = new GameSetup(settings);
+    Setup setup = new Setup(settings);
 
     // Hook the start event so we can add consoles to the system.
     SadConsole.Game.Instance.OnStart = setup.Init;

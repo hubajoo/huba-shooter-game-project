@@ -21,14 +21,9 @@ public class SettingsReader : ISettingsReader
       string[] lines = File.ReadAllLines(path); // Reads all lines from file
       return new GameSettings(lines); // Returns settings
     }
-    catch (FileNotFoundException) // If file not found
-    {
-      return new DefaultSettings().Settings; // Returns default settings
-    }
     catch (Exception e) // If any other exception
     {
-      Console.WriteLine(e.Message);
-      return new DefaultSettings().Settings;
+      throw new Exception(e.Message);
     }
   }
 }

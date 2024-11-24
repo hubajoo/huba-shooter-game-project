@@ -11,14 +11,14 @@ using DungeonCrawl.LeaderBoard;
 
 namespace DungeonCrawl.GameSetup;
 
-public class GameSetup
+public class Setup
 {
   /// <summary>
   /// Initializes the game.
   /// </summary>
   private IGameSettings _settings;
 
-  public GameSetup(IGameSettings settings)
+  public Setup(IGameSettings settings)
   {
     _settings = settings;
   }
