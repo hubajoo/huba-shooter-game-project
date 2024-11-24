@@ -1,5 +1,4 @@
-using DungeonCrawl.GameObjects;
-using DungeonCrawl.Maps;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
 using SadRogue.Primitives;
 
 namespace DungeonCrawl.Mechanics;

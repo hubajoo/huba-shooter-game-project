@@ -1,49 +1,52 @@
 ﻿using System.Collections.Generic;
 using SadConsole;
 using SadRogue.Primitives;
-using DungeonCrawl.Mechanics;
-using System.Linq;
-using DungeonCrawl.Maps;
-using System.Reflection.Metadata.Ecma335;
+using DungeonCrawl.GameObjects.Items;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
 
 
 namespace DungeonCrawl.GameObjects;
 
 /// <summary>
-/// Class <c>Player</c> models a user controlled object in the game.
+/// Class <c>Player</c> models a user controlled object in the .
 /// </summary>
 public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
 {
-  public List<Items> Inventory { get; private set; }
+  public List<Item> Inventory { get; private set; }
 
   public int Health { get; set; }
 
-  public int Kills { get; private set; } = 0;
+  public int Kills { get; private set; }
 
   public string Name { get; private set; }
 
 
-  private System.Action<string, int> ScoreHandling;
+  private readonly System.Action<string, int> _scoreHandling;
 
   /// <summary>
-  /// Constructor.
+  /// Constructor for Player
   /// </summary>
+  /// <param name="name"></param>
   /// <param name="position"></param>
-  /// <param name="hostingSurface"></param>
-
-  //public Direction Direction;
+  /// <param name="screenObjectManager"></param>
+  /// <param name="map"></param>
+  /// <param name="health"></param>
+  /// <param name="damage"></param>
+  /// <param name="range"></param>
+  /// <param name="addToLeaderboard"></param>
   public Player(string name, Point position, IScreenObjectManager screenObjectManager, IMap map, int health = 100, int damage = 1, int range = 5, System.Action<string, int> addToLeaderboard = null)
       : base(new ColoredGlyph(Color.Green, Color.Transparent, 2), position, screenObjectManager, map)
   {
-    Inventory = new List<Items>();
+    Inventory = new List<Item>();
     Health = health;
     Damage = damage;
     Range = range;
     Name = name;
-    ScoreHandling = addToLeaderboard ?? ((name, score) => { });
+    Kills = 0;
+    _scoreHandling = addToLeaderboard ?? ((name, score) => { });
   }
   /// <summary>
-  /// Method <c>ChageDirection</c> changes the direction of the player.
+  /// Method <c>ChangeDirection</c> changes the direction of the player.
   /// </summary>
   /// <param name="direction"></param>
   public void ChangeDirection(Direction direction)
@@ -91,7 +94,7 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
   }
 
   /// <summary>
-  /// Method <c>Killed</c> counts the players's kills.
+  /// Method <c>Killed</c> counts the player's kills.
   /// </summary>
   /// <param name="victim"></param>
   public void Killed(IGameObject victim)
@@ -101,11 +104,15 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
 
 
   /// <summary>
-  /// Creartes a custom projectile going in the required direction.
+  /// Method <c>CreateProjectile</c> creates a projectile in the direction of the player.
   /// </summary>
-  /// <param name="attackerPosition">Origin position</param>
-  /// <param name="direction"Direction of flight</param>
-  /// <param name="color" Projectile color</param>
+  /// <param name="origin"></param>
+  /// <param name="direction"></param>
+  /// <param name="color"></param>
+  /// <param name="damage"></param>
+  /// <param name="maxDistance"></param>
+  /// <param name="glyph"></param>
+  /// <returns></returns>
   public bool CreateProjectile(Point origin, Direction direction, Color color, int damage = 1, int maxDistance = 1, int glyph = 4)
   {
     Point spawnPosition = origin + direction;
@@ -117,18 +124,19 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
       return false;
     }
 
-    Projectile projectile = new Projectile(spawnPosition, direction, _screenObjectManager, damage, maxDistance, color, _map, glyph);
+    Projectile projectile = new Projectile(spawnPosition, direction, ScreenObjectManager, damage, maxDistance, color, _map, glyph);
     _map.AddMapObject(projectile);
 
     return true;
   }
 
+  /// <summary>
+  /// Method <c>EndGame</c> ends the game.
+  /// </summary>
   public void EndGame()
   {
     RemoveSelf();
-    //Appearance.Foreground = Color.White;
-    //_screenObjectManager.RefreshCell(_map, Position);
-    _screenObjectManager.End();
-    ScoreHandling(Name, Kills);
+    ScreenObjectManager.End();
+    _scoreHandling(Name, Kills);
   }
 }

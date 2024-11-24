@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using DungeonCrawl.GameObjects.ObjectInterfaces;
 using DungeonCrawl.Maps;
 using DungeonCrawl.Mechanics;
 using SadConsole;
@@ -14,37 +15,39 @@ public abstract class GameObject : IGameObject
 {
   public Point Position { get; set; }
   public Direction Direction;
-  public int Damage { get; protected set; } = 0;
+  public int Damage { get; protected set; }
   public int Range { get; set; }
 
   public ColoredGlyph Appearance { get; set; }
   protected ColoredGlyph OriginalAppearance { get; set; }
-  public ColoredGlyph _mapAppearance = new ColoredGlyph();
+  public ColoredGlyph MapAppearance = new ColoredGlyph();
 
-  protected IScreenObjectManager _screenObjectManager;
+  protected IScreenObjectManager ScreenObjectManager;
 
-  private IMovementLogic movement;
+  private IMovementLogic _movement;
 
   protected IMap _map;
 
 
   /// <summary>
-  /// Constructor.
+  /// Constructor for GameObject.
   /// </summary>
   /// <param name="appearance"></param>
   /// <param name="position"></param>
-  /// <param name="hostingSurface"></param>
+  /// <param name="screenObjectManager"></param>
+  /// <param name="map"></param>
+  /// <param name="movementLogic"></param>
   protected GameObject(ColoredGlyph appearance, Point position, IScreenObjectManager screenObjectManager, IMap map, IMovementLogic? movementLogic = null)
   {
     Appearance = appearance;
     OriginalAppearance = appearance;
     Position = position;
-    _screenObjectManager = screenObjectManager;
+    ScreenObjectManager = screenObjectManager;
     _map = map;
-    movement = movementLogic ?? new Movements(map, screenObjectManager);
+    _movement = movementLogic ?? new Movements(map, screenObjectManager);
 
     // Store the map cell
-    _mapAppearance = screenObjectManager.GetScreenObject(position);
+    MapAppearance = screenObjectManager.GetScreenObject(position);
 
 
     // Draw the object
@@ -65,8 +68,8 @@ public abstract class GameObject : IGameObject
   /// <returns></returns>
   public bool Move(Point newPosition, IMap map)
   {
-    var m = new Movements(map, _screenObjectManager);
-    return movement.Move(this, map, newPosition);
+    var m = new Movements(map, ScreenObjectManager);
+    return _movement.Move(this, map, newPosition);
   }
 
   /// <summary>
@@ -100,7 +103,7 @@ public abstract class GameObject : IGameObject
   public virtual void RemoveSelf()
   {
     _map.RemoveMapObject(this);
-    _screenObjectManager.RefreshCell(_map, Position);
+    ScreenObjectManager.RefreshCell(_map, Position);
   }
   /// <summary>
   /// Gets the position of the object.

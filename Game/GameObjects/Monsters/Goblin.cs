@@ -1,15 +1,13 @@
-using DungeonCrawl.Maps;
-using DungeonCrawl.Mechanics;
+using DungeonCrawl.Mechanics.Randomisation;
 using SadConsole;
 using SadRogue.Primitives;
 
 
-namespace DungeonCrawl.GameObjects;
-
+namespace DungeonCrawl.GameObjects.Monsters;
 /// <summary>
 /// The class <c>Goblin</c> models a fast, agressive, melee monster in the game.
 /// </summary>
-public class Goblin : Monster, IDamaging, IMoving
+public class Goblin : Monster
 {
   /// <summary>
   /// Initializes a new instance of <c>Goblin</c> with a position, screen object manager, and map.
@@ -17,33 +15,33 @@ public class Goblin : Monster, IDamaging, IMoving
   /// <param name="position"></param>
   /// <param name="screenObjectManager"></param>
   /// <param name="map"></param>
+  /// <param name="directionChoice"></param>
   public Goblin(Point position, IScreenObjectManager screenObjectManager, IMap map, IDirectionChoiche directionChoice = null)
-      : base(new ColoredGlyph(Color.Blue, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 5, map, directionChoice)
+      : base(new ColoredGlyph(Color.Cyan, Color.Transparent, 1), position, screenObjectManager, health: 5, damage: 10, map, directionChoice)
   {
-    Damage = 10;
-    FixActionDelay = 10;
-    RandomActionDelayMax = 5;
+    FixActionDelay = 10; // The time the goblin waits between actions
+    RandomActionDelayMax = 5; // The maximum time the goblin waits between actions
   }
   /// <summary>
   /// Overwrites the AIMove method to make the goblin chase the player.
   /// </summary>
   /// <param name="map"></param>
-  protected override void AIMove(IMap map)
+  protected override void AiMove(IMap map)
   {
-    if (InactiveTime >= FixActionDelay)
+    if (InactiveTime >= FixActionDelay) // If the goblin is not inactive
     {
-      var direction = _directionChoice.GetDirection(Position, map.UserControlledObject.Position);
-      if (!RandomAction.weightedBool(4))
+      var direction = DirectionChoice.GetDirection(Position, map.UserControlledObject.Position); // Get the direction of the player
+      if (!RandomAction.WeightedBool(4)) // Chanche to move randomly
       {
-        direction = _directionChoice.GetDirection();
+        direction = DirectionChoice.GetDirection(); // Get a random direction
       }
-      this.Move(this.Position + direction, map);
-      InactiveTime = 0;
-      InactiveTime -= RandomAction.RandomWait(RandomActionDelayMax);
+      Move(Position + direction, map);// Move in the direction
+      InactiveTime = 0; // Reset the inactive time
+      InactiveTime -= RandomAction.RandomWait(RandomActionDelayMax); // Randomly wait
     }
     else
     {
-      InactiveTime++;
+      InactiveTime++; // Wait
     }
   }
 }

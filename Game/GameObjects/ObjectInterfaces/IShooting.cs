@@ -1,5 +1,8 @@
 using SadRogue.Primitives;
 
+namespace DungeonCrawl.GameObjects.ObjectInterfaces;
+
+
 public interface IShooting
 {
   public void Shoot();

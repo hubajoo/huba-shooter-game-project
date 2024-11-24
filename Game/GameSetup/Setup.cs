@@ -5,7 +5,7 @@ using DungeonCrawl.Ui;
 using DungeonCrawl.UI;
 using SadConsole;
 using SadRogue.Primitives;
-using DungeonCrawl.Mechanics;
+using DungeonCrawl.Mechanics.SpawnLogic;
 using DungeonCrawl.LeaderBoard;
 
 
@@ -58,19 +58,19 @@ public class Setup
     map.SetSpawnLogic(wave);
 
     // Creates UI elements
-    var PlayerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName,
+    var playerStatsConsole = new PlayerStatsConsole(_settings.StatsConsoleWidth, _settings.ViewPortHeight, player, _settings.UserName,
     leaderBoardHandler.ReadLeaderBoard().ToArray())
     {
       Position = new Point(0, 0)
     };
-    var EndScreen = new EndScreen(_settings, leaderBoardHandler)
+    var endScreen = new EndScreen(_settings, leaderBoardHandler)
     {
       Position = new Point(0, 0)
     };
     var rootScreen = new RootScreen(map);
     screenObjectManager.SetMainScreen(rootScreen);
-    screenObjectManager.SetConsole(PlayerStatsConsole);
-    screenObjectManager.SetEndScreen(EndScreen);
+    screenObjectManager.SetConsole(playerStatsConsole);
+    screenObjectManager.SetEndScreen(endScreen);
     map.SurfaceObject.Position = new Point(_settings.StatsConsoleWidth, 0);
 
     // Sets the main screen

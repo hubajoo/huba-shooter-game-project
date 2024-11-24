@@ -2,12 +2,12 @@ using DungeonCrawl.Maps;
 using SadConsole;
 using SadRogue.Primitives;
 
-namespace DungeonCrawl.GameObjects;
+namespace DungeonCrawl.GameObjects.Items;
 
 /// <summary>
-/// The class <c>RangeBonus</c> models a range bonus item in the game.
+/// The class <c>RangeBonus</c> models an item that increases the player's range.
 /// </summary>
-public class RangeBonus : Items
+public class RangeBonus : Item
 {
   /// <summary>
   /// Initializes a new instance of <c>RangeBonus</c> with a position, screen object manager, and map.

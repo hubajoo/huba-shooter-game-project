@@ -1,4 +1,6 @@
 using DungeonCrawl.GameObjects;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
+using DungeonCrawl.Mechanics.SpawnLogic;
 using SadConsole;
 using SadRogue.Primitives;
 

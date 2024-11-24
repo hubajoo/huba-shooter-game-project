@@ -1,5 +1,4 @@
 using System;
-using DungeonCrawl.UI;
 using SadConsole;
 using SadConsole.Input;
 using SadRogue.Primitives;

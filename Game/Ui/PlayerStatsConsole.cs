@@ -15,10 +15,10 @@ public class PlayerStatsConsole : Console
   private string _name;
 
   private int _borderOffset;
-  private int fullWidth;
-  private int fullHeight;
-  private int LeaderBoardOffset = 0;
-  private int leftMargin;
+  private int _fullWidth;
+  private int _fullHeight;
+  private int _leaderBoardOffset;
+  private int _leftMargin;
 
   /// <summary>
   /// Constructor.
@@ -35,10 +35,11 @@ public class PlayerStatsConsole : Console
     IsVisible = true;
     IsFocused = false;
     _borderOffset = borderOffset;
-    fullWidth = width;
-    fullHeight = height;
-    leftMargin = _borderOffset + 1;
+    _fullWidth = width;
+    _fullHeight = height;
+    _leftMargin = _borderOffset + 1;
     _name = name;
+    _leaderBoardOffset = 0;
 
     PrintStats();
     DrawBorder();
@@ -50,14 +51,14 @@ public class PlayerStatsConsole : Console
   /// </summary>
   public void PrintStats()
   {
-    var area = new Rectangle(_borderOffset, _borderOffset, Width - _borderOffset * 2, LeaderBoardOffset);
+    var area = new Rectangle(_borderOffset, _borderOffset, Width - _borderOffset * 2, _leaderBoardOffset);
     this.Clear(area);
 
     int line = _borderOffset + 1;
 
-    this.Print(leftMargin, line, " Mission: Survive ", Color.Black, Color.White);
+    this.Print(_leftMargin, line, " Mission: Survive ", Color.Black, Color.White);
     line++;
-    this.Print(leftMargin, line + 1, $" User: {_name} ", Color.White);
+    this.Print(_leftMargin, line + 1, $" User: {_name} ", Color.White);
     line += 3;
 
     string mission = "Kill the monsters coming from the portals and survive as long as you can.";
@@ -69,7 +70,7 @@ public class PlayerStatsConsole : Console
       if (lineText.Length + missionArr[i].Length > 20 || i == missionArr.Length - 1)
       {
         lineText += " " + missionArr[i];
-        this.Print(leftMargin, line, lineText, Color.DarkOrange);
+        this.Print(_leftMargin, line, lineText, Color.DarkOrange);
         lineText = "";
         line++;
       }
@@ -79,17 +80,17 @@ public class PlayerStatsConsole : Console
       }
     }
     line++;
-    this.Print(leftMargin, line, " Player stats:", Color.Black, Color.White);
+    this.Print(_leftMargin, line, " Player stats:", Color.Black, Color.White);
     line++;
-    this.Print(leftMargin, line, $" Health: {_player.Health}", Color.White);
+    this.Print(_leftMargin, line, $" Health: {_player.Health}", Color.White);
     line++;
-    this.Print(leftMargin, line, $" Damage: {_player.Damage}", Color.White);
+    this.Print(_leftMargin, line, $" Damage: {_player.Damage}", Color.White);
     line++;
-    this.Print(leftMargin, line, $" Range: {_player.Range}", Color.White);
+    this.Print(_leftMargin, line, $" Range: {_player.Range}", Color.White);
     line++;
-    this.Print(leftMargin, line, $" Score: {_player.Kills}", Color.White);
+    this.Print(_leftMargin, line, $" Score: {_player.Kills}", Color.White);
     line++;
-    LeaderBoardOffset = line;
+    _leaderBoardOffset = line;
   }
 
   /// <summary>
@@ -98,14 +99,14 @@ public class PlayerStatsConsole : Console
   /// <param name="leaderBoard"></param>
   public void PrintLeaderBoard(string[] leaderBoard)
   {
-    int line = LeaderBoardOffset + 1;
-    this.Print(leftMargin, line, $"Top players:", Color.Black, Color.White);
+    int line = _leaderBoardOffset + 1;
+    this.Print(_leftMargin, line, $"Top players:", Color.Black, Color.White);
     line++;
     for (int i = 0; i < leaderBoard.Length; i++)
     {
       if (line < Height - _borderOffset * 2)
       {
-        this.Print(leftMargin, line, $"{i + 1}. {leaderBoard[i]}", Color.White);
+        this.Print(_leftMargin, line, $"{i + 1}. {leaderBoard[i]}", Color.White);
         line++;
       }
     }
@@ -116,7 +117,7 @@ public class PlayerStatsConsole : Console
   /// </summary>
   public void DrawBorder()
   {
-    this.DrawBox(new Rectangle(0, 0, fullWidth, fullHeight),
+    this.DrawBox(new Rectangle(0, 0, _fullWidth, _fullHeight),
         ShapeParameters.CreateBorder(new ColoredGlyph(Color.White, Color.Black, 176)));
   }
 

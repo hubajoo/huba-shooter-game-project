@@ -1,3 +1,5 @@
+
+namespace DungeonCrawl.Mechanics.SpawnLogic;
 public class SpawnScript
 {
   private int[][] _spawnScript;

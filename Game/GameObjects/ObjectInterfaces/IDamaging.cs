@@ -1,5 +1,6 @@
-using System.Data;
-using DungeonCrawl.GameObjects;
+
+namespace DungeonCrawl.GameObjects.ObjectInterfaces;
+
 /// <summary>
 /// Interface <c>IDamaging</c> defines the damage logic for a game object.
 /// </summary>

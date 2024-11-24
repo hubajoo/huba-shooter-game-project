@@ -1,7 +1,6 @@
 using System;
-using SadRogue.Primitives;
 
-namespace DungeonCrawl.Mechanics;
+namespace DungeonCrawl.Mechanics.Randomisation;
 
 public class RandomAction
 {
@@ -18,7 +17,7 @@ public class RandomAction
     int randomOrAggro = rnd.Next(0, 2);
     return randomOrAggro == 1;
   }
-  public static bool weightedBool(int max)
+  public static bool WeightedBool(int max)
   {
     Random rnd = new Random();
     int randomOrAggro = rnd.Next(0, max);

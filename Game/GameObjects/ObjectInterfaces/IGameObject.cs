@@ -1,9 +1,7 @@
-using DungeonCrawl.Maps;
-using DungeonCrawl.Mechanics;
 using SadConsole;
 using SadRogue.Primitives;
 
-namespace DungeonCrawl.GameObjects;
+namespace DungeonCrawl.GameObjects.ObjectInterfaces;
 
 /// <summary>
 /// The interface <I>IGameObject</I> models any objects in the game.
@@ -26,11 +24,13 @@ public interface IGameObject
   /// <param name="source"></param>
   /// <returns></returns>
   public bool Touched(IGameObject source);
+
   /// <summary>
   /// Calls contact logic for the touchhed game object.
   /// </summary>
   /// <param name="source"></param>
   public void Touching(IGameObject source);
+
   /// <summary>
   /// Updates the game object.
   /// </summary>
@@ -39,11 +39,13 @@ public interface IGameObject
   /// Removes the game object from the map.
   /// </summary>
   public void RemoveSelf();
+
   /// <summary>
   /// Gets the position of the game object.
   /// </summary>
   /// <returns>Point</returns>
   public Point GetPosition();
+
   /// <summary>
   /// Gets the appearance of the game object. 
   /// </summary>

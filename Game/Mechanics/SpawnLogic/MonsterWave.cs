@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using DungeonCrawl.Maps;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
 using DungeonCrawl.GameObjects;
 using SadConsole;
 using SadRogue.Primitives;
 
-namespace DungeonCrawl.Mechanics;
+namespace DungeonCrawl.Mechanics.SpawnLogic;
 
 /// <summary>
 /// Class <c>MonsterWave</c> models a wave of monsters in the game.

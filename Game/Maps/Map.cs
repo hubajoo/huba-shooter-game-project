@@ -2,12 +2,13 @@
 using SadConsole;
 using SadRogue.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using DungeonCrawl.Mechanics;
-using DungeonCrawl.UI;
-using SadConsole.UI;
 using DungeonCrawl.GameObjects;
+using DungeonCrawl.GameObjects.Items;
+using DungeonCrawl.GameObjects.Monsters;
+using DungeonCrawl.Mechanics.SpawnLogic;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
+
 
 namespace DungeonCrawl.Maps;
 
@@ -19,16 +20,16 @@ public class Map : IMap
   //public IReadOnlyList<IGameObject> GameObjects => _mapObjects.AsReadOnly();
   public IScreenSurface SurfaceObject => _mapSurface;
   public Player UserControlledObject { get; private set; }
-  private List<IGameObject> _mapObjects;
-  private IScreenSurface _mapSurface;
-
+  private readonly List<IGameObject> _mapObjects;
+  private readonly IScreenSurface _mapSurface;
+  private readonly IScreenObjectManager _screenObjectManager;
   private ISpawnOrchestrator _spawnLogic;
-  private bool _spawnLogicSet = false;
 
+  private bool _spawnLogicSet = false;
   public int Width { get; private set; }
   public int Height { get; private set; }
 
-  private IScreenObjectManager _screenObjectManager;
+
   /// <summary>
   /// Constructor.
   /// </summary>

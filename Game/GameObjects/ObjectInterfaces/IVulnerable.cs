@@ -1,4 +1,4 @@
-using DungeonCrawl.Maps;
+namespace DungeonCrawl.GameObjects.ObjectInterfaces;
 
 /// <summary>
 /// Interface <c>IVulnerable</c> models the vulnerability of a game object.

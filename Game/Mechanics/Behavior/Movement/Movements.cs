@@ -1,8 +1,10 @@
-namespace DungeonCrawl.Mechanics;
 
-using DungeonCrawl.GameObjects;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
 using SadConsole;
 using SadRogue.Primitives;
+
+namespace DungeonCrawl.Mechanics;
+
 /// <summary>
 /// Class <c>Movement</c> models the movement logic for a game object.
 /// </summary>

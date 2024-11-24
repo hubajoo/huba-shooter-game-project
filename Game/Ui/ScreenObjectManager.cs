@@ -1,6 +1,5 @@
 using System;
-using DungeonCrawl.GameObjects;
-using DungeonCrawl.UI;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
 using SadConsole;
 using SadRogue.Primitives;
 
@@ -16,13 +15,13 @@ namespace DungeonCrawl.UI;
 /// </summary>
 public class ScreenObjectManager : ScreenObject, IScreenObjectManager
 {
-  private IScreenObject _Screen;
+  private IScreenObject _screen;
 
-  private IScreenObject _EndScreen;
+  private IScreenObject _endScreen;
 
-  private bool _EndScreenSet = false;
+  private bool _endScreenSet = false;
 
-  private PlayerStatsConsole _PlayerStatsConsole;
+  private PlayerStatsConsole _playerStatsConsole;
 
 
   private IScreenSurface _screenSurface;
@@ -33,7 +32,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   public ScreenObjectManager(IScreenSurface screenSurface)
   {
     _screenSurface = screenSurface;
-    _Screen = new ScreenObject();
+    _screen = new ScreenObject();
   }
 
   /// <summary>
@@ -50,11 +49,11 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// <summary>
   /// Draws a ColoredGlyph at given position.
   /// </summary>
-  /// <param name="apperance"></param>
+  /// <param name="appearance"></param>
   /// <param name="position"></param>
-  public void DrawScreenObject(ColoredGlyph apperance, Point position)
+  public void DrawScreenObject(ColoredGlyph appearance, Point position)
   {
-    apperance.CopyAppearanceTo(_screenSurface.Surface[position]);
+    appearance.CopyAppearanceTo(_screenSurface.Surface[position]);
     _screenSurface.IsDirty = true;
   }
 
@@ -105,11 +104,11 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   }
 
   /// <summary>
-  /// ScreenObject lifetime managementt.
+  /// ScreenObject lifetime management.
   /// </summary>
   public void RemoveScreenObject(IScreenObject screenObject)
   {
-    _Screen.Children.Remove(screenObject);
+    _screen.Children.Remove(screenObject);
   }
 
   /// <summary>
@@ -118,7 +117,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// <param name="screenObject"></param>
   public void AddScreenObject(IScreenObject screenObject)
   {
-    _Screen.Children.Add(screenObject);
+    _screen.Children.Add(screenObject);
   }
 
   /// <summary>
@@ -126,7 +125,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// </summary>
   public void ClearScreen()
   {
-    _Screen.Children.Clear();
+    _screen.Children.Clear();
   }
 
   /// <summary>
@@ -135,7 +134,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// <param name="mainScreen"></param>
   public void SetMainScreen(IScreenObject mainScreen)
   {
-    _Screen = mainScreen;
+    _screen = mainScreen;
   }
 
   /// <summary>
@@ -144,8 +143,8 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// <param name="console"></param>
   public void SetConsole(PlayerStatsConsole console)
   {
-    _PlayerStatsConsole = console;
-    _Screen.Children.Add(console);
+    _playerStatsConsole = console;
+    _screen.Children.Add(console);
   }
 
   /// <summary>
@@ -153,10 +152,10 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// </summary>
   public void End()
   {
-    if (_EndScreenSet)
+    if (_endScreenSet)
     {
-      AddScreenObject(_EndScreen);
-      Game.Instance.Screen = _EndScreen;
+      AddScreenObject(_endScreen);
+      Game.Instance.Screen = _endScreen;
     }
   }
 
@@ -166,8 +165,8 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// <param name="endScreen"></param>
   public void SetEndScreen(IScreenObject endScreen)
   {
-    _EndScreen = endScreen;
+    _endScreen = endScreen;
     endScreen.Update(new TimeSpan());
-    _EndScreenSet = true;
+    _endScreenSet = true;
   }
 }

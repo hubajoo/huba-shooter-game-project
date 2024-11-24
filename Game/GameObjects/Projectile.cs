@@ -1,7 +1,6 @@
-using SadConsole.Components;
 using SadConsole;
 using SadRogue.Primitives;
-using DungeonCrawl.Maps;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
 
 namespace DungeonCrawl.GameObjects;
 
@@ -38,33 +37,51 @@ public class Projectile : GameObject, IDamaging
   }
 
   /// <summary>
-  /// Touched method changes the direction of the projectile when it touches another object.
+  /// Touched method changes the stops and explodes the projectile when it touches another object.
   /// </summary>
   /// <param name="source"></param>
   /// <returns></returns>
   public override bool Touched(IGameObject source)
   {
+    #nullable enable
+    Appearance = new ColoredGlyph(OriginalAppearance.Foreground, Appearance.Background, 15);
+    ScreenObjectManager.RefreshCell(_map, Position);
+    _maxDistance = 1;
+    //_flownDistance = 0;
     Direction = Direction.None;
     return true;
   }
-  //
 
+
+  /// <summary>
+  /// Update method updates the projectile.
+  /// </summary>
   public override void Update()
   {
     Fly();
   }
 
+  /// <summary>
+  /// Fly method moves the projectile in the direction it is facing.
+  /// </summary>
   public void Fly()
   {
+    // If the projectile has not flown the maximum distance
     if (_flownDistance <= _maxDistance)
     {
-      if (!Move(Position + Direction, _map)) Direction = Direction.None;
-      _flownDistance++;
-      if (Direction == Direction.Up || Direction == Direction.Down) _flownDistance++;
+      // Move the projectile in the direction it is facing, if it can't move, call the Touched method.
+      _flownDistance++; // Increase the flown distance
+
+      // Move the projectile in the direction it is facing
+      if (!Move(Position + Direction, _map)) Touched(null); // If the projectile can't move, call the Touched method
+
+      // Increase the flown distance if the projectile is moving up or down
+      // Tiles are rectangular, visually the projectile moves 2 times faster up and down
+      if (Direction == Direction.Up || Direction == Direction.Down) _flownDistance += 2;
     }
     else
     {
-      RemoveSelf();
+      RemoveSelf(); // Remove the projectile from the map
     }
 
   }
@@ -75,7 +92,7 @@ public class Projectile : GameObject, IDamaging
   public override void Touching(IGameObject source)
   {
     Appearance = new ColoredGlyph(OriginalAppearance.Foreground, Appearance.Background, 15);
-    _screenObjectManager.RefreshCell(_map, Position);
+    ScreenObjectManager.RefreshCell(_map, Position);
     Direction = Direction.None;
   }
 
