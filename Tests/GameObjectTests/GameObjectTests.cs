@@ -15,9 +15,11 @@ public class GameObjectTests
   private GameObject _gameObject;
   private ColoredGlyph _appearance;
   private Point _position;
+  private Color _color;
   private Mock<IScreenObjectManager> _screenObjectManager;
   private Mock<IMap> _map;
   private Mock<IMovementLogic> _movementLogic;
+
 
 
   [SetUp]
@@ -38,7 +40,6 @@ public class GameObjectTests
   public void Constructor_SetsProperties()
   {
     var constructorTestGameobject = new TestGameObject(_appearance, _position, _screenObjectManager.Object, _map.Object, _movementLogic.Object);
-
     Assert.That(constructorTestGameobject.Appearance, Is.EqualTo(_appearance));
     Assert.That(constructorTestGameobject.Position, Is.EqualTo(_position));
   }

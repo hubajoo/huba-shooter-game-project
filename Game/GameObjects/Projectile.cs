@@ -43,12 +43,11 @@ public class Projectile : GameObject, IDamaging
   /// <returns></returns>
   public override bool Touched(IGameObject source)
   {
-    #nullable enable
-    Appearance = new ColoredGlyph(OriginalAppearance.Foreground, Appearance.Background, 15);
-    ScreenObjectManager.RefreshCell(_map, Position);
-    _maxDistance = 1;
-    //_flownDistance = 0;
-    Direction = Direction.None;
+#nullable enable
+    Appearance = new ColoredGlyph(OriginalAppearance.Foreground, Appearance.Background, 15); // Change the appearance of the projectile - it explodes
+    ScreenObjectManager.RefreshCell(_map, Position); // Refresh the cell on the map
+    _maxDistance = 1; // Set the maximum distance to 1 - the projectile will be removed after the update
+    Direction = Direction.None; // Stop the projectile
     return true;
   }
 
@@ -67,7 +66,7 @@ public class Projectile : GameObject, IDamaging
   public void Fly()
   {
     // If the projectile has not flown the maximum distance
-    if (_flownDistance <= _maxDistance)
+    if (_flownDistance < _maxDistance)
     {
       // Move the projectile in the direction it is facing, if it can't move, call the Touched method.
       _flownDistance++; // Increase the flown distance

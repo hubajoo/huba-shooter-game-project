@@ -120,6 +120,7 @@ public abstract class GameObject : IGameObject
   {
     return Appearance;
   }
+
   /// <summary>
   /// Method <c>TakeDamage</c> reduces the health of the monster by a given amount.
   /// </summary>
@@ -127,9 +128,17 @@ public abstract class GameObject : IGameObject
   /// <param name="source"></param>
   /// <param name="damage"></param>
   /// <returns></returns>
-
   public virtual bool TakeDamage(Map map, IGameObject source, int damage)
   {
     return false;
+  }
+
+  /// <summary>
+  /// Method <c>SetMovementLogic</c> sets the movement logic for the object.
+  /// </summary>
+  /// <param name="movementLogic"></param>
+  public void SetMovementLogic(IMovementLogic movementLogic)
+  {
+    _movement = movementLogic;
   }
 }
