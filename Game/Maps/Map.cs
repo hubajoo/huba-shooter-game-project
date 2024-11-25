@@ -8,6 +8,7 @@ using DungeonCrawl.GameObjects.Items;
 using DungeonCrawl.GameObjects.Monsters;
 using DungeonCrawl.Mechanics.SpawnLogic;
 using DungeonCrawl.GameObjects.ObjectInterfaces;
+using DungeonCrawl.UI;
 
 
 namespace DungeonCrawl.Maps;
@@ -45,7 +46,7 @@ public class Map : IMap
   }
 
   /// <summary>
-  /// Adds a player to the map.
+  /// Adds a IPlayer to the map.
   /// </summary>
   /// <param name="player"></param>
   public void AddUserControlledObject(Player player)
@@ -53,6 +54,7 @@ public class Map : IMap
     UserControlledObject = player;
     _mapObjects.Add(player);
   }
+
   /// <summary>
   /// Adds a map object to the map.
   /// </summary>

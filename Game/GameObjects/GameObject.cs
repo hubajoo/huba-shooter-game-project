@@ -13,13 +13,13 @@ namespace DungeonCrawl.GameObjects;
 /// </summary>
 public abstract class GameObject : IGameObject
 {
-  public Point Position { get; set; }
-  public Direction Direction;
-  public int Damage { get; protected set; }
-  public int Range { get; set; }
+  public virtual Point Position { get; set; }
+  public virtual Direction Direction { get; set; }
+  public virtual int Damage { get; protected set; }
+  public virtual int Range { get; set; }
 
-  public ColoredGlyph Appearance { get; set; }
-  protected ColoredGlyph OriginalAppearance { get; set; }
+  public virtual ColoredGlyph Appearance { get; set; }
+  protected virtual ColoredGlyph OriginalAppearance { get; set; }
   public ColoredGlyph MapAppearance = new ColoredGlyph();
 
   protected IScreenObjectManager ScreenObjectManager;
@@ -66,7 +66,7 @@ public abstract class GameObject : IGameObject
   /// <param name="newPosition"></param>
   /// <param name="map"></param>
   /// <returns></returns>
-  public bool Move(Point newPosition, IMap map)
+  public virtual bool Move(Point newPosition, IMap map)
   {
     var m = new Movements(map, ScreenObjectManager);
     return _movement.Move(this, map, newPosition);
@@ -109,7 +109,7 @@ public abstract class GameObject : IGameObject
   /// Gets the position of the object.
   /// </summary>
   /// <returns>Point</returns>
-  public Point GetPosition()
+  public virtual Point GetPosition()
   {
     return Position;
   }
@@ -117,7 +117,7 @@ public abstract class GameObject : IGameObject
   /// Gets the appearance of the object.
   /// </summary>
   /// <returns></returns>
-  public ColoredGlyph GetAppearance()
+  public virtual ColoredGlyph GetAppearance()
   {
     return Appearance;
   }
