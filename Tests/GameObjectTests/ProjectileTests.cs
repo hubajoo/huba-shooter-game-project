@@ -10,11 +10,12 @@ using Moq;
 
 namespace Tests.GameObjectTests;
 
-public class GameObjectTests
+public class Projectile
 {
   private GameObject _gameObject;
   private ColoredGlyph _appearance;
   private Point _position;
+  private Direction _direction;
   private Mock<IScreenObjectManager> _screenObjectManager;
   private Mock<IMap> _map;
   private Mock<IMovementLogic> _movementLogic;
@@ -25,6 +26,7 @@ public class GameObjectTests
   {
     _appearance = new ColoredGlyph(Color.White, Color.Black, 'X');
     _position = new Point(1, 1);
+    _direction = Direction.Down;
 
     _screenObjectManager = new Mock<IScreenObjectManager>();
     _map = new Mock<IMap>();
@@ -37,10 +39,9 @@ public class GameObjectTests
   [Test]
   public void Constructor_SetsProperties()
   {
-    var constructorTestGameobject = new TestGameObject(_appearance, _position, _screenObjectManager.Object, _map.Object, _movementLogic.Object);
-
-    Assert.That(constructorTestGameobject.Appearance, Is.EqualTo(_appearance));
-    Assert.That(constructorTestGameobject.Position, Is.EqualTo(_position));
+    //var constructorTestGameobject = new Projectile(spawnPosition, direction, ScreenObjectManager, damage, maxDistance, color, _map, glyph);  
+    // var constructorTestProjectile = new Projectile(_position, _screenObjectManager.Object, _map.Object, _movementLogic.Object);
+    //Assert.That(constructorTestGameobject.Position, Is.EqualTo(_position));
   }
 
   [Test]

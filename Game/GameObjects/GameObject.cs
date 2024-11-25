@@ -68,7 +68,6 @@ public abstract class GameObject : IGameObject
   /// <returns></returns>
   public virtual bool Move(Point newPosition, IMap map)
   {
-    var m = new Movements(map, ScreenObjectManager);
     return _movement.Move(this, map, newPosition);
   }
 

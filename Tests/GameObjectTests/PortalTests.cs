@@ -10,43 +10,50 @@ using Moq;
 
 namespace Tests.GameObjectTests;
 
-public class GameObjectTests
+public class PortalTests
 {
-  private GameObject _gameObject;
-  private ColoredGlyph _appearance;
-  private Point _position;
   private Mock<IScreenObjectManager> _screenObjectManager;
   private Mock<IMap> _map;
   private Mock<IMovementLogic> _movementLogic;
+  private ColoredGlyph _appearance;
+  private Point _position;
+  private Portal _gameObject;
 
 
   [SetUp]
   public void Setup()
   {
-    _appearance = new ColoredGlyph(Color.White, Color.Black, 'X');
+    _appearance = new ColoredGlyph(Color.Gray, Color.Red, 0);
     _position = new Point(1, 1);
 
     _screenObjectManager = new Mock<IScreenObjectManager>();
     _map = new Mock<IMap>();
-
     _movementLogic = new Mock<IMovementLogic>();
-    _movementLogic.Setup(m => m.Move(It.IsAny<IGameObject>(), It.IsAny<IMap>(), It.IsAny<Point>()));
-    _gameObject = new TestGameObject(_appearance, _position, _screenObjectManager.Object, _map.Object, _movementLogic.Object);
+
+    _gameObject = new Portal(_position, _screenObjectManager.Object, _map.Object);
   }
 
   [Test]
   public void Constructor_SetsProperties()
   {
-    var constructorTestGameobject = new TestGameObject(_appearance, _position, _screenObjectManager.Object, _map.Object, _movementLogic.Object);
+    var constructorTestGameobject = new Portal(_position, _screenObjectManager.Object, _map.Object);
 
-    Assert.That(constructorTestGameobject.Appearance, Is.EqualTo(_appearance));
+    var portalDefaultAppearance = new ColoredGlyph(Color.Gray, Color.Red, 0);
+
+    Assert.That(constructorTestGameobject.Appearance.Foreground, Is.EqualTo(portalDefaultAppearance.Foreground));
+    Assert.That(constructorTestGameobject.Appearance.Background, Is.EqualTo(portalDefaultAppearance.Background));
+    Assert.That(constructorTestGameobject.Appearance.Glyph, Is.EqualTo(portalDefaultAppearance.Glyph));
     Assert.That(constructorTestGameobject.Position, Is.EqualTo(_position));
   }
 
   [Test]
-  public void GetAppearance_ReturnsAppearance()
+  public void Blocks_Movement()
   {
-    Assert.That(_gameObject.GetAppearance(), Is.EqualTo(_appearance));
+    var portal = new Portal(_position, _screenObjectManager.Object, _map.Object);
+    var source = new Mock<IGameObject>();
+
+    bool result = portal.Touched(source.Object);
+    Assert.That(result, Is.False);
   }
 
   [Test]
@@ -64,15 +71,6 @@ public class GameObjectTests
   }
 
   [Test]
-  public void Move_Calls_MoveOnMovementLogic()
-  {
-    var newPosition = new Point(2, 2);
-    _gameObject.Move(newPosition, _map.Object);
-
-    _movementLogic.Verify(m => m.Move(_gameObject, _map.Object, newPosition), Times.Once);
-  }
-
-  [Test]
   public void Touched_Calls_TouchingOnSource()
   {
     var source = new Mock<IGameObject>();
@@ -80,6 +78,5 @@ public class GameObjectTests
 
     source.Verify(m => m.Touching(_gameObject), Times.Once);
   }
-
 }
 

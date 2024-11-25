@@ -4,7 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using DungeonCrawl.GameSetup;
 
-namespace Tests.SettingsTests
+namespace Tests.GameSetupTests.SettingsTests
 {
   public class SettingsTests
   {
