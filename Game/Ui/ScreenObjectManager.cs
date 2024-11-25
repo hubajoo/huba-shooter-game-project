@@ -15,7 +15,7 @@ namespace DungeonCrawl.UI;
 /// </summary>
 public class ScreenObjectManager : ScreenObject, IScreenObjectManager
 {
-  private IScreenObject _screen;
+  public IScreenObject Screen { get; private set; }
 
   private IScreenObject _endScreen;
 
@@ -32,7 +32,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   public ScreenObjectManager(IScreenSurface screenSurface)
   {
     _screenSurface = screenSurface;
-    _screen = new ScreenObject();
+    Screen = new ScreenObject();
   }
 
   /// <summary>
@@ -108,7 +108,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// </summary>
   public void RemoveScreenObject(IScreenObject screenObject)
   {
-    _screen.Children.Remove(screenObject);
+    Screen.Children.Remove(screenObject);
   }
 
   /// <summary>
@@ -117,7 +117,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// <param name="screenObject"></param>
   public void AddScreenObject(IScreenObject screenObject)
   {
-    _screen.Children.Add(screenObject);
+    Screen.Children.Add(screenObject);
   }
 
   /// <summary>
@@ -125,7 +125,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// </summary>
   public void ClearScreen()
   {
-    _screen.Children.Clear();
+    Screen.Children.Clear();
   }
 
   /// <summary>
@@ -134,7 +134,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   /// <param name="mainScreen"></param>
   public void SetMainScreen(IScreenObject mainScreen)
   {
-    _screen = mainScreen;
+    Screen = mainScreen;
   }
 
   /// <summary>
@@ -144,7 +144,7 @@ public class ScreenObjectManager : ScreenObject, IScreenObjectManager
   public void SetConsole(PlayerStatsConsole console)
   {
     _playerStatsConsole = console;
-    _screen.Children.Add(console);
+    Screen.Children.Add(console);
   }
 
   /// <summary>

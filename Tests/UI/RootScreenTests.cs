@@ -5,51 +5,50 @@ using SadConsole.Input;
 using SadRogue.Primitives;
 using DungeonCrawl.Ui;
 
-/*
 namespace Tests.RootScreenTests
 {
   public class RootScreenTests
   {
     private Mock<IMap> _mockMap;
+    private Mock<IScreenSurface> _screenSurface;
     private RootScreen _rootScreen;
+
 
     [SetUp]
     public void Setup()
     {
+
       _mockMap = new Mock<IMap>();
-      _mockMap.Setup(m => m.SurfaceObject).Returns(new ScreenObject());
+      _screenSurface = new Mock<IScreenSurface>();
+      _mockMap.Setup(m => m.SurfaceObject).Returns(_screenSurface.Object);
       _rootScreen = new RootScreen(_mockMap.Object);
+
     }
-    
-        [Test]
-        public void Constructor_InitializesWithMap()
-        {
-          Assert.That(_rootScreen.Children.Contains(_mockMap.Object.SurfaceObject), Is.True);
-        }
 
-        [Test]
-        public void ProcessKeyboard_EscapeKey_ReturnsTrue()
-        {
-          var keyboard = new Keyboard();
-          keyboard.SetKeyState(Keys.Escape, true);
+    [Test]
+    public void Constructor_InitializesWithMap()
+    {
+      Assert.That(_rootScreen.Children.Contains(_mockMap.Object.SurfaceObject), Is.True);
+    }
 
-          bool result = _rootScreen.ProcessKeyboard(keyboard);
 
-          Assert.That(result, Is.True);
-        }
+    [Test]
+    public void Update_UpdatesMap()
+    {
+      var time = new TimeSpan(0, 0, 0, 0, 100);
+      _rootScreen.Update(time);
+      _mockMap.Verify(m => m.ProgressTime(), Times.Once);
+    }
 
-        [Test]
-        public void ProcessKeyboard_OtherKey_ReturnsFalse()
-        {
-          var keyboard = new Keyboard();
-          keyboard.SetKeyState(Keys.A, true);
+    [Test]
+    public void Update_UpdatesChildren()
+    {
+      var time = new TimeSpan(0, 0, 0, 0, 100);
+      _rootScreen.Update(time);
+      _screenSurface.Verify(s => s.Update(time), Times.Once);
+    }
 
-          bool result = _rootScreen.ProcessKeyboard(keyboard);
-
-          Assert.That(result, Is.False);
-        }
-        
+    /// Keyboard inputs are not tested here, because the whole keyboard logic is prevritten SadConsole code.
   }
 }
 
-*/

@@ -33,7 +33,6 @@ public class RootScreen : ScreenObject
   public override bool ProcessKeyboard(Keyboard keyboard)
   {
     bool handled = false;
-
     if (keyboard.IsKeyPressed(Keys.Up))
     {
       _map.UserControlledObject.Move(_map.UserControlledObject.Position + Direction.Up, _map);
@@ -64,7 +63,7 @@ public class RootScreen : ScreenObject
       _map.UserControlledObject.Shoot();
       handled = true;
     }
-     else if (keyboard.IsKeyPressed(Keys.Escape))
+    else if (keyboard.IsKeyPressed(Keys.Escape))
     {
       _map.UserControlledObject.EndGame();
       handled = true;

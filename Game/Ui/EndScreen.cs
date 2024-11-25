@@ -36,6 +36,7 @@ namespace DungeonCrawl.UI
 
       PrintLeaderBoard(_leaderBoardHandler.GetArray());
     }
+
     /// <summary>
     /// Prints death message and prompts player to quit the game.
     /// </summary>
@@ -44,6 +45,7 @@ namespace DungeonCrawl.UI
       PrintCenter(" You died ", 4, Color.Red, Color.White);
       PrintCenter(" Press Space to quit ", 6, Color.DarkOrange);
     }
+
     /// <summary>
     /// Prints text in the horizontal center.
     /// </summary>
@@ -55,6 +57,7 @@ namespace DungeonCrawl.UI
     {
       this.Print(_center - (text.Length / 2), y, text, foreground, background);
     }
+
     /// <summary>
     /// Prints text in the horizontal center.
     /// </summary>
@@ -65,6 +68,7 @@ namespace DungeonCrawl.UI
     {
       this.Print(_center - (text.Length / 2), y, text, foreground);
     }
+
     /// <summary>
     /// Draws a box.
     /// </summary>
@@ -73,6 +77,7 @@ namespace DungeonCrawl.UI
       this.DrawBox(new Rectangle(0, 0, Width, Height),
           ShapeParameters.CreateBorder(new ColoredGlyph(Color.Red, Color.Black, 176)));
     }
+
     /// <summary>
     /// Prints the leaderboard.
     /// </summary>
@@ -92,6 +97,7 @@ namespace DungeonCrawl.UI
       }
 
     }
+
     /// <summary>
     /// Processes the keyboard input.
     /// </summary>
@@ -105,6 +111,7 @@ namespace DungeonCrawl.UI
       }
       return true;
     }
+
     /// <summary>
     /// Updates the screen.
     /// </summary>

@@ -9,6 +9,7 @@ using System;
 /// </summary>
 public interface IScreenObjectManager
 {
+  public IScreenObject Screen { get; }
   public void AddScreenObject(IScreenObject screenObject);
   public void RemoveScreenObject(IScreenObject screenObject);
   public void RefreshCell(IMap map, Point position);

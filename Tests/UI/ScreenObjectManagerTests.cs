@@ -1,81 +1,131 @@
 using NUnit.Framework;
-using SadConsole;
-using SadRogue;
-using SadRogue.Primitives;
-using DungeonCrawl.UI;
-using DungeonCrawl.GameObjects;
+using System;
 using Moq;
+using DungeonCrawl.Maps;
+using DungeonCrawl.GameObjects.ObjectInterfaces;
+using DungeonCrawl.UI;
+using SadConsole;
+using SadRogue.Primitives;
+using DungeonCrawl.Mechanics.SpawnLogic;
+using DungeonCrawl.LeaderBoard;
+
 
 namespace Tests.ScreenObjectManagerTests
 {
   public class ScreenObjectManagerTests
   {
-    private ScreenSurface _screenSurface;
     private IScreenObjectManager _screenObjectManager;
     private ColoredGlyph _appearance;
     private Mock<IGameObject> _gameObject;
+    private Mock<IScreenSurface> _screenSurface;
+    private Mock<IScreenObject> _screenObject;
+    private Mock<IMap> _map;
 
     [SetUp]
     public void Setup()
     {
-      //_screenSurface = new ScreenSurface(10, 10);
-      _screenObjectManager = new ScreenObjectManager(_screenSurface);
-      _gameObject = new Mock<IGameObject>();
       _appearance = new ColoredGlyph(Color.White, Color.Black, 'X');
+
+      _gameObject = new Mock<IGameObject>();
       _gameObject.Setup(m => m.Appearance).Returns(_appearance);
-      _gameObject.Setup(m => m.Position).Returns(new SadRogue.Primitives.Point(1, 1));
+      _gameObject.Setup(m => m.GetAppearance()).Returns(_appearance);
+      _gameObject.Setup(m => m.Position).Returns(new Point(1, 1));
+
+      _screenSurface = new Mock<IScreenSurface>();
+      _screenObjectManager = new ScreenObjectManager(_screenSurface.Object);
+
+      _screenObject = new Mock<IScreenObject>();
+      _map = new Mock<IMap>();
     }
 
-    [TearDown]
-    public void TearDown()
-    {
-      //_screenSurface.Dispose();
-    }
 
 
     [Test]
-    public void DrawGameObject_DrawsGameObject()
+    public void AddScreenObject_AddsObject()
     {
-      // _screenObjectManager.DrawScreenObject(_gameObject);
-      // Assert.That(_screenSurface.Surface[1, 1], Is.EqualTo(_appearance));
-      Assert.Fail("Forced failure for testing purposes.");
+      _screenObjectManager.AddScreenObject(_screenObject.Object);
+
+      Assert.That(_screenObjectManager.Screen.Children.Contains(_screenObject.Object), Is.True);
     }
 
-  }}
-    /*
-            [Test]
-            public void RemoveScreenObject_RemovesObject()
-            {
-              _screenObjectManager.AddScreenObject(_screenObject);
-              _screenObjectManager.RemoveScreenObject(_screenObject);
 
-              Assert.That(_screenObjectManager.ContainsScreenObject(_screenObject), Is.False);
-              Assert.That(_screenObjectManager.ScreenObjectCount, Is.EqualTo(0));
-            }
 
-            [Test]
-            public void ContainsScreenObject_ReturnsTrueIfExists()
-            {
-              _screenObjectManager.AddScreenObject(_screenObject);
+    [Test]
+    public void RemoveScreenObject_RemovesObject()
+    {
+      _screenObjectManager.AddScreenObject(_screenObject.Object);
+      _screenObjectManager.RemoveScreenObject(_screenObject.Object);
 
-              Assert.That(_screenObjectManager.ContainsScreenObject(_screenObject), Is.True);
-            }
+      Assert.That(_screenObjectManager.Screen.Children.Contains(_screenObject.Object), Is.False);
+    }
 
-            [Test]
-            public void ContainsScreenObject_ReturnsFalseIfNotExists()
-            {
-              Assert.That(_screenObjectManager.ContainsScreenObject(_screenObject), Is.False);
-            }
+    [Test]
+    public void RefreshCell_RefreshesCell()
+    {
+      var obj = _gameObject.Object;
 
-            [Test]
-            public void ScreenObjectCount_ReturnsCorrectCount()
-            {
-              Assert.That(_screenObjectManager.ScreenObjectCount, Is.EqualTo(0));
+      // Setup the mock to return the object at the given position
+      _map.Setup(m => m.TryGetMapObject(new Point(1, 1), out obj)).Returns(true);
 
-              _screenObjectManager.AddScreenObject(_screenObject);
-              Assert.That(_screenObjectManager.ScreenObjectCount, Is.EqualTo(1));
+      // Define alternative appearance
+      ColoredGlyph altAppearance = new ColoredGlyph(Color.Black, Color.White, 'Y');
 
-              _screenObjectManager.RemoveScreenObject(_screenObject);
-              Assert.That(_screenObjectManager.ScreenObjectCount, Is.EqualTo(0));
-            }
-            */
+      // Setup the mock to return the alternative appearance instead of the default appearance
+      _screenSurface.Setup(s => s.Surface[new Point(1, 1)]).Returns(altAppearance);
+
+      // Call the method
+      _screenObjectManager.RefreshCell(_map.Object, new Point(1, 1));
+
+      // Verify screen surface and map were accessed
+      _screenSurface.Verify(s => s.Surface[new Point(1, 1)], Times.Once);
+      _map.Verify(m => m.TryGetMapObject(new Point(1, 1), out obj), Times.Once);
+
+      // Verify the alt appearance was overwritten
+      Assert.That(altAppearance.Foreground, Is.EqualTo(_appearance.Foreground));
+    }
+
+    [Test]
+    public void GetScreenObject_ReturnsObject()
+    {
+      _screenSurface.Setup(s => s.Surface[new Point(1, 1)]).Returns(_appearance);
+
+      var obj = _gameObject.Object;
+
+      _map.Setup(m => m.TryGetMapObject(new Point(1, 1), out obj)).Returns(true);
+
+      var result = _screenObjectManager.GetScreenObject(new Point(1, 1));
+
+      Assert.That(result, Is.EqualTo(_appearance));
+    }
+
+    [Test]
+    public void DrawScreenObject_DrawsObject()
+    {
+      var obj = _gameObject.Object;
+
+      // Define alternative appearance
+      ColoredGlyph altAppearance = new ColoredGlyph(Color.Black, Color.White, 'Y');
+
+      // Setup the mock to return the alternative appearance instead of the default appearance
+      _screenSurface.Setup(s => s.Surface[new Point(1, 1)]).Returns(altAppearance);
+
+      // Call the method
+      _screenObjectManager.DrawScreenObject(_gameObject.Object, new Point(1, 1));
+
+      // Verify screen surface and map were accessed
+      _screenSurface.Verify(s => s.Surface[new Point(1, 1)], Times.Once);
+
+      // Verify the appearance was updated
+      Assert.That(_screenSurface.Object.Surface[new Point(1, 1)], Is.EqualTo(altAppearance));
+    }
+
+    [Test]
+    public void ClearScreen_ClearsScreen()
+    {
+      _screenObjectManager.ClearScreen();
+
+      Assert.That(_screenObjectManager.Screen.Children.Count, Is.EqualTo(0));
+    }
+  }
+}
+

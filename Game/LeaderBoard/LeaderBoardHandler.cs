@@ -13,7 +13,7 @@ namespace DungeonCrawl.LeaderBoard;
 /// </summary>
 public class LeaderBoardHandler : ILeaderBoardHandler
 {
-  private List<string> LeaderBoard;
+  private List<string> _leaderBoard;
 
   private string _path;
 
@@ -24,10 +24,10 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   /// </summary>
   /// <param name="settings"></param>
   /// <param name="path"></param>
-  public LeaderBoardHandler(IGameSettings settings, string path = "Data/leaderboard.txt")
+  public LeaderBoardHandler(IGameSettings settings, string path) //= "Data/leaderboard.txt")
   {
     _url = settings.ServerUrl;
-    LeaderBoard = new List<string>();
+    _leaderBoard = new List<string>();
     _path = path;
   }
 
@@ -49,13 +49,14 @@ public class LeaderBoardHandler : ILeaderBoardHandler
         if (response.IsSuccessStatusCode)
         {
           string content = await response.Content.ReadAsStringAsync();
-          Console.WriteLine(content);
+
           ClearLeaderBoard();
+
           var leaderboardEntries = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LeaderBoardEntry>>(content);
           foreach (var entry in leaderboardEntries)
           {
             string line = $"{entry.Name}:{entry.Score}";
-            LeaderBoard.Add(line);
+            _leaderBoard.Add(line);
             using StreamWriter sw = File.AppendText(_path);
             sw.WriteLine($"\n{line}");
           }
@@ -69,7 +70,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
     }
     catch (Exception ex)
     {
-      Console.WriteLine($"An error occurred: {ex.Message}");
+      throw new Exception($"An error occurred: {ex.Message}");
     }
   }
 
@@ -82,7 +83,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   {
     try
     {
-      LeaderBoard.Add($"{name}:{score}");
+      _leaderBoard.Add($"{name}:{score}");
       using StreamWriter sw = File.AppendText(_path);
       sw.WriteLine($"\n{name}:{score}");
       Console.WriteLine($"{name}:{score}");
@@ -138,7 +139,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   {
     try
     {
-      LeaderBoard.Clear();
+      _leaderBoard.Clear();
       string[] lines = File.ReadAllLines(_path); // Reads all lines from file
       foreach (string line in lines) // Loops through lines
       {
@@ -147,22 +148,22 @@ public class LeaderBoardHandler : ILeaderBoardHandler
         {
           continue; // Skip to next iteration
         }
-        LeaderBoard.Add(line); // Adds key-value pair to dictionary
+        _leaderBoard.Add(line); // Adds key-value pair to dictionary
       }
       SortLeaderBoard();
-      return LeaderBoard;
+      return _leaderBoard;
     }
     catch (FileNotFoundException) // If file not found
     {
       File.Create(_path);
-      return LeaderBoard;
+      return _leaderBoard;
     }
     catch (Exception e) // If any other exception
     {
       File.Delete(_path);
       File.Create(_path);
       Console.WriteLine(e.Message);
-      return LeaderBoard;
+      return _leaderBoard;
     }
   }
 
@@ -172,6 +173,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   public void ClearLeaderBoard()
   {
     File.WriteAllText(_path, string.Empty);
+    _leaderBoard.Clear();
   }
 
   /// <summary>
@@ -179,7 +181,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   /// </summary>
   public void SortLeaderBoard()
   {
-    LeaderBoard.Sort((a, b) => int.Parse(b.Split(':')[1]).CompareTo(int.Parse(a.Split(':')[1])));
+    _leaderBoard.Sort((a, b) => int.Parse(b.Split(':')[1]).CompareTo(int.Parse(a.Split(':')[1])));
   }
 
   /// <summary>
@@ -188,7 +190,7 @@ public class LeaderBoardHandler : ILeaderBoardHandler
   /// <returns></returns>
   public string[] GetArray()
   {
-    return LeaderBoard.ToArray();
+    return _leaderBoard.ToArray();
   }
 
 }
