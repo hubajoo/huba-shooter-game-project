@@ -48,10 +48,10 @@ public class Setup
     map.AddUserControlledObject(player);
 
     // Creates monster types
-    MonsterTypes monsterTypes = new MonsterTypes(MonsterCreation.CreateMonsterTypes());
+    IMonsterTypes monsterTypes = new MonsterTypes(MonsterCreation.CreateMonsterTypes());
 
     // Creates spawn logic
-    var spawnScrip = new SpawnScript();
+    ISpawnScript spawnScrip = new SpawnScript();
 
     // Creates wave and sets spawn logic
     MonsterWave wave = new MonsterWave(map, screenObjectManager, monsterTypes, spawnScrip);

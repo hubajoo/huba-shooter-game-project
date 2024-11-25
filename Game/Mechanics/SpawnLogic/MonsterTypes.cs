@@ -4,7 +4,7 @@ using DungeonCrawl.GameObjects.ObjectInterfaces;
 using SadRogue.Primitives;
 
 namespace DungeonCrawl.Mechanics.SpawnLogic;
-public class MonsterTypes
+public class MonsterTypes : IMonsterTypes
 {
   public List<Func<Point, IScreenObjectManager, IMap, IGameObject>> Types { get; private set; } = new List<Func<Point, IScreenObjectManager, IMap, IGameObject>>();
   public MonsterTypes(params Func<Point, IScreenObjectManager, IMap, IGameObject>[] monsterTypes)

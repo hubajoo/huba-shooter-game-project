@@ -30,7 +30,7 @@ public class MonsterWave : ISpawnOrchestrator
   /// <summary>
   /// Monster types.
   /// </summary>
-  private MonsterTypes _monsterTypes;
+  private IMonsterTypes _monsterTypes;
 
   /// <summary>
   /// Spawn script.
@@ -50,7 +50,7 @@ public class MonsterWave : ISpawnOrchestrator
   /// <param name="monsterTypes"></param>
   /// <param name="spawnScript"></param>
   /// <param name="difficulty"></param>
-  public MonsterWave(IMap map, IScreenObjectManager screenObjectManager, MonsterTypes monsterTypes, SpawnScript spawnScript, int difficulty = 0)
+  public MonsterWave(IMap map, IScreenObjectManager screenObjectManager, IMonsterTypes monsterTypes, ISpawnScript spawnScript, int difficulty = 0)
   {
     _map = map;
     _screenObjectManager = screenObjectManager;

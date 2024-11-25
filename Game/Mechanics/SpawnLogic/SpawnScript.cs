@@ -1,6 +1,6 @@
 
 namespace DungeonCrawl.Mechanics.SpawnLogic;
-public class SpawnScript
+public class SpawnScript : ISpawnScript
 {
   private int[][] _spawnScript;
   public SpawnScript(int[][] spawnScript, int difficulty = 0)
