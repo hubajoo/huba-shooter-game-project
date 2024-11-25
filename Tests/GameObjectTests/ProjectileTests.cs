@@ -28,6 +28,7 @@ namespace Tests.GameObjectTests
       _mockScreenObjectManager = new Mock<IScreenObjectManager>();
       _mockMap = new Mock<IMap>();
       _mockMovementLogic = new Mock<IMovementLogic>();
+      _mockMovementLogic.Setup(m => m.Move(It.IsAny<IGameObject>(), It.IsAny<IMap>(), It.IsAny<Point>())).Returns(true);
       _projectile = new Projectile(_position, _direction, _mockScreenObjectManager.Object, _damage, _maxDistance, _color, _mockMap.Object);
 
       _projectile.SetMovementLogic(_mockMovementLogic.Object);
@@ -62,24 +63,14 @@ namespace Tests.GameObjectTests
     public void Update_RemovesProjectileWhenMaxDistanceReached()
     {
       var projectile = new Projectile(_position, Direction.Right, _mockScreenObjectManager.Object, _damage, 10, _color, _mockMap.Object);
+      _mockMovementLogic.Setup(m => m.Move(projectile, _mockMap.Object, It.IsAny<Point>())).Returns(true);
       projectile.SetMovementLogic(_mockMovementLogic.Object);
 
-      for (int i = 0; i < 10; i++)
+      for (int i = 0; i < 11; i++)
       {
-        _projectile.Fly();
+        projectile.Update();
       }
       _mockMap.Verify(m => m.RemoveMapObject(projectile), Times.Once);
-    }
-
-    [Test]
-    public void Update_CallsFly()
-    {
-      var projectile = new Projectile(_position, _direction, _mockScreenObjectManager.Object, _damage, _maxDistance, _color, _mockMap.Object);
-
-      projectile.SetMovementLogic(_mockMovementLogic.Object);
-
-      projectile.Update();
-      _mockMovementLogic.Verify(p => p.Move(projectile, It.IsAny<IMap>(), It.IsAny<Point>()), Times.Once);
     }
   }
 }

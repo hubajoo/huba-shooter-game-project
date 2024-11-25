@@ -1,9 +1,10 @@
+using DungeonCrawl.GameObjects;
 using SadRogue.Primitives;
 using SadConsole;
 using DungeonCrawl.Mechanics;
 
 
-namespace DungeonCrawl.GameObjects;
+namespace Tests.Wrappers;
 
 /// <summary>
 /// Class <c>TestGameObject</c> implements a pure object for testing purposes.

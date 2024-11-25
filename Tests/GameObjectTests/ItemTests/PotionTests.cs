@@ -11,7 +11,7 @@ namespace Tests.GameObjectTests.ItemTests
   public class PotionTests
   {
     private Mock<IScreenObjectManager> _mockScreenObjectManager;
-    private Mock<Map> _mockMap;
+    private Mock<IMap> _mockMap;
     private Player _player;
     private Potion _potion;
 
@@ -19,7 +19,7 @@ namespace Tests.GameObjectTests.ItemTests
     public void SetUp()
     {
       _mockScreenObjectManager = new Mock<IScreenObjectManager>();
-      _mockMap = new Mock<Map>();
+      _mockMap = new Mock<IMap>();
       _player = new Player("TestPlayer", new Point(0, 0), _mockScreenObjectManager.Object, _mockMap.Object);
       _potion = new Potion(new Point(1, 1), _mockScreenObjectManager.Object, _mockMap.Object);
     }

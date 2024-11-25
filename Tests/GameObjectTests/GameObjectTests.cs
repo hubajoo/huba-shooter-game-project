@@ -1,3 +1,4 @@
+using Tests.Wrappers;
 using DungeonCrawl.GameObjects.ObjectInterfaces;
 using DungeonCrawl.GameObjects;
 using DungeonCrawl.UI;

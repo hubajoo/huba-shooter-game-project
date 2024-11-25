@@ -72,17 +72,22 @@ public class Projectile : GameObject, IDamaging
       _flownDistance++; // Increase the flown distance
 
       // Move the projectile in the direction it is facing
-      if (!Move(Position + Direction, _map)) Touched(null); // If the projectile can't move, call the Touched method
+      if (!Move(Position + Direction, _map))
+      {
+        Touched(null); // If the projectile can't move, call the Touched method
+      }
 
       // Increase the flown distance if the projectile is moving up or down
       // Tiles are rectangular, visually the projectile moves 2 times faster up and down
-      if (Direction == Direction.Up || Direction == Direction.Down) _flownDistance += 2;
+      if (Direction == Direction.Up || Direction == Direction.Down)
+      {
+        _flownDistance += 2;
+      }
     }
     else
     {
       RemoveSelf(); // Remove the projectile from the map
     }
-
   }
 
   /// <summary>

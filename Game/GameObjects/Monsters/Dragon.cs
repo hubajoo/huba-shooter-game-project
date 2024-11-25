@@ -2,6 +2,7 @@ using DungeonCrawl.GameObjects.ObjectInterfaces;
 using DungeonCrawl.Mechanics.Randomisation;
 using SadConsole;
 using SadRogue.Primitives;
+using DungeonCrawl.Mechanics;
 
 
 namespace DungeonCrawl.GameObjects.Monsters;

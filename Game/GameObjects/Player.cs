@@ -88,7 +88,6 @@ public class Player : GameObject, IVulnerable, IMoving, IShooting, IGameEnding
     Health -= damage;
     if (Health <= 0)
     {
-      _map.RemoveMapObject(this);
       EndGame();
     }
   }
