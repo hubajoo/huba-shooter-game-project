@@ -59,4 +59,11 @@ public class Movements : IMovementLogic
     return true;
   }
 
+  public Movements(IMap map, IScreenObjectManager screenObjectManager, ICellSurfaceWrapper cellSurfaceWrapper)
+  {
+    _map = map;
+    _screenObjectManager = screenObjectManager;
+    _cellSurfaceWrapper = cellSurfaceWrapper;
+  }
+
 }
