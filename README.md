@@ -12,16 +12,17 @@
 <br />
 <div align="center">
   <a href="https://github.com/hubajoo/huba-shooter-game-project">
-    <img src="Game/Images/Icon.png" alt="Logo" width="80" height="80">
+    <img src="https://raw.githubusercontent.com/hubajoo/huba-shooter-game-project/Experimental-movement/Images/Icon.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Huba Shooter Game</h3>
 
   <p align="center">
     This game is a 2D shooter, where you try to kill enemies swarming from portals and survive as long as you can to put your name on the leaderboard.
+    You controll a small green character, move around using the key buttons, shoot projectiles at enemies and pick up items to get stronger.
     <br />
-    <a href="https://github.com/hubajoo/huba-shooter-game-project"><strong>Explore the docs »</strong></a>
     <br />
+     <img src="https://raw.githubusercontent.com/hubajoo/huba-shooter-game-project/Experimental-movement/Images/Screenshot.png" alt="Logo">
     <br />
     <a href="https://github.com/hubajoo/huba-shooter-game-project">View Demo</a>
     ·
@@ -112,6 +113,7 @@ This project requires .NET to be installed. You can download it from [here](http
   Using the terminal:
   ```sh
   cd Game
+  dotnet build
   dotnet run
   ```
   Or execute the file directly:
@@ -124,6 +126,22 @@ This project requires .NET to be installed. You can download it from [here](http
 
 After running the game, follow the on-screen instructions to play.
 Use the arrow keys to navigate and spacebar to interact.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Testing
+ 1. Switch to testing directory.
+  ```sh
+  cd Test
+  ```
+2. Build the project.
+  ```sh
+  dotnet build
+  ```
+3. Run the tests
+  ```sh
+  dotnet test
+  ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -184,7 +202,7 @@ Project Link: [https://github.com/hubajoo/huba-shooter-game-project](https://git
 [license-url]: https://github.com/hubajoo/huba-shooter-game-project/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/huba-joó
-[product-screenshot]: https://github.com/hubajoo/huba-shooter-game-project/blob/Experimental-movement/Images/screenshot.png
+[product-screenshot]: https://raw.githubusercontent.com//hubajoo/huba-shooter-game-project/Experimental-movement/Images/Screenshot.png
 [csharp-shield]: https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white
 [csharp-url]: https://docs.microsoft.com/en-us/dotnet/csharp/
 [linq-shield]: https://img.shields.io/badge/LINQ-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
