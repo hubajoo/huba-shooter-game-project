@@ -119,11 +119,6 @@ This project requires .NET to be installed. You can download it from [here](http
   C:\Program Files\Repository\New\huba-shooter-game-project\Game\bin\Debug\net6.0\DungeonCrawl.exe
   ```
 
-4. Change git remote URL to avoid accidental pushes to the base project
-  ```sh
-  git remote set-url origin hubajoo/huba-shooter-game-project
-  git remote -v # confirm the changes
-  ```
 
 ### Usage
 
@@ -189,7 +184,7 @@ Project Link: [https://github.com/hubajoo/huba-shooter-game-project](https://git
 [license-url]: https://github.com/hubajoo/huba-shooter-game-project/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/huba-joó
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: https://github.com/hubajoo/huba-shooter-game-project/blob/Experimental-movement/Images/screenshot.png
 [csharp-shield]: https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white
 [csharp-url]: https://docs.microsoft.com/en-us/dotnet/csharp/
 [linq-shield]: https://img.shields.io/badge/LINQ-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
